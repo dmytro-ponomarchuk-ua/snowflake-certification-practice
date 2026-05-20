@@ -1,0 +1,1126 @@
+{
+    "setId": "set6-data-protection",
+    "setName": "Data Protection & Sharing",
+    "domain": "Data Protection and Data Sharing",
+    "domainWeight": 10,
+    "questions": [
+        {
+            "id": "s6q001",
+            "question": "What is the maximum Time Travel retention period for a PERMANENT table on the Enterprise edition?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "90 days"
+                },
+                {
+                    "key": "B",
+                    "text": "7 days"
+                },
+                {
+                    "key": "C",
+                    "text": "1 day"
+                },
+                {
+                    "key": "D",
+                    "text": "365 days"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Permanent tables on Enterprise edition and above support up to 90 days of Time Travel. Standard edition supports a maximum of 1 day. Transient and temporary tables support 0-1 days on any edition.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q002",
+            "question": "What is the maximum Time Travel retention period on the Standard edition?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "90 days"
+                },
+                {
+                    "key": "B",
+                    "text": "7 days"
+                },
+                {
+                    "key": "C",
+                    "text": "1 day"
+                },
+                {
+                    "key": "D",
+                    "text": "0 days (Time Travel is not available)"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Standard edition supports a maximum of 1 day of Time Travel for permanent tables. Time Travel is available on all editions, but the retention period is limited to 1 day on Standard. Enterprise edition extends this to up to 90 days.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q003",
+            "question": "What is Fail-safe in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A user-accessible backup system for recovering data"
+                },
+                {
+                    "key": "B",
+                    "text": "A non-configurable 7-day period for data recovery by Snowflake Support only, after Time Travel expires"
+                },
+                {
+                    "key": "C",
+                    "text": "An automatic failover mechanism for warehouses"
+                },
+                {
+                    "key": "D",
+                    "text": "A redundant storage system that prevents data loss during outages"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Fail-safe provides an additional 7-day window of data protection after Time Travel expires. It is NOT user-accessible — only Snowflake Support can recover data from Fail-safe, and only in the event of a system failure or disaster. Fail-safe data contributes to storage costs.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q004",
+            "question": "Which table types have Fail-safe protection? (Choose the best answer)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Permanent tables only"
+                },
+                {
+                    "key": "B",
+                    "text": "All table types (permanent, transient, temporary)"
+                },
+                {
+                    "key": "C",
+                    "text": "Permanent and transient tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Transient and temporary tables"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Only permanent tables have Fail-safe protection (7 days). Transient and temporary tables do NOT have Fail-safe, which means they have lower storage costs but less data protection.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q005",
+            "question": "Which are valid types of Snowflake table? (Choose all that apply)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "External"
+                },
+                {
+                    "key": "B",
+                    "text": "Transient"
+                },
+                {
+                    "key": "C",
+                    "text": "Temporary"
+                },
+                {
+                    "key": "D",
+                    "text": "Permanent"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C",
+                "D"
+            ],
+            "multiSelect": true,
+            "explanation": "All four are correct. External tables reference data in external storage. Transient tables have no Fail-safe period (lower storage costs). Temporary tables exist only for the current session. Permanent tables have full Time Travel and Fail-safe protection.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q006",
+            "question": "What is the main advantage of a Transient table over a Permanent table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Faster query performance"
+                },
+                {
+                    "key": "B",
+                    "text": "Lower storage costs because transient tables have no Fail-safe period"
+                },
+                {
+                    "key": "C",
+                    "text": "Transient tables can hold more data"
+                },
+                {
+                    "key": "D",
+                    "text": "Transient tables support longer Time Travel periods"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Transient tables do not have Fail-safe protection, which reduces storage costs (no 7-day Fail-safe storage overhead). They support Time Travel of 0-1 days. They're ideal for data that can be easily recreated, like staging tables or ETL intermediate results.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q007",
+            "question": "Which Snowflake feature allows sharing live, read-only data between accounts without copying the data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Database Replication"
+                },
+                {
+                    "key": "B",
+                    "text": "Secure Data Sharing"
+                },
+                {
+                    "key": "C",
+                    "text": "Zero-Copy Cloning"
+                },
+                {
+                    "key": "D",
+                    "text": "COPY INTO command"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Secure Data Sharing allows a provider account to share live, read-only access to data with consumer accounts without copying, moving, or transferring any data. The consumer queries the shared data using their own compute resources. Database Replication does copy data across accounts.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q008",
+            "question": "Snowflake supports database replication only between accounts in the same Region.",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "True"
+                },
+                {
+                    "key": "B",
+                    "text": "False"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B (False) is correct. Snowflake supports database replication between accounts across different regions and even across different cloud providers (e.g., AWS to Azure). This enables global data distribution and disaster recovery across geographic regions.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q009",
+            "question": "What is a Share in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A file shared between warehouses"
+                },
+                {
+                    "key": "B",
+                    "text": "A named Snowflake object that encapsulates database objects to be shared with other accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "A type of role that provides shared access"
+                },
+                {
+                    "key": "D",
+                    "text": "A shared compute resource between accounts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Share is a Snowflake object created by the data provider that specifies which databases, schemas, and objects (tables, views) are shared with consumer accounts. Consumers access shared data by creating a database from the share.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q010",
+            "question": "Who pays for the compute resources when a consumer queries shared data via Secure Data Sharing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The data provider"
+                },
+                {
+                    "key": "B",
+                    "text": "The data consumer"
+                },
+                {
+                    "key": "C",
+                    "text": "Costs are split equally"
+                },
+                {
+                    "key": "D",
+                    "text": "Snowflake absorbs the compute costs"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. In Secure Data Sharing, the consumer pays for all compute resources (virtual warehouse credits) used to query the shared data. The provider incurs no compute costs for consumer queries. The provider only pays for their own storage of the shared data.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q011",
+            "question": "What is the Snowflake Marketplace?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A marketplace for buying Snowflake credits at discounted rates"
+                },
+                {
+                    "key": "B",
+                    "text": "A platform where third-party providers publish datasets that consumers can access or purchase directly in their Snowflake accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "An internal tool for sharing data between departments"
+                },
+                {
+                    "key": "D",
+                    "text": "A marketplace for Snowflake connectors and drivers"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake Marketplace is a platform where data providers (companies and organizations) can list and monetize datasets. Consumers can discover, evaluate, and access these datasets directly within their Snowflake accounts — no ETL or data copying needed.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q012",
+            "question": "What is a Reader Account in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "An account that can only read from internal tables"
+                },
+                {
+                    "key": "B",
+                    "text": "A managed account created by a data provider for consumers who don't have their own Snowflake account"
+                },
+                {
+                    "key": "C",
+                    "text": "A read-only view of another account's data"
+                },
+                {
+                    "key": "D",
+                    "text": "An account type for auditors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Reader Accounts (formerly Managed Accounts) are Snowflake accounts created and managed by a data provider for consumers who don't have their own Snowflake account. The provider manages and pays for the reader account's compute and storage costs.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q013",
+            "question": "What is Database Replication in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating a clone of a database within the same account"
+                },
+                {
+                    "key": "B",
+                    "text": "Replicating a database and its objects to another Snowflake account for disaster recovery or data distribution"
+                },
+                {
+                    "key": "C",
+                    "text": "Synchronizing data between Snowflake and an on-premises database"
+                },
+                {
+                    "key": "D",
+                    "text": "Creating read replicas of a database for load balancing"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Database Replication allows you to replicate databases (and their objects) to other Snowflake accounts across regions and cloud providers. This enables disaster recovery, data locality for global users, and data migration between accounts.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q014",
+            "question": "What is the difference between database replication and database failover?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Replication copies data; failover promotes a replica to primary (writable) in case of outage"
+                },
+                {
+                    "key": "B",
+                    "text": "They are the same feature"
+                },
+                {
+                    "key": "C",
+                    "text": "Failover copies data; replication promotes a replica"
+                },
+                {
+                    "key": "D",
+                    "text": "Replication is for the same region; failover is for cross-region"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Database replication continuously synchronizes a read-only copy of a database to another account. Database failover (Business Critical+) allows promoting that replica to become the primary (writable) database if the original account experiences an outage, then failing back when resolved.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q015",
+            "question": "Which objects can be included in a Secure Data Share? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Secure Views"
+                },
+                {
+                    "key": "C",
+                    "text": "Virtual Warehouses"
+                },
+                {
+                    "key": "D",
+                    "text": "User Accounts"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Data Shares can include tables, external tables, and secure views (recommended for controlled data access). Warehouses and user accounts are account-level objects and cannot be shared. Secure views are recommended to control exactly what data consumers can see.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q016",
+            "question": "How does Time Travel storage affect billing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Time Travel storage is free"
+                },
+                {
+                    "key": "B",
+                    "text": "Time Travel data counts toward storage costs based on the amount of changed data retained"
+                },
+                {
+                    "key": "C",
+                    "text": "Time Travel doubles the storage cost of every table"
+                },
+                {
+                    "key": "D",
+                    "text": "Time Travel is only billed when data is actually accessed"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Time Travel retains historical versions of changed micro-partitions. Storage costs are based on the amount of data that has changed during the retention period — not the full table size. If data changes frequently, Time Travel storage costs will be higher.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q017",
+            "question": "A Temporary table is visible to which users?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "All users in the account"
+                },
+                {
+                    "key": "B",
+                    "text": "All users with the same role"
+                },
+                {
+                    "key": "C",
+                    "text": "Only the user who created it, and only within the session it was created"
+                },
+                {
+                    "key": "D",
+                    "text": "All users in the same database"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Temporary tables are visible only to the user who created them and only within the session where they were created. Once the session ends, the temporary table is automatically dropped. Other users cannot see or access temporary tables.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q018",
+            "question": "What is the total data protection window for a permanent table on Enterprise edition with 90 days of Time Travel?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "90 days"
+                },
+                {
+                    "key": "B",
+                    "text": "97 days (90 days Time Travel + 7 days Fail-safe)"
+                },
+                {
+                    "key": "C",
+                    "text": "7 days"
+                },
+                {
+                    "key": "D",
+                    "text": "180 days"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The total protection window is Time Travel + Fail-safe. With 90 days of Time Travel and 7 days of Fail-safe, the total is 97 days. During Time Travel, the user can recover data. During Fail-safe (after Time Travel expires), only Snowflake Support can recover data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q019",
+            "question": "Can you set the Time Travel retention period to 0 days?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, the minimum is 1 day"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, setting it to 0 disables Time Travel for the object"
+                },
+                {
+                    "key": "C",
+                    "text": "Only for temporary tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Only ACCOUNTADMIN can set it to 0"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. DATA_RETENTION_TIME_IN_DAYS can be set to 0, which disables Time Travel for the object. This means you cannot query historical data, undrop the object, or clone from a previous point in time. This can be useful for reducing storage costs on staging tables.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q020",
+            "question": "Which statement about data shared via Secure Data Sharing is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Shared data is physically copied to the consumer's account"
+                },
+                {
+                    "key": "B",
+                    "text": "Consumers can modify the shared data"
+                },
+                {
+                    "key": "C",
+                    "text": "Shared data remains in the provider's account; consumers get read-only access to live data"
+                },
+                {
+                    "key": "D",
+                    "text": "Shared data is only accessible for 30 days"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. In Secure Data Sharing, no data is copied or transferred. The shared data remains in the provider's storage, and consumers get real-time, read-only access. Any changes the provider makes to the data are immediately visible to consumers.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q021",
+            "question": "What is a Replication Group in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A group of users who share the same role"
+                },
+                {
+                    "key": "B",
+                    "text": "A defined collection of objects in a source account that are replicated as a unit to one or more target accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "A group of warehouses that share compute"
+                },
+                {
+                    "key": "D",
+                    "text": "A backup group for disaster recovery storage"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Replication Group is a collection of objects (databases, shares, users, roles, warehouses, etc.) that are replicated together from a source account to one or more target accounts, potentially across regions and cloud platforms.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q022",
+            "question": "What is a Failover Group?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A group of queries that are retried on failure"
+                },
+                {
+                    "key": "B",
+                    "text": "A Replication Group that additionally supports failover — promoting a secondary account to serve as the primary"
+                },
+                {
+                    "key": "C",
+                    "text": "A group of warehouses that activate when the primary fails"
+                },
+                {
+                    "key": "D",
+                    "text": "A disaster recovery plan document"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Failover Group extends a Replication Group with the ability to failover. In a disaster, the secondary account can be promoted to primary, making the replicated objects writable. This enables business continuity across regions/clouds.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q023",
+            "question": "What is a Snowflake Data Exchange?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A tool for exchanging data between columns"
+                },
+                {
+                    "key": "B",
+                    "text": "A branded hub where a group of accounts can publish and discover shared data among selected participants"
+                },
+                {
+                    "key": "C",
+                    "text": "A Snowflake feature for currency exchange rates"
+                },
+                {
+                    "key": "D",
+                    "text": "An API for exporting data to external systems"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Data Exchange is a private, managed hub where selected Snowflake accounts can publish, discover, and consume shared data. Unlike the public Snowflake Marketplace, Data Exchanges are invite-only and can be branded by an organization.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q024",
+            "question": "What is the difference between a free listing and a paid listing on the Snowflake Marketplace?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Free listings are lower quality; paid listings are curated"
+                },
+                {
+                    "key": "B",
+                    "text": "Free listings grant immediate access via data sharing; paid listings require a commercial agreement and may involve monetization through Snowflake"
+                },
+                {
+                    "key": "C",
+                    "text": "There is no difference — all listings are free"
+                },
+                {
+                    "key": "D",
+                    "text": "Paid listings include compute credits; free listings do not"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Free listings provide instant access to shared data. Paid (personalized) listings require consumers to accept terms and may involve usage-based or flat-fee pricing. Providers can monetize their data products through Snowflake's commercial framework.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q025",
+            "question": "What is a Private Listing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A listing visible only to the account owner"
+                },
+                {
+                    "key": "B",
+                    "text": "A data share published on the Marketplace that is visible only to specific, invited consumer accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "A listing with encrypted data only"
+                },
+                {
+                    "key": "D",
+                    "text": "A listing that requires VPN access"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Private Listings are published on the Snowflake Marketplace but are only visible to specified consumer accounts. They allow providers to share data with specific partners or customers without making the listing publicly discoverable.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q026",
+            "question": "What is a Snowflake Native App?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A mobile application for managing Snowflake"
+                },
+                {
+                    "key": "B",
+                    "text": "An application built using the Snowflake Native App Framework that can be distributed via the Marketplace, combining data, logic, and UI"
+                },
+                {
+                    "key": "C",
+                    "text": "A desktop client for Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "A pre-installed Snowflake system application"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake Native Apps are applications built using the Native App Framework. They package data content, application logic (stored procedures, UDFs), and optional Streamlit UI components. They can be distributed via the Marketplace and run within a consumer's account.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q027",
+            "question": "What is a Reader Account (formerly 'Share Reader Account')?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "An account with read-only access to the Snowflake documentation"
+                },
+                {
+                    "key": "B",
+                    "text": "A Snowflake account created by a provider for non-Snowflake consumers to access shared data"
+                },
+                {
+                    "key": "C",
+                    "text": "An account that can only read from internal stages"
+                },
+                {
+                    "key": "D",
+                    "text": "A free trial Snowflake account"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Reader Accounts (managed accounts) are created by a data provider for consumers who don't have their own Snowflake account. The provider's account pays for the Reader Account's compute costs. Reader Accounts can only consume data shared by the creating provider.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q028",
+            "question": "What are the limitations of a Reader Account? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Cannot create its own databases or load its own data"
+                },
+                {
+                    "key": "B",
+                    "text": "Can only access data shared by the provider who created the account"
+                },
+                {
+                    "key": "C",
+                    "text": "Cannot use SQL commands"
+                },
+                {
+                    "key": "D",
+                    "text": "Cannot have more than one user"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Reader Accounts cannot create databases, load data, or access shares from other providers. They are limited to querying data shared by the provider who created the account. The provider pays for compute; Reader Accounts have their own warehouses for querying.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q029",
+            "question": "Can you share data across different cloud platforms (e.g., AWS to Azure)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, sharing only works within the same cloud"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, using listings (Marketplace or Private Listings) which support cross-cloud and cross-region sharing"
+                },
+                {
+                    "key": "C",
+                    "text": "Only with data replication"
+                },
+                {
+                    "key": "D",
+                    "text": "Only for Enterprise edition"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Direct Shares work within the same region/cloud. For cross-region or cross-cloud sharing, you use Listings (via Marketplace or Private Listings), which leverage auto-fulfillment to replicate data to the consumer's region. Replication Groups also enable cross-cloud data movement.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s6q030",
+            "question": "What objects can be included in a Share? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Tables (including secure views)"
+                },
+                {
+                    "key": "B",
+                    "text": "Secure UDFs"
+                },
+                {
+                    "key": "C",
+                    "text": "Virtual warehouses"
+                },
+                {
+                    "key": "D",
+                    "text": "Users and roles"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Shares can include tables, external tables, secure views, secure materialized views, and secure UDFs. Warehouses, users, and roles cannot be shared — consumers use their own warehouses to query shared data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q031",
+            "question": "What is the purpose of a Secure View in data sharing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To encrypt the view definition"
+                },
+                {
+                    "key": "B",
+                    "text": "To hide the view's SQL definition from consumers while providing controlled access to underlying data"
+                },
+                {
+                    "key": "C",
+                    "text": "To make the view run faster"
+                },
+                {
+                    "key": "D",
+                    "text": "To restrict the view to ACCOUNTADMIN only"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Secure Views hide the view definition (DDL) from consumers and also prevent query optimization from exposing underlying data. In data sharing, only secure views (not regular views) can be shared, ensuring providers control what consumers can see.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q032",
+            "question": "What is Organization-level replication?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Replicating data within a single database"
+                },
+                {
+                    "key": "B",
+                    "text": "Replicating objects (databases, users, roles, warehouses, shares) across Snowflake accounts within the same organization"
+                },
+                {
+                    "key": "C",
+                    "text": "Copying organizational charts into Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "Replicating data to non-Snowflake systems"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Organization-level replication uses Replication and Failover Groups to replicate databases, shares, account-level objects (users, roles, warehouses, resource monitors, integrations) across accounts in the same Snowflake organization, enabling DR and data distribution.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q033",
+            "question": "What is the SYSTEM$GLOBAL_ACCOUNT_SET_PARAMETER function used for in replication?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Setting global parameters for all accounts"
+                },
+                {
+                    "key": "B",
+                    "text": "Enabling replication for an account by setting the allowed replication accounts list"
+                },
+                {
+                    "key": "C",
+                    "text": "Configuring global network policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Setting up global time zones"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SYSTEM$GLOBAL_ACCOUNT_SET_PARAMETER is used to enable replication by specifying which accounts are allowed to replicate to/from each other. This is a prerequisite for setting up database replication or replication groups.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s6q034",
+            "question": "What happens to shared data if the provider revokes a consumer's access?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The consumer keeps a copy of the data"
+                },
+                {
+                    "key": "B",
+                    "text": "The consumer immediately loses access to the shared data — no data was ever copied"
+                },
+                {
+                    "key": "C",
+                    "text": "The data is deleted from the consumer's account after 30 days"
+                },
+                {
+                    "key": "D",
+                    "text": "The consumer gets read-only access for 7 more days"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Since Secure Data Sharing doesn't copy data, revoking access immediately prevents the consumer from querying the shared objects. The consumer never had their own copy of the data, so there's nothing to delete.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q035",
+            "question": "Who pays for the compute when a consumer queries shared data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The data provider"
+                },
+                {
+                    "key": "B",
+                    "text": "The consumer pays using their own virtual warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "Snowflake covers the cost"
+                },
+                {
+                    "key": "D",
+                    "text": "Costs are split 50/50"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Consumers use their own virtual warehouses to query shared data, so they pay for their own compute costs. The provider pays only for data storage. Exception: Reader Accounts — the provider pays for the Reader Account's compute.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q036",
+            "question": "Can you share data across databases within the same account using Secure Data Sharing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, using a share within the same account"
+                },
+                {
+                    "key": "B",
+                    "text": "No, shares are only for sharing between different accounts. For cross-database access within an account, use views or GRANT privileges"
+                },
+                {
+                    "key": "C",
+                    "text": "Only with Enterprise edition"
+                },
+                {
+                    "key": "D",
+                    "text": "Only for tables, not views"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Secure Data Sharing is designed for sharing between accounts. Within the same account, you access cross-database objects using fully qualified names (db.schema.object), views, or by granting appropriate privileges. You don't need to create shares.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q037",
+            "question": "What is auto-fulfillment in the Snowflake Marketplace?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Automatic payment processing for paid listings"
+                },
+                {
+                    "key": "B",
+                    "text": "Automatic replication of shared data to the consumer's region/cloud when they access a cross-region listing"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatic provisioning of warehouses for consumers"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatic data quality checks before sharing"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Auto-fulfillment automatically replicates the provider's shared data to the consumer's region and cloud platform when the consumer is in a different region. This enables cross-region and cross-cloud data sharing through the Marketplace transparently.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s6q038",
+            "question": "What is the minimum Snowflake edition required for database replication?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions support replication"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Database replication is available in all Snowflake editions, including Standard. However, replication of account objects (users, roles, warehouses) requires Business Critical edition. Failover Groups also require Business Critical or higher.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s6q039",
+            "question": "What is the purpose of the SHOW SHARES command?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Displays stock market share prices"
+                },
+                {
+                    "key": "B",
+                    "text": "Lists all shares created by your account (outbound) and shares available to your account (inbound)"
+                },
+                {
+                    "key": "C",
+                    "text": "Shows disk space shared between databases"
+                },
+                {
+                    "key": "D",
+                    "text": "Displays sharing permissions for a specific user"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SHOW SHARES lists outbound shares (created in your account and shared with others) and inbound shares (shared by other accounts with your account). It shows the share name, kind (OUTBOUND/INBOUND), database, owner, and consumer accounts.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s6q040",
+            "question": "How do you add a consumer account to an existing share?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CREATE CONSUMER FOR SHARE share_name"
+                },
+                {
+                    "key": "B",
+                    "text": "ALTER SHARE share_name ADD ACCOUNTS = consumer_account"
+                },
+                {
+                    "key": "C",
+                    "text": "GRANT SHARE share_name TO ACCOUNT consumer_account"
+                },
+                {
+                    "key": "D",
+                    "text": "INSERT INTO SHARE share_name VALUES (consumer_account)"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ALTER SHARE share_name ADD ACCOUNTS = account_name adds consumer accounts to an existing share. To remove access: ALTER SHARE share_name REMOVE ACCOUNTS = account_name. You can add multiple accounts separated by commas.",
+            "difficulty": "easy"
+        }
+    ]
+}

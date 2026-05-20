@@ -1,0 +1,2276 @@
+{
+    "setId": "set5-transformations",
+    "setName": "Data Transformations",
+    "domain": "Data Transformations",
+    "domainWeight": 20,
+    "questions": [
+        {
+            "id": "s5q001",
+            "question": "Which of the following are valid types of Snowflake VIEW? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Permanent View"
+                },
+                {
+                    "key": "B",
+                    "text": "Temporary View"
+                },
+                {
+                    "key": "C",
+                    "text": "Secure View"
+                },
+                {
+                    "key": "D",
+                    "text": "Materialized View"
+                },
+                {
+                    "key": "E",
+                    "text": "External View"
+                }
+            ],
+            "correctAnswers": [
+                "C",
+                "D"
+            ],
+            "multiSelect": true,
+            "explanation": "C and D are correct. Snowflake supports standard (non-temporary) views, Secure Views, and Materialized Views. There is no 'Permanent View' or 'External View' keyword. 'Temporary View' is not a supported view type in Snowflake SQL syntax. Note: standard views can be created without any special keyword.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q002",
+            "question": "What is Zero-Copy Cloning in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating a copy of an object that shares the underlying storage until data is modified"
+                },
+                {
+                    "key": "B",
+                    "text": "Creating a copy of an object by duplicating all the data physically"
+                },
+                {
+                    "key": "C",
+                    "text": "Creating a symbolic link to another table"
+                },
+                {
+                    "key": "D",
+                    "text": "Creating a view that references the original table"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Zero-Copy Cloning creates a metadata-only copy that shares the existing micro-partitions with the source. No data is physically copied at clone time, so it's nearly instantaneous and incurs no additional storage cost until data in the clone diverges from the source.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q003",
+            "question": "Which objects can be cloned in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Databases"
+                },
+                {
+                    "key": "B",
+                    "text": "Schemas"
+                },
+                {
+                    "key": "C",
+                    "text": "Tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Virtual Warehouses"
+                },
+                {
+                    "key": "E",
+                    "text": "Users"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Databases, schemas, and tables can be cloned (along with stages, file formats, sequences, and streams). Virtual warehouses and users cannot be cloned as they are account-level objects, not data objects.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q004",
+            "question": "Is it possible to CLONE tables between two different Snowflake accounts?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, if both accounts are in the same region and cloud provider"
+                },
+                {
+                    "key": "B",
+                    "text": "No, cloning only works within the same Snowflake account"
+                },
+                {
+                    "key": "C",
+                    "text": "Yes, using the CLONE TO ACCOUNT syntax"
+                },
+                {
+                    "key": "D",
+                    "text": "Yes, but only for Enterprise edition accounts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Cloning is an account-level operation only — you cannot clone objects across account boundaries. To copy data between accounts, use Data Sharing, Data Replication, or COPY INTO/COPY OUT through a shared cloud storage location.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q005",
+            "question": "What is a Stream in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A real-time data streaming service like Apache Kafka"
+                },
+                {
+                    "key": "B",
+                    "text": "An object that records DML changes (inserts, updates, deletes) made to a table — change data capture (CDC)"
+                },
+                {
+                    "key": "C",
+                    "text": "A continuous query that runs in the background"
+                },
+                {
+                    "key": "D",
+                    "text": "A pipeline that loads data from external sources"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Snowflake Stream is a change data capture (CDC) object that tracks DML changes (INSERT, UPDATE, DELETE) to a source table. It records what changed since the last time the stream was consumed, enabling incremental data processing.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q006",
+            "question": "What metadata columns does a Stream add to track changes? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "METADATA$ACTION (INSERT or DELETE)"
+                },
+                {
+                    "key": "B",
+                    "text": "METADATA$ISUPDATE (TRUE if the action is part of an UPDATE)"
+                },
+                {
+                    "key": "C",
+                    "text": "METADATA$ROW_ID (unique row identifier)"
+                },
+                {
+                    "key": "D",
+                    "text": "METADATA$TIMESTAMP (time of the change)"
+                },
+                {
+                    "key": "E",
+                    "text": "METADATA$CHANGED_COLUMNS (list of modified columns)"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Streams add three metadata columns: METADATA$ACTION (INSERT or DELETE — updates produce a DELETE+INSERT pair), METADATA$ISUPDATE (TRUE for update-related rows), and METADATA$ROW_ID (unique identifier for each row). TIMESTAMP and CHANGED_COLUMNS are not stream metadata columns.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s5q007",
+            "question": "What is a Task in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A scheduled object that executes a SQL statement on a defined schedule or when triggered by a stream"
+                },
+                {
+                    "key": "B",
+                    "text": "A background process that optimizes query performance"
+                },
+                {
+                    "key": "C",
+                    "text": "A unit of work assigned to a virtual warehouse"
+                },
+                {
+                    "key": "D",
+                    "text": "A monitoring alert for account activity"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. A Task is a schedulable object that executes a single SQL statement on a defined schedule (using CRON or interval) or when triggered by preceding tasks in a task tree. Tasks can be configured to run when a stream has new data using SYSTEM$STREAM_HAS_DATA().",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q008",
+            "question": "What compute options are available for running Tasks? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "User-managed virtual warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowflake-managed serverless compute"
+                },
+                {
+                    "key": "C",
+                    "text": "Cloud provider compute (e.g., AWS Lambda)"
+                },
+                {
+                    "key": "D",
+                    "text": "Local compute on the client machine"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Tasks can run on either a user-managed virtual warehouse (specified with WAREHOUSE = wh_name) or Snowflake-managed serverless compute (specified with USER_TASK_MANAGED_INITIAL_WAREHOUSE_SIZE). They cannot use external compute resources.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q009",
+            "question": "What is a Stored Procedure in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A precompiled query stored in the Result Cache"
+                },
+                {
+                    "key": "B",
+                    "text": "A named block of procedural code (using SQL, JavaScript, Python, Java, or Scala) that can execute SQL statements"
+                },
+                {
+                    "key": "C",
+                    "text": "A scheduled task that runs automatically"
+                },
+                {
+                    "key": "D",
+                    "text": "A type of view that stores intermediate results"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Stored Procedures in Snowflake are named objects containing procedural code written in SQL (Snowflake Scripting), JavaScript, Python, Java, or Scala. They can execute multiple SQL statements, include control flow logic, and return values.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q010",
+            "question": "What is the difference between a UDF and a Stored Procedure in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "UDFs return a value and can be used in SQL expressions; Stored Procedures execute procedural logic and are called with CALL"
+                },
+                {
+                    "key": "B",
+                    "text": "There is no difference; they are the same thing"
+                },
+                {
+                    "key": "C",
+                    "text": "UDFs can only be written in SQL; Stored Procedures support multiple languages"
+                },
+                {
+                    "key": "D",
+                    "text": "Stored Procedures are faster than UDFs"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. UDFs (User-Defined Functions) return a scalar or tabular value and can be used inline in SQL statements (SELECT, WHERE, etc.). Stored Procedures contain procedural logic, are invoked with CALL, and can execute multiple SQL statements, but cannot be used inline in queries.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q011",
+            "question": "Which function is used to flatten semi-structured data (arrays and objects) in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "PARSE_JSON"
+                },
+                {
+                    "key": "B",
+                    "text": "FLATTEN"
+                },
+                {
+                    "key": "C",
+                    "text": "UNNEST"
+                },
+                {
+                    "key": "D",
+                    "text": "EXPLODE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FLATTEN is used with LATERAL to expand semi-structured data (arrays and objects) into individual rows. PARSE_JSON converts a JSON string into a VARIANT. UNNEST and EXPLODE are not Snowflake functions (they exist in other databases).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q012",
+            "question": "Snowflake recommends always extracting VARIANT data to a fixed table structure.",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "True"
+                },
+                {
+                    "key": "B",
+                    "text": "False"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B (False) is correct. Snowflake can efficiently query VARIANT data directly without extraction. However, if query performance on VARIANT columns is insufficient, extracting frequently queried fields to fixed columns can improve partition pruning and overall performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q013",
+            "question": "How do you access a nested key 'city' inside a VARIANT column named 'data' that contains JSON?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "data.address.city or data['address']['city']"
+                },
+                {
+                    "key": "B",
+                    "text": "JSON_EXTRACT(data, 'address.city')"
+                },
+                {
+                    "key": "C",
+                    "text": "data->address->city"
+                },
+                {
+                    "key": "D",
+                    "text": "GET_JSON_VALUE(data, '$.address.city')"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Snowflake uses dot notation (data.address.city) or bracket notation (data['address']['city']) to traverse VARIANT/OBJECT data. Both syntaxes are equivalent. JSON_EXTRACT, ->, and GET_JSON_VALUE are from other databases.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q014",
+            "question": "What does the LATERAL keyword do when used with FLATTEN?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It creates a cross join between the table and the flattened results"
+                },
+                {
+                    "key": "B",
+                    "text": "It allows FLATTEN to reference columns from the preceding table expression in the FROM clause"
+                },
+                {
+                    "key": "C",
+                    "text": "It sorts the flattened results horizontally"
+                },
+                {
+                    "key": "D",
+                    "text": "It restricts FLATTEN output to unique values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LATERAL allows FLATTEN to reference columns from preceding table expressions in the FROM clause. This is how FLATTEN accesses the VARIANT column from the source table. The typical pattern is: FROM table, LATERAL FLATTEN(input => table.variant_col).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q015",
+            "question": "What is the purpose of the PARSE_JSON function?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To validate JSON syntax"
+                },
+                {
+                    "key": "B",
+                    "text": "To convert a JSON-formatted string into a VARIANT value"
+                },
+                {
+                    "key": "C",
+                    "text": "To extract a specific field from JSON data"
+                },
+                {
+                    "key": "D",
+                    "text": "To convert VARIANT data back to a JSON string"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. PARSE_JSON takes a string containing valid JSON and converts it into a VARIANT value that can be queried using Snowflake's semi-structured data functions. TO_JSON does the reverse — converts VARIANT to a JSON string.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q016",
+            "question": "Which type of function returns a single value for a set of input rows?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scalar Function"
+                },
+                {
+                    "key": "B",
+                    "text": "Aggregate Function"
+                },
+                {
+                    "key": "C",
+                    "text": "Table Function"
+                },
+                {
+                    "key": "D",
+                    "text": "Window Function"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Aggregate functions (SUM, COUNT, AVG, MIN, MAX, etc.) take a set of input rows and return a single value. Scalar functions return one value per input row. Table functions return multiple rows. Window functions return a value for each row but compute it over a window of rows.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q017",
+            "question": "Which types of functions return a single value? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Aggregate Function"
+                },
+                {
+                    "key": "B",
+                    "text": "Window Function"
+                },
+                {
+                    "key": "C",
+                    "text": "Scalar Function"
+                },
+                {
+                    "key": "D",
+                    "text": "Table Function"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A and C are correct. Scalar functions return a single value per input row (e.g., UPPER, LENGTH). Aggregate functions return a single value for a group of rows (e.g., SUM, COUNT). Window functions return a value per row but use a window frame. Table functions return a set of rows.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q018",
+            "question": "What is a User-Defined Table Function (UDTF)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A function that returns a scalar value"
+                },
+                {
+                    "key": "B",
+                    "text": "A function that returns a set of rows (tabular result) and can be used in the FROM clause"
+                },
+                {
+                    "key": "C",
+                    "text": "A function that modifies table data"
+                },
+                {
+                    "key": "D",
+                    "text": "A function that creates a new table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A UDTF returns a set of rows (a table) for each input row. It's used in the FROM clause like a table. UDTFs are useful for generating multiple output rows from a single input row, such as splitting a comma-separated string into multiple rows.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q019",
+            "question": "What does CREATE TABLE ... AS SELECT (CTAS) do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creates a table and populates it with the result of a SELECT query"
+                },
+                {
+                    "key": "B",
+                    "text": "Creates a view based on a SELECT query"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates a clone of the selected table"
+                },
+                {
+                    "key": "D",
+                    "text": "Creates a table definition only, without loading any data"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. CTAS (CREATE TABLE AS SELECT) creates a new table and populates it with the results of a SELECT query in a single operation. The table structure is inferred from the query's output columns. This is different from CREATE TABLE LIKE (structure only) or CLONE (shares storage).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q020",
+            "question": "What is Time Travel in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A feature that replicates data to a different time zone"
+                },
+                {
+                    "key": "B",
+                    "text": "A feature that allows querying, cloning, and restoring data as it existed at a previous point in time"
+                },
+                {
+                    "key": "C",
+                    "text": "A scheduling feature for future query execution"
+                },
+                {
+                    "key": "D",
+                    "text": "A backup service that runs on a predefined schedule"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Time Travel allows you to access historical data at any point within the retention period. You can query data as of a specific timestamp (AT), before a statement (BEFORE), restore dropped objects (UNDROP), and clone from a historical point.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q021",
+            "question": "Which SQL clause is used to query data at a specific point in time using Time Travel?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "AT (TIMESTAMP => ...)"
+                },
+                {
+                    "key": "B",
+                    "text": "BEFORE (TIMESTAMP => ...)"
+                },
+                {
+                    "key": "C",
+                    "text": "AS OF (TIMESTAMP => ...)"
+                },
+                {
+                    "key": "D",
+                    "text": "Both A and B are valid Time Travel clauses"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. Both AT and BEFORE are valid Time Travel clauses. AT returns data as it existed at the specified point. BEFORE returns data as it existed just before the specified point (often used with STATEMENT to see data before a specific query ran). AS OF is not valid in Snowflake.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q022",
+            "question": "What command restores a previously dropped table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "RESTORE TABLE table_name"
+                },
+                {
+                    "key": "B",
+                    "text": "UNDROP TABLE table_name"
+                },
+                {
+                    "key": "C",
+                    "text": "RECOVER TABLE table_name"
+                },
+                {
+                    "key": "D",
+                    "text": "ALTER TABLE table_name UNDELETE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. UNDROP TABLE restores a table that was previously dropped, as long as it's still within the Time Travel retention period. The same UNDROP command works for schemas and databases. RESTORE, RECOVER, and UNDELETE are not valid Snowflake commands.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q023",
+            "question": "What is a Sequence in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "An ordered list of SQL statements"
+                },
+                {
+                    "key": "B",
+                    "text": "A schema-level object that generates unique sequential numbers"
+                },
+                {
+                    "key": "C",
+                    "text": "A type of constraint that enforces row ordering"
+                },
+                {
+                    "key": "D",
+                    "text": "A task execution order definition"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Sequence is a schema-level object that generates unique, incrementing numbers. Sequences are commonly used to generate surrogate keys. Unlike auto-increment columns, sequences guarantee uniqueness but may not be gap-free.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q024",
+            "question": "What is the DATA_RETENTION_TIME_IN_DAYS parameter used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Setting how long Fail-safe data is retained"
+                },
+                {
+                    "key": "B",
+                    "text": "Setting the Time Travel retention period for a table, schema, or database"
+                },
+                {
+                    "key": "C",
+                    "text": "Setting how long query history is retained"
+                },
+                {
+                    "key": "D",
+                    "text": "Setting the result cache expiration period"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. DATA_RETENTION_TIME_IN_DAYS sets the Time Travel retention period. It can be set at the account, database, schema, or table level. Standard edition supports 0-1 days; Enterprise and above support 0-90 days for permanent tables.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q025",
+            "question": "Which languages can be used to write User-Defined Functions (UDFs) in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SQL"
+                },
+                {
+                    "key": "B",
+                    "text": "JavaScript"
+                },
+                {
+                    "key": "C",
+                    "text": "Python"
+                },
+                {
+                    "key": "D",
+                    "text": "Ruby"
+                },
+                {
+                    "key": "E",
+                    "text": "PHP"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake UDFs can be written in SQL, JavaScript, Python, Java, and Scala. Ruby and PHP are not supported languages for Snowflake UDFs.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q026",
+            "question": "What happens to a stream after its data is consumed (read in a DML transaction)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The stream is automatically dropped"
+                },
+                {
+                    "key": "B",
+                    "text": "The stream offset advances past the consumed changes, and the stream shows only new changes"
+                },
+                {
+                    "key": "C",
+                    "text": "The consumed data remains visible in the stream indefinitely"
+                },
+                {
+                    "key": "D",
+                    "text": "The stream must be manually reset using ALTER STREAM"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When stream data is consumed within a DML transaction (e.g., INSERT INTO ... SELECT FROM stream), the stream's offset advances past the consumed changes. After consumption, the stream only shows changes that occurred after the consumption point.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q027",
+            "question": "How can you check if a stream has new data to process?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SELECT COUNT(*) FROM stream_name"
+                },
+                {
+                    "key": "B",
+                    "text": "SYSTEM$STREAM_HAS_DATA('stream_name')"
+                },
+                {
+                    "key": "C",
+                    "text": "SHOW STREAMS LIKE 'stream_name' and check the HAS_DATA column"
+                },
+                {
+                    "key": "D",
+                    "text": "Both A and B are valid approaches"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. Both methods work: SELECT COUNT(*) will show the number of change records, and SYSTEM$STREAM_HAS_DATA() returns TRUE/FALSE. SYSTEM$STREAM_HAS_DATA is more efficient and is commonly used in Task WHEN conditions to avoid running tasks unnecessarily.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q028",
+            "question": "What is a Task Tree (DAG of Tasks) in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A single task that executes multiple SQL statements"
+                },
+                {
+                    "key": "B",
+                    "text": "A hierarchy of tasks where child tasks run after their parent task completes successfully"
+                },
+                {
+                    "key": "C",
+                    "text": "A backup schedule for task definitions"
+                },
+                {
+                    "key": "D",
+                    "text": "A monitoring dashboard for task execution"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Task Tree is a directed acyclic graph (DAG) where child tasks are triggered after their parent task completes. The root task has a schedule (CRON or interval), and child tasks are defined with AFTER parent_task_name. This enables multi-step data pipelines.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q029",
+            "question": "What is the MERGE statement used for in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Combining two tables into one permanently"
+                },
+                {
+                    "key": "B",
+                    "text": "Performing upsert operations — inserting new rows and updating existing rows based on a match condition"
+                },
+                {
+                    "key": "C",
+                    "text": "Merging two schemas"
+                },
+                {
+                    "key": "D",
+                    "text": "Joining data for read-only queries"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. MERGE performs upsert operations by matching source rows against target rows. When matched, it can UPDATE or DELETE. When not matched, it can INSERT. This is commonly used in ETL/ELT pipelines to keep dimension tables up to date.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q030",
+            "question": "What is the SAMPLE / TABLESAMPLE clause used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Taking a random sample of rows from a table for testing or analysis"
+                },
+                {
+                    "key": "B",
+                    "text": "Creating a sample database"
+                },
+                {
+                    "key": "C",
+                    "text": "Generating sample data for testing"
+                },
+                {
+                    "key": "D",
+                    "text": "Sampling query execution times"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. SAMPLE (or TABLESAMPLE) returns a random subset of rows from a table. You can specify the sample size as a percentage (SAMPLE(10)) or a fixed number of rows (SAMPLE(100 ROWS)). This is useful for exploratory analysis on large tables.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q031",
+            "question": "What does INSERT OVERWRITE do in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Inserts data and overwrites duplicate rows based on primary key"
+                },
+                {
+                    "key": "B",
+                    "text": "Truncates the target table and inserts the new data in a single atomic operation"
+                },
+                {
+                    "key": "C",
+                    "text": "Overwrites specific columns in existing rows"
+                },
+                {
+                    "key": "D",
+                    "text": "Inserts data only if the table is empty"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. INSERT OVERWRITE INTO table SELECT ... atomically replaces all data in the table with the result of the SELECT query. It's equivalent to TRUNCATE + INSERT but performed atomically, meaning readers see either the old or new data, never a partially loaded state.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q032",
+            "question": "Which statement about Snowflake Stored Procedures is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Stored Procedures can be used directly in SELECT statements like functions"
+                },
+                {
+                    "key": "B",
+                    "text": "Stored Procedures are invoked using the CALL statement"
+                },
+                {
+                    "key": "C",
+                    "text": "Stored Procedures cannot contain transaction control statements"
+                },
+                {
+                    "key": "D",
+                    "text": "Stored Procedures must be written in JavaScript"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Stored Procedures are invoked using CALL procedure_name(args). They cannot be used directly in SELECT statements — that's what UDFs are for. Procedures can contain transaction control (BEGIN/COMMIT/ROLLBACK) and can be written in SQL, JavaScript, Python, Java, or Scala.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q033",
+            "question": "What is the difference between a standard view and a materialized view?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A standard view stores data; a materialized view is just a query definition"
+                },
+                {
+                    "key": "B",
+                    "text": "A standard view is a named query definition; a materialized view stores precomputed results that are automatically maintained"
+                },
+                {
+                    "key": "C",
+                    "text": "There is no difference; they are interchangeable"
+                },
+                {
+                    "key": "D",
+                    "text": "Materialized views can only be created on external tables"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A standard view is a stored query definition — it runs the query each time it's accessed. A materialized view stores the precomputed query results and Snowflake automatically refreshes them when the base table data changes. Materialized views trade storage cost for query performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q034",
+            "question": "What types of operations can a Stream track? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "INSERT"
+                },
+                {
+                    "key": "B",
+                    "text": "UPDATE"
+                },
+                {
+                    "key": "C",
+                    "text": "DELETE"
+                },
+                {
+                    "key": "D",
+                    "text": "TRUNCATE"
+                },
+                {
+                    "key": "E",
+                    "text": "ALTER TABLE"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Streams track DML operations: INSERT, UPDATE, and DELETE. Updates are represented as a DELETE+INSERT pair. DDL operations like TRUNCATE and ALTER TABLE are not tracked by streams.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q035",
+            "question": "What is Snowflake Scripting?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "JavaScript code executed in Snowflake"
+                },
+                {
+                    "key": "B",
+                    "text": "A SQL extension that adds procedural constructs (variables, loops, branching) to SQL in stored procedures and anonymous blocks"
+                },
+                {
+                    "key": "C",
+                    "text": "Python scripts that run in Snowpark"
+                },
+                {
+                    "key": "D",
+                    "text": "Shell scripts for managing Snowflake via CLI"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake Scripting is a SQL extension that adds procedural programming constructs to SQL, including variables (LET/DECLARE), IF-THEN-ELSE, FOR/WHILE loops, cursors, and exception handling. It can be used in stored procedures and anonymous blocks (EXECUTE IMMEDIATE).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q036",
+            "question": "What does the GENERATOR table function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Generates random test data matching a table's schema"
+                },
+                {
+                    "key": "B",
+                    "text": "Generates a specified number of rows, useful for creating sequences or test data"
+                },
+                {
+                    "key": "C",
+                    "text": "Generates DDL statements for existing tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Generates query execution plans"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. GENERATOR(ROWCOUNT => n) produces n rows with no columns. Combined with SEQ4(), RANDOM(), and other functions, it's commonly used to generate test data, number sequences, or date ranges. For example: SELECT SEQ4() FROM TABLE(GENERATOR(ROWCOUNT => 100)).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q037",
+            "question": "What is a Recursive CTE (Common Table Expression) in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A CTE that references external tables"
+                },
+                {
+                    "key": "B",
+                    "text": "A CTE that references itself to traverse hierarchical or graph-like data structures"
+                },
+                {
+                    "key": "C",
+                    "text": "A CTE that runs multiple times in a loop"
+                },
+                {
+                    "key": "D",
+                    "text": "A CTE that is cached for reuse across sessions"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Recursive CTE (WITH RECURSIVE) references itself to iteratively process hierarchical data like organizational charts, bill of materials, or graph structures. It has an anchor member (base case) and a recursive member that references the CTE name.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q038",
+            "question": "What is the difference between QUALIFY and HAVING in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "QUALIFY filters rows based on window function results; HAVING filters groups based on aggregate function results"
+                },
+                {
+                    "key": "B",
+                    "text": "They are interchangeable and do the same thing"
+                },
+                {
+                    "key": "C",
+                    "text": "QUALIFY works on JOINs; HAVING works on GROUP BY"
+                },
+                {
+                    "key": "D",
+                    "text": "HAVING is standard SQL; QUALIFY is not supported in Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. QUALIFY filters rows based on the result of window functions (like ROW_NUMBER, RANK), similar to how HAVING filters based on aggregate results. Example: SELECT * FROM t QUALIFY ROW_NUMBER() OVER(PARTITION BY col ORDER BY col2) = 1.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s5q039",
+            "question": "Which statement about external functions in Snowflake is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "External functions execute code on Snowflake's compute resources"
+                },
+                {
+                    "key": "B",
+                    "text": "External functions call code hosted on external cloud services (e.g., AWS Lambda, Azure Functions) via API integrations"
+                },
+                {
+                    "key": "C",
+                    "text": "External functions can only return scalar values"
+                },
+                {
+                    "key": "D",
+                    "text": "External functions are deprecated in favor of Snowpark"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. External functions allow Snowflake to call remote services (AWS Lambda, Azure Functions, GCP Cloud Functions) via API Gateway integrations. This enables calling ML models, external APIs, or custom logic from within SQL queries.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s5q040",
+            "question": "What does the ARRAY_AGG function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Sums all elements in an array"
+                },
+                {
+                    "key": "B",
+                    "text": "Aggregates values from multiple rows into a single ARRAY"
+                },
+                {
+                    "key": "C",
+                    "text": "Counts the elements in an array"
+                },
+                {
+                    "key": "D",
+                    "text": "Flattens nested arrays into a single array"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ARRAY_AGG is an aggregate function that collects values from multiple rows into a single ARRAY value. For example, SELECT dept, ARRAY_AGG(employee_name) FROM employees GROUP BY dept would return an array of names per department.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q041",
+            "question": "What does the PIVOT function do in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Rotates rows into columns, transforming unique values from one column into multiple columns"
+                },
+                {
+                    "key": "B",
+                    "text": "Rotates columns into rows"
+                },
+                {
+                    "key": "C",
+                    "text": "Joins two tables side by side"
+                },
+                {
+                    "key": "D",
+                    "text": "Transposes the entire table"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. PIVOT rotates rows into columns. It takes distinct values from a column and creates new columns for each value, aggregating a specified measure. Example: SELECT * FROM sales PIVOT(SUM(amount) FOR quarter IN ('Q1', 'Q2', 'Q3', 'Q4'));",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q042",
+            "question": "What does the UNPIVOT function do in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Rotates rows into columns"
+                },
+                {
+                    "key": "B",
+                    "text": "Rotates columns into rows, creating name-value pairs from multiple columns"
+                },
+                {
+                    "key": "C",
+                    "text": "Removes pivot tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Undoes the last PIVOT operation"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. UNPIVOT is the reverse of PIVOT. It transforms columns into rows, creating name-value pairs. Example: If you have columns Q1, Q2, Q3, Q4 with amounts, UNPIVOT creates two columns: quarter_name and amount, with one row per original column.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q043",
+            "question": "What is the OBJECT_CONSTRUCT function used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating database objects like tables and views"
+                },
+                {
+                    "key": "B",
+                    "text": "Building a JSON object (OBJECT/VARIANT) from key-value pairs"
+                },
+                {
+                    "key": "C",
+                    "text": "Constructing SQL queries dynamically"
+                },
+                {
+                    "key": "D",
+                    "text": "Creating stored procedures"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. OBJECT_CONSTRUCT creates a VARIANT value containing a JSON object from key-value pair arguments. Example: OBJECT_CONSTRUCT('name', 'John', 'age', 30) returns {\"name\": \"John\", \"age\": 30}. OBJECT_CONSTRUCT(*) creates an object from all columns in a row.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q044",
+            "question": "What does the GET_PATH function (or : notation) do with semi-structured data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Gets the file path of the data source"
+                },
+                {
+                    "key": "B",
+                    "text": "Extracts a value from a VARIANT column using a path expression (e.g., data:customer.address.city)"
+                },
+                {
+                    "key": "C",
+                    "text": "Returns the directory path of a stage"
+                },
+                {
+                    "key": "D",
+                    "text": "Gets the execution path of a stored procedure"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. GET_PATH (or the : and . dot notation) extracts values from nested VARIANT/OBJECT data. Example: SELECT data:customer.address.city FROM my_table extracts the city field from nested JSON. Bracket notation also works: data['customer']['address']['city'].",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q045",
+            "question": "What does the TYPEOF function return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The Snowflake SQL data type of a column"
+                },
+                {
+                    "key": "B",
+                    "text": "The JSON/VARIANT data type of a value within a VARIANT column (e.g., VARCHAR, INTEGER, BOOLEAN, ARRAY, OBJECT)"
+                },
+                {
+                    "key": "C",
+                    "text": "The type of a database object"
+                },
+                {
+                    "key": "D",
+                    "text": "The type of warehouse being used"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. TYPEOF returns the data type of a value stored within a VARIANT column — such as VARCHAR, INTEGER, DOUBLE, BOOLEAN, ARRAY, OBJECT, or NULL_VALUE. This is useful for inspecting semi-structured data where types can vary.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q046",
+            "question": "What is the difference between TRY_CAST and CAST?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "TRY_CAST is faster than CAST"
+                },
+                {
+                    "key": "B",
+                    "text": "TRY_CAST returns NULL on conversion failure instead of raising an error, while CAST raises an error"
+                },
+                {
+                    "key": "C",
+                    "text": "TRY_CAST works with more data types"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no difference"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. TRY_CAST attempts a type conversion and returns NULL if it fails (e.g., TRY_CAST('abc' AS INT) returns NULL). CAST raises an error on failure. TRY_CAST is useful for data cleansing when values may not be valid for the target type.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q047",
+            "question": "What does the RESULT_SCAN function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scans table results for errors"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns the result set of a previous SQL statement as a table, allowing further querying"
+                },
+                {
+                    "key": "C",
+                    "text": "Scans query history for specific patterns"
+                },
+                {
+                    "key": "D",
+                    "text": "Scans the result cache for matching queries"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. RESULT_SCAN returns the result of a previous command as a table. Example: SELECT * FROM TABLE(RESULT_SCAN(LAST_QUERY_ID())) WHERE column1 > 100; This lets you query the output of SHOW, DESCRIBE, or any other command.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q048",
+            "question": "What does LAST_QUERY_ID() return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The ID of the last table queried"
+                },
+                {
+                    "key": "B",
+                    "text": "The query ID of the most recently executed statement in the current session"
+                },
+                {
+                    "key": "C",
+                    "text": "The ID of the last user who ran a query"
+                },
+                {
+                    "key": "D",
+                    "text": "The timestamp of the last query"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LAST_QUERY_ID() returns the UUID query ID of the most recent statement executed in the current session. You can also pass an offset: LAST_QUERY_ID(-2) returns the query ID of the second-to-last query. It's commonly used with RESULT_SCAN.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q049",
+            "question": "What is the difference between BERNOULLI and SYSTEM sampling methods?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "BERNOULLI samples individual rows randomly; SYSTEM samples entire micro-partitions (blocks), which is faster but less random"
+                },
+                {
+                    "key": "B",
+                    "text": "SYSTEM is more random; BERNOULLI is faster"
+                },
+                {
+                    "key": "C",
+                    "text": "They produce identical results"
+                },
+                {
+                    "key": "D",
+                    "text": "BERNOULLI only works on views; SYSTEM only on tables"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. BERNOULLI (or ROW) sampling evaluates each row independently, providing true random sampling. SYSTEM (or BLOCK) sampling selects entire micro-partitions, which is faster for large tables but may produce clustered results.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q050",
+            "question": "What is a JavaScript UDF in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A front-end JavaScript function for the Snowflake UI"
+                },
+                {
+                    "key": "B",
+                    "text": "A User-Defined Function written in JavaScript that runs inside the Snowflake engine for custom data transformations"
+                },
+                {
+                    "key": "C",
+                    "text": "A Node.js server that connects to Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "A JavaScript client library for Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake supports UDFs written in JavaScript (as well as SQL, Python, Java, Scala). JavaScript UDFs run within Snowflake's secure sandbox and can process VARIANT data, perform string manipulation, math, and complex logic not easily done in SQL.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q051",
+            "question": "What languages can be used to write User-Defined Functions (UDFs) in Snowflake? (Choose all that apply)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SQL"
+                },
+                {
+                    "key": "B",
+                    "text": "JavaScript"
+                },
+                {
+                    "key": "C",
+                    "text": "Python"
+                },
+                {
+                    "key": "D",
+                    "text": "Java"
+                },
+                {
+                    "key": "E",
+                    "text": "All of the above"
+                }
+            ],
+            "correctAnswers": [
+                "E"
+            ],
+            "multiSelect": false,
+            "explanation": "E is correct. Snowflake supports UDFs written in SQL, JavaScript, Python, Java, and Scala. Each language has different use cases: SQL for simple logic, JavaScript/Python for complex transformations, Java/Scala for leveraging existing libraries.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q052",
+            "question": "What is the difference between a scalar UDF and a tabular UDF (UDTF)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scalar UDFs are faster; UDTFs are more accurate"
+                },
+                {
+                    "key": "B",
+                    "text": "A scalar UDF returns a single value per input row; a UDTF returns a set of rows (a table) per input row"
+                },
+                {
+                    "key": "C",
+                    "text": "Scalar UDFs use SQL; UDTFs use JavaScript"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no difference"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A scalar UDF returns exactly one value for each input row. A UDTF (User-Defined Table Function) can return zero, one, or many rows for each input row, and is used with TABLE() in the FROM clause.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q053",
+            "question": "What does the QUALIFY clause do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Qualifies a column with its table name"
+                },
+                {
+                    "key": "B",
+                    "text": "Filters results based on window function values, similar to HAVING for aggregate functions"
+                },
+                {
+                    "key": "C",
+                    "text": "Qualifies a user for access to a table"
+                },
+                {
+                    "key": "D",
+                    "text": "Validates data quality constraints"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. QUALIFY filters the result of window functions, analogous to how HAVING filters GROUP BY results. Example: SELECT * FROM sales QUALIFY ROW_NUMBER() OVER (PARTITION BY customer ORDER BY date DESC) = 1; returns the latest sale per customer.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q054",
+            "question": "What is the correct order of SQL clause evaluation in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SELECT → FROM → WHERE → GROUP BY → HAVING → QUALIFY → ORDER BY → LIMIT"
+                },
+                {
+                    "key": "B",
+                    "text": "FROM → WHERE → GROUP BY → HAVING → SELECT → QUALIFY → ORDER BY → LIMIT"
+                },
+                {
+                    "key": "C",
+                    "text": "FROM → WHERE → GROUP BY → HAVING → WINDOW → QUALIFY → SELECT → ORDER BY → LIMIT"
+                },
+                {
+                    "key": "D",
+                    "text": "SELECT → FROM → WHERE → QUALIFY → GROUP BY → HAVING → ORDER BY → LIMIT"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SQL clauses are logically evaluated in this order: FROM → WHERE → GROUP BY → HAVING → SELECT (including window functions) → QUALIFY → DISTINCT → ORDER BY → LIMIT. QUALIFY runs after window functions are computed.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s5q055",
+            "question": "Which window function returns the value from the previous row without a self-join?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "LEAD"
+                },
+                {
+                    "key": "B",
+                    "text": "LAG"
+                },
+                {
+                    "key": "C",
+                    "text": "FIRST_VALUE"
+                },
+                {
+                    "key": "D",
+                    "text": "NTH_VALUE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LAG accesses a value from a previous row (by default, the immediately preceding row) within the window partition. LEAD accesses the next row. Both avoid the need for self-joins when comparing rows. Example: LAG(sales, 1) OVER (ORDER BY month).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q056",
+            "question": "What is the difference between RANK() and DENSE_RANK()?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "RANK() skips numbers after ties; DENSE_RANK() does not skip numbers"
+                },
+                {
+                    "key": "B",
+                    "text": "DENSE_RANK() skips numbers after ties; RANK() does not"
+                },
+                {
+                    "key": "C",
+                    "text": "They always produce the same results"
+                },
+                {
+                    "key": "D",
+                    "text": "RANK() is for numeric data; DENSE_RANK() is for text data"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. With RANK(), if two rows tie at rank 1, the next rank is 3 (gap). With DENSE_RANK(), the next rank after a tie at 1 is 2 (no gap). ROW_NUMBER() assigns unique numbers with no ties.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q057",
+            "question": "What does the NTILE function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Returns the Nth value in a window"
+                },
+                {
+                    "key": "B",
+                    "text": "Divides the result set into a specified number of approximately equal groups (tiles) and assigns a group number to each row"
+                },
+                {
+                    "key": "C",
+                    "text": "Calculates the Nth percentile"
+                },
+                {
+                    "key": "D",
+                    "text": "Tiles data across multiple tables"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. NTILE(n) divides the ordered result set into n groups (tiles) of approximately equal size. Each row is assigned a tile number from 1 to n. Example: NTILE(4) OVER (ORDER BY sales DESC) creates quartiles.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q058",
+            "question": "What does LISTAGG do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Lists all aggregate functions available"
+                },
+                {
+                    "key": "B",
+                    "text": "Concatenates values from multiple rows into a single string with a specified delimiter"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates a list/array from rows"
+                },
+                {
+                    "key": "D",
+                    "text": "Aggregates list data types"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LISTAGG concatenates values from multiple rows into a single delimited string. Example: SELECT dept, LISTAGG(name, ', ') WITHIN GROUP (ORDER BY name) FROM employees GROUP BY dept; produces 'Alice, Bob, Charlie' per department.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q059",
+            "question": "What does the 'caller's rights' vs 'owner's rights' distinction mean for stored procedures?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Caller's rights runs with the invoker's privileges; owner's rights runs with the creator's privileges"
+                },
+                {
+                    "key": "B",
+                    "text": "Owner's rights is always more secure"
+                },
+                {
+                    "key": "C",
+                    "text": "They are the same in Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "Caller's rights requires ACCOUNTADMIN role"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Caller's rights procedures execute with the privileges of the user who calls them. Owner's rights procedures execute with the privileges of the procedure owner, allowing controlled access to objects the caller might not have direct access to.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q060",
+            "question": "What is the difference between a Stored Procedure and a UDF? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Stored procedures are called with CALL; UDFs are used in SELECT statements"
+                },
+                {
+                    "key": "B",
+                    "text": "Stored procedures can execute DDL/DML; UDFs cannot execute DDL"
+                },
+                {
+                    "key": "C",
+                    "text": "UDFs are always faster than stored procedures"
+                },
+                {
+                    "key": "D",
+                    "text": "Stored procedures can only use SQL; UDFs support multiple languages"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Stored procedures are invoked with CALL and can execute DDL/DML operations (CREATE, DROP, INSERT, etc.). UDFs are used in SQL expressions (SELECT, WHERE) and cannot perform DDL. Both support multiple languages (SQL, JavaScript, Python, Java, Scala).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q061",
+            "question": "What does the IFF function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Checks if a value is a float"
+                },
+                {
+                    "key": "B",
+                    "text": "A shorthand for a simple IF-THEN-ELSE expression, returning one of two values based on a condition"
+                },
+                {
+                    "key": "C",
+                    "text": "Tests if two values are identical"
+                },
+                {
+                    "key": "D",
+                    "text": "Returns the inverse of a boolean value"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. IFF(condition, true_value, false_value) is Snowflake's shorthand for a simple conditional expression. It's equivalent to CASE WHEN condition THEN true_value ELSE false_value END. Example: IFF(score >= 70, 'Pass', 'Fail').",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q062",
+            "question": "What does the COALESCE function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Combines two tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns the first non-NULL expression from a list of arguments"
+                },
+                {
+                    "key": "C",
+                    "text": "Converts NULL to zero"
+                },
+                {
+                    "key": "D",
+                    "text": "Counts the number of NULL values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. COALESCE evaluates arguments left to right and returns the first non-NULL value. Example: COALESCE(phone_mobile, phone_work, phone_home, 'No phone') returns the first available phone number.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q063",
+            "question": "What does NVL do and how does it differ from COALESCE?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "NVL takes exactly two arguments (value, replacement); COALESCE accepts multiple arguments"
+                },
+                {
+                    "key": "B",
+                    "text": "NVL is faster than COALESCE"
+                },
+                {
+                    "key": "C",
+                    "text": "They are identical in all ways"
+                },
+                {
+                    "key": "D",
+                    "text": "NVL handles arrays; COALESCE does not"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. NVL(expr1, expr2) returns expr2 if expr1 is NULL (takes exactly 2 arguments). COALESCE(expr1, expr2, ..., exprN) returns the first non-NULL among any number of arguments. COALESCE is more flexible for multiple fallback values.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q064",
+            "question": "What does the NULLIF function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Replaces NULL with a specified value"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns NULL if the two arguments are equal; otherwise returns the first argument"
+                },
+                {
+                    "key": "C",
+                    "text": "Checks if a value is NULL"
+                },
+                {
+                    "key": "D",
+                    "text": "Converts empty strings to NULL"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. NULLIF(expr1, expr2) returns NULL if expr1 = expr2, otherwise returns expr1. Common use: NULLIF(value, 0) to avoid division by zero (returns NULL instead of 0, and dividing by NULL yields NULL instead of an error).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q065",
+            "question": "What does the PARSE_JSON function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Converts a JSON string into a VARIANT value that can be queried with path notation"
+                },
+                {
+                    "key": "B",
+                    "text": "Validates JSON syntax"
+                },
+                {
+                    "key": "C",
+                    "text": "Parses JSON files from a stage"
+                },
+                {
+                    "key": "D",
+                    "text": "Converts VARIANT to a JSON string"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. PARSE_JSON converts a JSON-formatted VARCHAR string into a VARIANT value. Once converted, you can use dot notation, bracket notation, and FLATTEN to navigate the structure. The reverse function is TO_JSON, which converts VARIANT back to a JSON string.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q066",
+            "question": "What does the TO_VARIANT function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Converts any SQL value to a VARIANT type"
+                },
+                {
+                    "key": "B",
+                    "text": "Converts VARIANT to a specific SQL type"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates a new VARIANT column"
+                },
+                {
+                    "key": "D",
+                    "text": "Lists all VARIANT values in a table"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. TO_VARIANT converts a value of any supported SQL type into a VARIANT value. This is useful when constructing semi-structured data or when inserting structured data into VARIANT columns.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q067",
+            "question": "What is the RECURSIVE keyword used for in FLATTEN?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It creates a recursive CTE automatically"
+                },
+                {
+                    "key": "B",
+                    "text": "When TRUE, FLATTEN recursively expands all nested arrays and objects in the input"
+                },
+                {
+                    "key": "C",
+                    "text": "It repeats the FLATTEN operation a specified number of times"
+                },
+                {
+                    "key": "D",
+                    "text": "It enables recursion in stored procedures"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FLATTEN with RECURSIVE => TRUE expands all nested structures (arrays and objects) at every level of the input, not just the top level. Default is FALSE (only the top-level element is flattened).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q068",
+            "question": "What does the AUTOINCREMENT (or IDENTITY) column property do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Automatically increments the warehouse size"
+                },
+                {
+                    "key": "B",
+                    "text": "Automatically generates unique sequential numeric values for a column when rows are inserted without providing a value"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatically increases the table's storage allocation"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatically increments the row count displayed in metadata"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. AUTOINCREMENT (or IDENTITY) on a numeric column auto-generates unique sequential values. Syntax: column_name INT AUTOINCREMENT START 1 INCREMENT 1. Unlike Sequences, this is a column-level property and doesn't require a separate object.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q069",
+            "question": "What does the GENERATOR function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Generates random passwords"
+                },
+                {
+                    "key": "B",
+                    "text": "Generates a specified number of rows with no actual data — useful as a row source for synthetic data generation"
+                },
+                {
+                    "key": "C",
+                    "text": "Generates DDL statements"
+                },
+                {
+                    "key": "D",
+                    "text": "Generates warehouse utilization reports"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. GENERATOR(ROWCOUNT => n) produces n rows with no columns. It's used with TABLE() to generate synthetic data: SELECT SEQ4(), RANDOM() FROM TABLE(GENERATOR(ROWCOUNT => 1000)); generates 1000 rows of sequential and random numbers.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q070",
+            "question": "What is a Recursive CTE?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A CTE that references external tables"
+                },
+                {
+                    "key": "B",
+                    "text": "A Common Table Expression that references itself, used for hierarchical or graph-traversal queries"
+                },
+                {
+                    "key": "C",
+                    "text": "A CTE that runs multiple times automatically"
+                },
+                {
+                    "key": "D",
+                    "text": "A CTE that creates temporary tables"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Recursive CTE (WITH RECURSIVE) references itself to process hierarchical data like org charts, bill of materials, or graph structures. It has an anchor member (base case) and a recursive member that references the CTE name.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s5q071",
+            "question": "What does OBJECT_KEYS return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The primary keys of a table"
+                },
+                {
+                    "key": "B",
+                    "text": "An array of the top-level keys in an OBJECT (VARIANT containing a JSON object)"
+                },
+                {
+                    "key": "C",
+                    "text": "All encryption keys in the account"
+                },
+                {
+                    "key": "D",
+                    "text": "The key columns used in clustering"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. OBJECT_KEYS returns an ARRAY containing the top-level key names from a VARIANT value that holds an OBJECT/JSON. Example: OBJECT_KEYS(PARSE_JSON('{\"a\":1,\"b\":2}')) returns ['a','b'].",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q072",
+            "question": "What is the FLATTEN output column 'path' used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The file path of the source data"
+                },
+                {
+                    "key": "B",
+                    "text": "The path to the element within the original nested structure that was flattened"
+                },
+                {
+                    "key": "C",
+                    "text": "The execution path of the query"
+                },
+                {
+                    "key": "D",
+                    "text": "The network path to the Snowflake server"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FLATTEN produces several output columns. 'path' shows the location of the element within the original structure. Other columns include 'key' (object key name), 'index' (array position), 'value' (the element value), and 'this' (the current element being flattened).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q073",
+            "question": "What does the ARRAY_SIZE function return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The memory size of an array in bytes"
+                },
+                {
+                    "key": "B",
+                    "text": "The number of elements in an ARRAY"
+                },
+                {
+                    "key": "C",
+                    "text": "The maximum allowed array size"
+                },
+                {
+                    "key": "D",
+                    "text": "The size of all arrays in a column"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ARRAY_SIZE returns the count of elements in an ARRAY. For NULL arrays, it returns NULL. Example: ARRAY_SIZE(ARRAY_CONSTRUCT(1, 2, 3)) returns 3.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q074",
+            "question": "What does the ARRAY_CONTAINS function check?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Whether a column contains an array data type"
+                },
+                {
+                    "key": "B",
+                    "text": "Whether a specified value exists within an ARRAY"
+                },
+                {
+                    "key": "C",
+                    "text": "Whether two arrays share common elements"
+                },
+                {
+                    "key": "D",
+                    "text": "Whether an array contains NULL values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ARRAY_CONTAINS(value, array) checks if the specified value is present in the ARRAY and returns TRUE or FALSE. The value to search for must be a VARIANT. Example: ARRAY_CONTAINS('apple'::VARIANT, fruit_array).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q075",
+            "question": "What is the difference between UNION and UNION ALL?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "UNION removes duplicate rows; UNION ALL keeps all rows including duplicates"
+                },
+                {
+                    "key": "B",
+                    "text": "UNION ALL removes duplicates; UNION keeps all"
+                },
+                {
+                    "key": "C",
+                    "text": "UNION works on tables; UNION ALL works on views"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no difference in Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. UNION combines result sets and removes duplicates (requiring a sort/distinct operation). UNION ALL combines result sets keeping all rows including duplicates. UNION ALL is faster because it skips deduplication.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q076",
+            "question": "What does the HAVING clause do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Filters rows before grouping"
+                },
+                {
+                    "key": "B",
+                    "text": "Filters groups based on aggregate function results, applied after GROUP BY"
+                },
+                {
+                    "key": "C",
+                    "text": "Defines the columns to group by"
+                },
+                {
+                    "key": "D",
+                    "text": "Specifies the sort order of groups"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. HAVING filters groups after the GROUP BY aggregation. WHERE filters individual rows before grouping. Example: SELECT dept, COUNT(*) FROM employees GROUP BY dept HAVING COUNT(*) > 5; returns only departments with more than 5 employees.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q077",
+            "question": "What does the MERGE statement do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Merges two databases into one"
+                },
+                {
+                    "key": "B",
+                    "text": "Performs INSERT, UPDATE, and/or DELETE in a single statement based on a join condition between source and target tables"
+                },
+                {
+                    "key": "C",
+                    "text": "Merges query results from multiple warehouses"
+                },
+                {
+                    "key": "D",
+                    "text": "Combines two schemas"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. MERGE is an upsert/SCD operation. It matches rows between a source and target table using a join condition, then performs WHEN MATCHED (UPDATE/DELETE) and WHEN NOT MATCHED (INSERT) actions. Essential for incremental data loading patterns.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q078",
+            "question": "What does the VALUES clause do in INSERT statements?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Validates the data before insertion"
+                },
+                {
+                    "key": "B",
+                    "text": "Specifies literal row values to insert; multiple rows can be inserted in a single statement"
+                },
+                {
+                    "key": "C",
+                    "text": "Returns the values of an existing row"
+                },
+                {
+                    "key": "D",
+                    "text": "Creates a temporary table with the values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. INSERT INTO table VALUES (val1, val2), (val3, val4) inserts one or more rows of literal values. For multi-row inserts, this is more efficient than separate INSERT statements. VALUES can also be used as a table source in FROM clauses.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s5q079",
+            "question": "What is the purpose of the WITHIN GROUP clause?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Defines the grouping columns"
+                },
+                {
+                    "key": "B",
+                    "text": "Specifies the sort order for ordered-set aggregate functions like LISTAGG, PERCENTILE_CONT, and ARRAY_AGG"
+                },
+                {
+                    "key": "C",
+                    "text": "Groups tables within a schema"
+                },
+                {
+                    "key": "D",
+                    "text": "Defines group-level security"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. WITHIN GROUP (ORDER BY ...) specifies the ordering for ordered-set aggregate functions. Example: LISTAGG(name, ', ') WITHIN GROUP (ORDER BY name) concatenates names alphabetically. Also used with PERCENTILE_CONT and PERCENTILE_DISC.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s5q080",
+            "question": "What does the TRY_TO_NUMBER function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Converts a string to a number, raising an error on failure"
+                },
+                {
+                    "key": "B",
+                    "text": "Attempts to convert a string to a number and returns NULL (instead of an error) if the conversion fails"
+                },
+                {
+                    "key": "C",
+                    "text": "Returns TRUE if the input is a number"
+                },
+                {
+                    "key": "D",
+                    "text": "Rounds a number to the nearest integer"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. TRY_TO_NUMBER (and related TRY_TO_DECIMAL, TRY_TO_DOUBLE, TRY_TO_DATE, TRY_TO_TIMESTAMP) attempts the conversion and returns NULL on failure instead of raising an error. These TRY_ functions are essential for handling dirty or inconsistent data.",
+            "difficulty": "easy"
+        }
+    ]
+}

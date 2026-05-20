@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz — SnowPro Core Practice Exam</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="container">
+      <div class="app-title">
+        <span class="snowflake-icon">&#10052;</span>
+        SnowPro Core Practice Exam
+      </div>
+      <div>
+        <button class="btn btn-sm btn-outline" id="end-quiz-btn" onclick="confirmEndQuiz()">End Quiz</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Loading screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-spinner"></div>
+    <p>Loading questions...</p>
+  </div>
+
+  <main class="container hidden" id="quiz-main">
+    <!-- Quiz header info -->
+    <div class="quiz-header">
+      <div class="quiz-timer" id="quiz-timer">
+        <span class="timer-icon">&#9200;</span>
+        <span id="timer-display">--:--</span>
+        <button class="btn-pause" id="pause-btn" onclick="togglePause()" title="Pause timer">&#9208;</button>
+      </div>
+      <div class="quiz-progress-text" id="progress-text">Question 1 of 20</div>
+      <div class="quiz-domain-badge" id="domain-badge">Architecture</div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+    </div>
+
+    <!-- Question Card -->
+    <div class="question-card fade-in" id="question-card">
+      <div class="question-number" id="question-number">Question 1</div>
+      <div class="question-text" id="question-text"></div>
+      <div class="question-hint hidden" id="question-hint"></div>
+      <div class="options-list" id="options-list"></div>
+
+      <!-- Explanation (practice mode) -->
+      <div class="explanation-panel" id="explanation-panel">
+        <div class="explanation-title" id="explanation-title"></div>
+        <div class="explanation-text" id="explanation-text"></div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="quiz-nav">
+      <div class="quiz-nav-left">
+        <button class="btn btn-outline" id="prev-btn" onclick="navigateQuestion(-1)">&#9664; Previous</button>
+        <button class="btn btn-flag" id="flag-btn" onclick="toggleFlag()">&#9873; Flag</button>
+      </div>
+      <div class="quiz-nav-right">
+        <!-- Practice mode: submit answer -->
+        <button class="btn btn-success hidden" id="submit-answer-btn" onclick="submitAnswer()">Submit Answer</button>
+        <!-- Navigation -->
+        <button class="btn btn-primary" id="next-btn" onclick="navigateQuestion(1)">Next &#9654;</button>
+        <!-- Exam mode: submit exam (shown on last question) -->
+        <button class="btn btn-danger hidden" id="submit-exam-btn" onclick="confirmSubmitExam()">Submit Exam</button>
+      </div>
+    </div>
+
+    <!-- Question Navigator Grid -->
+    <div class="question-navigator mt-24">
+      <div class="navigator-title">Question Navigator</div>
+      <div class="navigator-grid" id="navigator-grid"></div>
+      <div class="navigator-legend">
+        <div class="legend-item"><div class="legend-dot unanswered"></div> Unanswered</div>
+        <div class="legend-item"><div class="legend-dot flagged"></div> Flagged</div>
+        <div class="legend-item"><div class="legend-dot correct"></div> Correct</div>
+        <div class="legend-item"><div class="legend-dot incorrect"></div> Incorrect</div>
+        <div class="legend-item"><div class="legend-dot timeout"></div> Timeout</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Submit Exam Confirmation Modal -->
+  <div class="modal-overlay hidden" id="submit-modal">
+    <div class="modal">
+      <h3>Submit Exam?</h3>
+      <p id="submit-modal-text">You have answered X of Y questions. Are you sure you want to submit?</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-danger" onclick="submitExam()">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Quiz Confirmation Modal -->
+  <div class="modal-overlay hidden" id="end-modal">
+    <div class="modal">
+      <h3>End Quiz?</h3>
+      <p>Your progress will be lost. Are you sure?</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeEndModal()">Cancel</button>
+        <button class="btn btn-danger" onclick="endQuiz()">End Quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/timer.js"></script>
+  <script src="js/question-loader.js"></script>
+  <script src="js/quiz-engine.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>
