@@ -1,0 +1,1703 @@
+{
+    "setId": "set3-performance",
+    "setName": "Performance Concepts",
+    "domain": "Performance Concepts",
+    "domainWeight": 15,
+    "questions": [
+        {
+            "id": "s3q001",
+            "question": "Your end-user queries against a SALES table WHERE SALE_DATE = current day are increasingly slow on a MEDIUM warehouse as data grew from 250GB to 1TB. What's the most cost-efficient way to improve performance?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Add more clusters with ALTER WAREHOUSE SET MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 5"
+                },
+                {
+                    "key": "B",
+                    "text": "Resize the warehouse to LARGE"
+                },
+                {
+                    "key": "C",
+                    "text": "Sort the data by SALE_DATE using INSERT OVERWRITE to improve partition elimination"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable Search Optimization on the SALES table"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. For a large table queried by a specific date, improving data clustering by sorting is the most cost-efficient approach. This improves partition pruning so fewer micro-partitions are scanned. A adds concurrency (not needed here). B adds more compute (expensive). D is for point lookups, not date range filtering.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q002",
+            "question": "Under what conditions will multiple users benefit from the Result Cache? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "They run queries using the same virtual warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "They use the same USER name"
+                },
+                {
+                    "key": "C",
+                    "text": "Their query SQL text is exactly the same (except for spaces)"
+                },
+                {
+                    "key": "D",
+                    "text": "They run their queries within the same 24-hour period"
+                }
+            ],
+            "correctAnswers": [
+                "C",
+                "D"
+            ],
+            "multiSelect": true,
+            "explanation": "C and D are correct. The Result Cache serves results when the query text matches (whitespace differences are ignored) and the query is run within 24 hours of the cached result. The warehouse used and user name are irrelevant — the result cache is shared at the Cloud Services layer.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q003",
+            "question": "What are the three types of caching in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Result Cache (Query Result Cache)"
+                },
+                {
+                    "key": "B",
+                    "text": "Local Disk Cache (Warehouse Cache)"
+                },
+                {
+                    "key": "C",
+                    "text": "Metadata Cache"
+                },
+                {
+                    "key": "D",
+                    "text": "Application Cache"
+                },
+                {
+                    "key": "E",
+                    "text": "Browser Cache"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake has three cache layers: 1) Result Cache — stores complete query results for 24 hours in Cloud Services. 2) Local Disk Cache — stores micro-partition data on warehouse SSD for re-use. 3) Metadata Cache — stores micro-partition statistics for query optimization and pruning.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q004",
+            "question": "How long does the Snowflake Result Cache persist?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Until the warehouse is suspended"
+                },
+                {
+                    "key": "B",
+                    "text": "24 hours from when the query was last executed"
+                },
+                {
+                    "key": "C",
+                    "text": "Indefinitely until the underlying data changes"
+                },
+                {
+                    "key": "D",
+                    "text": "1 hour"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Query results are cached for 24 hours. If the same query is run again within 24 hours and the underlying data hasn't changed, the cached result is returned without using a warehouse. If data changes, the cache is invalidated.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q005",
+            "question": "When a query uses the Result Cache, does it consume warehouse credits?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, the warehouse must be running to access the cache"
+                },
+                {
+                    "key": "B",
+                    "text": "No, the Result Cache is served from the Cloud Services layer without a warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "It consumes half the normal credits"
+                },
+                {
+                    "key": "D",
+                    "text": "Only if the result set is larger than 10GB"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Result Cache is maintained in the Cloud Services layer. When a query hits the Result Cache, it does not require a running warehouse and therefore consumes no warehouse credits. This is a significant cost-saving benefit.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q006",
+            "question": "What is the primary purpose of a clustering key in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To create a primary key constraint on the table"
+                },
+                {
+                    "key": "B",
+                    "text": "To define how data is organized within micro-partitions to improve query pruning"
+                },
+                {
+                    "key": "C",
+                    "text": "To partition the table into separate physical segments"
+                },
+                {
+                    "key": "D",
+                    "text": "To create an index on frequently queried columns"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A clustering key defines the order in which data is maintained within micro-partitions. Well-clustered data enables more effective partition pruning, meaning fewer micro-partitions need to be scanned during queries. It is not a primary key, traditional partition, or index.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q007",
+            "question": "Which tables benefit the most from clustering keys?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Tables in the 100MB to 250MB range"
+                },
+                {
+                    "key": "B",
+                    "text": "Tables of 1TB or larger"
+                },
+                {
+                    "key": "C",
+                    "text": "Tables in the 100GB to 250GB range"
+                },
+                {
+                    "key": "D",
+                    "text": "All tables regardless of size"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Clustering keys provide the most benefit on large tables (1TB or more) where query pruning can eliminate scanning thousands of micro-partitions. Smaller tables have fewer partitions, so the overhead of maintaining clustering may not justify the performance gain.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q008",
+            "question": "What does the Query Profile in Snowflake help you understand?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The credit cost of each query"
+                },
+                {
+                    "key": "B",
+                    "text": "The execution plan, operator statistics, and performance bottlenecks of a query"
+                },
+                {
+                    "key": "C",
+                    "text": "The user who submitted the query"
+                },
+                {
+                    "key": "D",
+                    "text": "The network latency between the client and Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Query Profile provides a graphical representation of the query execution plan including operator nodes, data flow, partition pruning statistics, bytes scanned, and spilling information. It is the primary tool for diagnosing query performance issues.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q009",
+            "question": "What does 'spilling to local storage' indicate in a query profile?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The query is writing results to a local file"
+                },
+                {
+                    "key": "B",
+                    "text": "The query ran out of memory and is using the warehouse's local SSD disk as overflow"
+                },
+                {
+                    "key": "C",
+                    "text": "The data is being cached for future queries"
+                },
+                {
+                    "key": "D",
+                    "text": "The query is being replicated to a secondary warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Spilling occurs when a query's memory requirements exceed the available RAM. Data spills first to local SSD (faster) and then to remote cloud storage (slower). Spilling to local storage is a sign the warehouse may be undersized for the query workload.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q010",
+            "question": "If a query is spilling to remote storage, what is the recommended first action?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Add more clusters to the warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Increase the warehouse size to provide more memory and local storage"
+                },
+                {
+                    "key": "C",
+                    "text": "Add a clustering key to the table"
+                },
+                {
+                    "key": "D",
+                    "text": "Reduce the query's result set with LIMIT"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Spilling to remote storage means the query exhausted both memory and local SSD. Increasing the warehouse size provides more memory and local storage, which can reduce or eliminate spilling. Adding clusters helps concurrency, not individual query performance.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q011",
+            "question": "What is the Search Optimization Service in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A full-text search engine for documents"
+                },
+                {
+                    "key": "B",
+                    "text": "A service that creates access search structures to speed up point lookup queries and range queries"
+                },
+                {
+                    "key": "C",
+                    "text": "A query optimizer that rewrites SQL statements"
+                },
+                {
+                    "key": "D",
+                    "text": "A warehouse auto-tuning service"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Search Optimization Service creates persistent data structures (search access paths) that significantly improve the performance of point lookup queries (equality predicates), substring/regex searches, and queries on VARIANT fields. It is an Enterprise edition feature.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q012",
+            "question": "Which type of query benefits most from the Search Optimization Service?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Full table scans with complex aggregations"
+                },
+                {
+                    "key": "B",
+                    "text": "Point lookup queries that return a small number of rows from a large table"
+                },
+                {
+                    "key": "C",
+                    "text": "Joins between multiple large tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Queries that use ORDER BY on large result sets"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Search Optimization is designed for selective queries that filter on specific column values (point lookups) and return a small fraction of rows from a large table. It is not beneficial for full table scans, complex joins, or sorting operations.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q013",
+            "question": "What is the difference between scaling UP and scaling OUT a warehouse?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scaling up increases warehouse size (more compute per query); scaling out adds more clusters (handles more concurrent queries)"
+                },
+                {
+                    "key": "B",
+                    "text": "Scaling up adds more clusters; scaling out increases warehouse size"
+                },
+                {
+                    "key": "C",
+                    "text": "They are the same thing"
+                },
+                {
+                    "key": "D",
+                    "text": "Scaling up increases storage; scaling out increases compute"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Scaling UP means resizing the warehouse (e.g., Small to Medium) to provide more compute resources per query, improving individual query performance. Scaling OUT means adding more clusters (multi-cluster warehouse) to handle more concurrent queries without queuing.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q014",
+            "question": "When should you consider scaling UP (resizing) a warehouse instead of scaling OUT?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "When queries are queuing due to too many concurrent users"
+                },
+                {
+                    "key": "B",
+                    "text": "When individual queries are running slowly due to large data volumes"
+                },
+                {
+                    "key": "C",
+                    "text": "When the warehouse is frequently auto-suspending"
+                },
+                {
+                    "key": "D",
+                    "text": "When storage costs are too high"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Scaling up (increasing warehouse size) provides more compute resources to individual queries, making them run faster when dealing with large data volumes. Scaling out (adding clusters) helps with concurrency. Auto-suspend frequency is a configuration issue, not a sizing issue.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q015",
+            "question": "What does partition pruning mean in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Deleting old partitions to save storage"
+                },
+                {
+                    "key": "B",
+                    "text": "Skipping micro-partitions that don't contain relevant data based on metadata"
+                },
+                {
+                    "key": "C",
+                    "text": "Compressing partitions to reduce their size"
+                },
+                {
+                    "key": "D",
+                    "text": "Splitting large partitions into smaller ones"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Partition pruning uses micro-partition metadata (min/max values, null counts) to skip partitions that cannot contain data matching the query's filter conditions. This significantly reduces the amount of data scanned and improves query performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q016",
+            "question": "Which Snowflake view helps you determine the clustering quality of a table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SYSTEM$CLUSTERING_INFORMATION"
+                },
+                {
+                    "key": "B",
+                    "text": "INFORMATION_SCHEMA.CLUSTER_STATUS"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNT_USAGE.CLUSTERING_HISTORY"
+                },
+                {
+                    "key": "D",
+                    "text": "SHOW CLUSTER STATUS"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. SYSTEM$CLUSTERING_INFORMATION is a system function that returns clustering information for a table, including the clustering depth, average overlap, and the percentage of constants. Lower depth and overlap values indicate better clustering.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q017",
+            "question": "What does a high 'clustering depth' value indicate about a table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The data is well-clustered and queries will be efficient"
+                },
+                {
+                    "key": "B",
+                    "text": "The data is poorly clustered and many overlapping micro-partitions may need to be scanned"
+                },
+                {
+                    "key": "C",
+                    "text": "The table has many columns"
+                },
+                {
+                    "key": "D",
+                    "text": "The table is very large"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A high clustering depth means micro-partitions have significant overlap in their data ranges for the clustering key columns. This means the query optimizer cannot effectively prune partitions, leading to more data being scanned. A value of 1 indicates perfect clustering.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q018",
+            "question": "Which of the following scenarios would NOT benefit from a Materialized View?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Frequent queries that aggregate large amounts of data"
+                },
+                {
+                    "key": "B",
+                    "text": "Tables where the underlying data changes very frequently"
+                },
+                {
+                    "key": "C",
+                    "text": "Complex queries with multiple joins that are run repeatedly"
+                },
+                {
+                    "key": "D",
+                    "text": "Queries that filter on a different clustering key than the base table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Materialized Views store pre-computed results that must be refreshed when underlying data changes. If data changes very frequently, the maintenance cost of continuously refreshing the materialized view may outweigh the performance benefit. They work best when the base table is relatively stable.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q019",
+            "question": "Which column in the Query History view indicates the percentage of data scanned from cache vs. remote storage?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "BYTES_SCANNED"
+                },
+                {
+                    "key": "B",
+                    "text": "PERCENTAGE_SCANNED_FROM_CACHE"
+                },
+                {
+                    "key": "C",
+                    "text": "CACHE_HIT_RATIO"
+                },
+                {
+                    "key": "D",
+                    "text": "BYTES_READ_FROM_CACHE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. PERCENTAGE_SCANNED_FROM_CACHE in the query history indicates what fraction of data was read from the warehouse local disk cache rather than from remote cloud storage. A high percentage means good cache utilization and typically faster query performance.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q020",
+            "question": "Which action can help improve performance when many queries are queuing on a warehouse?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Increase the warehouse size from SMALL to MEDIUM"
+                },
+                {
+                    "key": "B",
+                    "text": "Enable multi-cluster warehouses to add additional clusters"
+                },
+                {
+                    "key": "C",
+                    "text": "Add a clustering key to all tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable the Result Cache"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Query queuing occurs when there are more concurrent queries than the warehouse can handle. Multi-cluster warehouses scale out additional clusters to handle increased concurrency. Increasing warehouse size helps individual query speed but not concurrency. The Result Cache is always enabled.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q021",
+            "question": "A Resource Monitor can perform which of the following actions when a credit threshold is reached? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Send a notification to account administrators"
+                },
+                {
+                    "key": "B",
+                    "text": "Suspend the warehouse (allow running queries to complete)"
+                },
+                {
+                    "key": "C",
+                    "text": "Suspend the warehouse immediately (kill running queries)"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatically resize the warehouse to a smaller size"
+                },
+                {
+                    "key": "E",
+                    "text": "Delete the warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Resource Monitors can: Notify (send alert to admins), Suspend (stop the warehouse after current queries finish), or Suspend Immediately (kill running queries and stop). They cannot resize or delete warehouses.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q022",
+            "question": "What is the EXPLAIN command used for in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To execute a query and display results with timing information"
+                },
+                {
+                    "key": "B",
+                    "text": "To display the logical execution plan of a query without actually running it"
+                },
+                {
+                    "key": "C",
+                    "text": "To show the estimated credit cost of a query"
+                },
+                {
+                    "key": "D",
+                    "text": "To describe the structure of a table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. EXPLAIN generates the logical execution plan for a SQL statement without executing it. This shows the operations Snowflake would perform, helping you understand the query's approach before running it. For detailed runtime statistics, use the Query Profile.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q023",
+            "question": "What is automatic reclustering in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Snowflake automatically creates clustering keys on all tables"
+                },
+                {
+                    "key": "B",
+                    "text": "A background service that maintains the clustering of a table after DML operations modify data"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatic defragmentation of micro-partitions daily"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatic redistribution of data across warehouses"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When a clustering key is defined, Snowflake's automatic reclustering service runs in the background to maintain data clustering as new data is inserted or existing data is modified. This reclustering is serverless and charged separately from warehouse compute.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q024",
+            "question": "Which statement about the local disk cache (warehouse cache) is true?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It persists indefinitely until explicitly cleared"
+                },
+                {
+                    "key": "B",
+                    "text": "It is maintained on the warehouse's SSD storage and cleared when the warehouse is suspended"
+                },
+                {
+                    "key": "C",
+                    "text": "It is shared across all warehouses in the account"
+                },
+                {
+                    "key": "D",
+                    "text": "It caches query results, not raw data"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The local disk cache stores raw micro-partition data on the warehouse nodes' SSD. When a warehouse is suspended, the cache is dropped. This is why frequent suspend/resume cycles can reduce cache efficiency. The cache is warehouse-specific, not shared.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q025",
+            "question": "When does Snowflake's query result cache become invalidated?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "When the warehouse is resized"
+                },
+                {
+                    "key": "B",
+                    "text": "When the underlying data changes or 24 hours have passed"
+                },
+                {
+                    "key": "C",
+                    "text": "When a different user runs the same query"
+                },
+                {
+                    "key": "D",
+                    "text": "When the warehouse is suspended"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The result cache is invalidated when: 1) The underlying data in any table referenced by the query changes, 2) 24 hours have passed since the result was cached, or 3) The micro-partitions referenced have changed. Warehouse state changes do not affect the result cache.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q026",
+            "question": "What does the 'Pruning' metric in the Query Profile indicate?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The number of columns removed from the result set"
+                },
+                {
+                    "key": "B",
+                    "text": "The number and percentage of micro-partitions skipped vs. total partitions"
+                },
+                {
+                    "key": "C",
+                    "text": "The amount of memory freed during query execution"
+                },
+                {
+                    "key": "D",
+                    "text": "The number of duplicate rows removed"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The pruning statistic shows how many micro-partitions were scanned vs. how many could have been scanned (total). A query that scans 10 out of 1000 partitions has 99% pruning efficiency, indicating excellent data organization relative to the query's filter.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q027",
+            "question": "Which factor does NOT affect the local disk cache hit rate?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "How recently the warehouse was resumed"
+                },
+                {
+                    "key": "B",
+                    "text": "Whether queries access the same micro-partitions repeatedly"
+                },
+                {
+                    "key": "C",
+                    "text": "The number of users querying the same data"
+                },
+                {
+                    "key": "D",
+                    "text": "The size of the underlying cloud object storage"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. The size of cloud object storage does not affect cache hit rates. Cache hits depend on: recency of warehouse resume (cache is empty after suspend), access patterns (repeated access to same data improves hits), and concurrent queries accessing similar data on the same warehouse.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q028",
+            "question": "What is the recommended approach when a query shows high 'Bytes Spilled to Remote Storage' in the Query Profile?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Enable the Search Optimization Service"
+                },
+                {
+                    "key": "B",
+                    "text": "Increase the warehouse size to reduce spilling"
+                },
+                {
+                    "key": "C",
+                    "text": "Add more concurrent users to distribute the load"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable caching on the warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Remote spilling means data overflowed from both memory and local SSD. Increasing warehouse size provides more memory and local SSD, reducing or eliminating spilling. Caching is always on. Search Optimization helps with lookup queries, not memory issues. More users would increase, not decrease, the problem.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q029",
+            "question": "How can you disable the Result Cache for a specific session?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ALTER SESSION SET USE_CACHED_RESULT = FALSE"
+                },
+                {
+                    "key": "B",
+                    "text": "ALTER WAREHOUSE SET RESULT_CACHE = FALSE"
+                },
+                {
+                    "key": "C",
+                    "text": "SET QUERY_CACHE = OFF"
+                },
+                {
+                    "key": "D",
+                    "text": "The Result Cache cannot be disabled"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. ALTER SESSION SET USE_CACHED_RESULT = FALSE disables the result cache for the current session. This forces queries to re-execute even if cached results exist. This is useful for benchmarking or when you want fresh results. The default is TRUE.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q030",
+            "question": "Which approach is recommended for choosing clustering key columns?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Choose high-cardinality columns like unique IDs"
+                },
+                {
+                    "key": "B",
+                    "text": "Choose columns frequently used in WHERE clauses and JOIN conditions, preferring low-to-medium cardinality"
+                },
+                {
+                    "key": "C",
+                    "text": "Always cluster on the primary key columns"
+                },
+                {
+                    "key": "D",
+                    "text": "Cluster on all columns in the table for maximum flexibility"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Clustering keys should be columns frequently used in query filters and joins, with low-to-medium cardinality. High-cardinality columns (unique IDs) produce poor clustering because values rarely repeat across partitions. Clustering on all columns adds overhead with no benefit. A typical clustering key has 3-4 columns maximum.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q031",
+            "question": "What is the purpose of the Query Profile in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To save frequently used queries for reuse"
+                },
+                {
+                    "key": "B",
+                    "text": "To provide a graphical execution plan showing query operators, data flow, and performance statistics"
+                },
+                {
+                    "key": "C",
+                    "text": "To compile queries for faster execution"
+                },
+                {
+                    "key": "D",
+                    "text": "To manage query concurrency settings"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Query Profile provides a graphical representation of the query execution plan, showing operators (TableScan, Filter, Join, Aggregate, etc.), data flow between operators, partition pruning stats, and execution timing — essential for identifying performance bottlenecks.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q032",
+            "question": "What does 'spilling to local disk' indicate in the Query Profile?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Data is being cached locally for faster subsequent queries"
+                },
+                {
+                    "key": "B",
+                    "text": "The query is running out of memory and using local SSD as overflow — consider using a larger warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "The query results are being saved to disk"
+                },
+                {
+                    "key": "D",
+                    "text": "The query is using external storage optimally"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Spilling to local disk means the warehouse doesn't have enough memory for the operation. Data overflows to local SSD first, then to remote storage if SSD fills up. This degrades performance. Solution: use a larger warehouse or optimize the query to reduce data volume.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q033",
+            "question": "What does 'spilling to remote storage' indicate?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Normal behavior for large queries"
+                },
+                {
+                    "key": "B",
+                    "text": "A severe performance issue — both memory and local disk are exhausted, data is spilling to cloud storage"
+                },
+                {
+                    "key": "C",
+                    "text": "The query is accessing external tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Data is being replicated to another region"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Spilling to remote storage is worse than spilling to local disk. It means both memory and local SSD are full, so data overflows to cloud storage (S3/Azure Blob/GCS) which is much slower. This usually requires a larger warehouse or query optimization.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q034",
+            "question": "What is the purpose of the EXPLAIN command in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To execute a query and return the results with execution statistics"
+                },
+                {
+                    "key": "B",
+                    "text": "To generate the logical execution plan for a query without actually executing it"
+                },
+                {
+                    "key": "C",
+                    "text": "To explain the meaning of SQL keywords"
+                },
+                {
+                    "key": "D",
+                    "text": "To profile warehouse performance"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. EXPLAIN generates the logical execution plan showing what operations Snowflake would perform, without executing the query. It's useful for understanding query plans without consuming compute resources. The Query Profile provides more detail after actual execution.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q035",
+            "question": "Which warehouse operation improves performance for complex individual queries?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scaling out (adding more clusters)"
+                },
+                {
+                    "key": "B",
+                    "text": "Scaling up (increasing warehouse size)"
+                },
+                {
+                    "key": "C",
+                    "text": "Reducing the auto-suspend timeout"
+                },
+                {
+                    "key": "D",
+                    "text": "Enabling auto-resume"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Scaling up (increasing size, e.g., Medium to Large) provides more compute power for individual queries, improving performance for complex/heavy queries. Scaling out (multi-cluster) adds clusters to handle more concurrent queries but doesn't speed up individual queries.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q036",
+            "question": "Which warehouse operation improves handling of many concurrent queries?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scaling up (increasing warehouse size)"
+                },
+                {
+                    "key": "B",
+                    "text": "Scaling out (adding more clusters via multi-cluster warehouse)"
+                },
+                {
+                    "key": "C",
+                    "text": "Enabling result caching"
+                },
+                {
+                    "key": "D",
+                    "text": "Adding clustering keys"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Scaling out by increasing MAX_CLUSTER_COUNT enables the multi-cluster warehouse to automatically spin up additional clusters when concurrency increases. Each cluster handles a portion of the queued queries, reducing wait times.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q037",
+            "question": "What is the 'Percentage Scanned from Cache' metric in the Query Profile?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Percentage of data read from the result cache"
+                },
+                {
+                    "key": "B",
+                    "text": "Percentage of table data read from the warehouse's local SSD cache instead of remote storage"
+                },
+                {
+                    "key": "C",
+                    "text": "Percentage of metadata cached"
+                },
+                {
+                    "key": "D",
+                    "text": "Percentage of query plan cached"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. This metric shows what percentage of the data scanned by the query was already cached on the warehouse's local SSD, avoiding slower reads from remote cloud storage. Higher values indicate better cache utilization.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q038",
+            "question": "What is the default result cache retention period?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "1 hour"
+                },
+                {
+                    "key": "B",
+                    "text": "24 hours"
+                },
+                {
+                    "key": "C",
+                    "text": "7 days"
+                },
+                {
+                    "key": "D",
+                    "text": "30 days"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Query results are cached for 24 hours by default. The cache is invalidated if the underlying data changes. Each time a cached result is reused, its 24-hour counter resets, so frequently-run queries can stay cached indefinitely.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q039",
+            "question": "Does the result cache consume warehouse credits when returning results?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, the same as a normal query"
+                },
+                {
+                    "key": "B",
+                    "text": "No, cached results are returned by the Cloud Services Layer without using a warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "Half the normal credit cost"
+                },
+                {
+                    "key": "D",
+                    "text": "Only if the warehouse is running"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When a query result is served from the result cache, it is returned by the Cloud Services Layer. No virtual warehouse is needed, so no compute credits are consumed. This is one of the key cost benefits of result caching.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q040",
+            "question": "What condition must be true for the result cache to be used? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The query text must be exactly the same (including whitespace and case)"
+                },
+                {
+                    "key": "B",
+                    "text": "The underlying data must not have changed since the cache was created"
+                },
+                {
+                    "key": "C",
+                    "text": "The query must use the same warehouse"
+                },
+                {
+                    "key": "D",
+                    "text": "The query must be run by the same user"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. The result cache requires an exact query match (same SQL text) and unchanged underlying data. The cache is shared across the account — any user running the same query can benefit. Different warehouses or roles can use the same cached result.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q041",
+            "question": "What is the Search Optimization Service (SOS)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A full-text search engine for documents"
+                },
+                {
+                    "key": "B",
+                    "text": "A serverless service that creates optimized search access paths for point-lookup and equality/range queries"
+                },
+                {
+                    "key": "C",
+                    "text": "A query optimizer that rewrites SQL"
+                },
+                {
+                    "key": "D",
+                    "text": "A tool for optimizing warehouse size selection"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Search Optimization Service is a serverless feature (Enterprise+) that maintains specialized search access paths to speed up point-lookup queries, equality predicates, IN clauses, substring/regex searches, and queries on VARIANT fields. It runs automatically in the background.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q042",
+            "question": "Which Snowflake edition is required for the Search Optimization Service?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Search Optimization Service requires Enterprise edition or higher. It is billed based on serverless compute used for maintenance and storage for the search access paths.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q043",
+            "question": "What is the SYSTEM$CLUSTERING_INFORMATION function used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating clustering keys on a table"
+                },
+                {
+                    "key": "B",
+                    "text": "Returning clustering depth and overlap statistics for a table to evaluate how well it is clustered"
+                },
+                {
+                    "key": "C",
+                    "text": "Reclustering a table manually"
+                },
+                {
+                    "key": "D",
+                    "text": "Listing all tables with clustering keys"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SYSTEM$CLUSTERING_INFORMATION returns statistics about how well a table is clustered, including average clustering depth (lower is better), average partition overlap (lower is better), and the total number of partitions. Use it to determine if reclustering is needed.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q044",
+            "question": "What is the recommended maximum number of columns in a clustering key?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "1 column only"
+                },
+                {
+                    "key": "B",
+                    "text": "3 to 4 columns, ordered from lowest to highest cardinality"
+                },
+                {
+                    "key": "C",
+                    "text": "10 or more columns for best coverage"
+                },
+                {
+                    "key": "D",
+                    "text": "All columns in the table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake recommends 3-4 columns maximum for a clustering key. Columns should be ordered from lowest cardinality to highest. Too many columns increase maintenance costs without improving pruning.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q045",
+            "question": "What is Automatic Reclustering?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A manual process triggered by ALTER TABLE ... RECLUSTER"
+                },
+                {
+                    "key": "B",
+                    "text": "A serverless background process that automatically maintains clustering on tables with clustering keys"
+                },
+                {
+                    "key": "C",
+                    "text": "Reclustering that happens during query execution"
+                },
+                {
+                    "key": "D",
+                    "text": "A scheduled job that runs once per day"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Automatic Reclustering is a serverless background process that continuously maintains the clustering of data in tables with defined clustering keys. It runs automatically when data changes degrade the clustering quality. Billed as serverless compute credits.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q046",
+            "question": "Which Query Profile operator would indicate a performance-intensive join?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "TableScan"
+                },
+                {
+                    "key": "B",
+                    "text": "Join (with high bytes sent or spilling indicators)"
+                },
+                {
+                    "key": "C",
+                    "text": "Result"
+                },
+                {
+                    "key": "D",
+                    "text": "WithClause"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. In the Query Profile, a Join operator showing high bytes processed, significant data flow, or spilling to disk/remote storage indicates a performance-intensive join. Consider filtering data before the join, using appropriate join types, or scaling up the warehouse.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q047",
+            "question": "What happens when a warehouse is resized from Small to Large while queries are running?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Running queries are terminated and restarted"
+                },
+                {
+                    "key": "B",
+                    "text": "Running queries continue on old resources; new queries use the new size"
+                },
+                {
+                    "key": "C",
+                    "text": "The resize is queued until all queries complete"
+                },
+                {
+                    "key": "D",
+                    "text": "Running queries immediately get additional compute resources"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When a warehouse is resized, currently running queries continue with the existing compute resources. New queries submitted after the resize will use the new (larger) set of resources. No queries are terminated.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q048",
+            "question": "What is the impact of using SELECT * versus selecting specific columns on performance?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No impact since Snowflake stores data row-based"
+                },
+                {
+                    "key": "B",
+                    "text": "SELECT * reads all columns from micro-partitions; selecting specific columns reads only those columns, improving performance due to columnar storage"
+                },
+                {
+                    "key": "C",
+                    "text": "SELECT * is faster because it avoids column lookup overhead"
+                },
+                {
+                    "key": "D",
+                    "text": "They perform identically in all cases"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake uses columnar storage, so selecting specific columns means only those columns are read from the micro-partitions. SELECT * reads all columns, increasing I/O and memory usage. Always select only the columns you need for better performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q049",
+            "question": "What is a Materialized View in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A view whose results are precomputed and stored, automatically refreshed when the base table changes"
+                },
+                {
+                    "key": "B",
+                    "text": "A regular view with a name saved in the catalog"
+                },
+                {
+                    "key": "C",
+                    "text": "A temporary cache of view results"
+                },
+                {
+                    "key": "D",
+                    "text": "A view that can only be accessed by the owner"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Materialized Views precompute and store query results. They are automatically and incrementally refreshed by a serverless background process when the base table changes. This makes subsequent queries faster, especially for aggregations or complex transformations.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q050",
+            "question": "Which Snowflake edition is required for Materialized Views?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Materialized Views require Enterprise edition or higher. They incur costs for serverless compute (for automatic background maintenance/refresh) and additional storage for the materialized results.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q051",
+            "question": "How does partition pruning improve query performance?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "By compressing partitions to reduce storage"
+                },
+                {
+                    "key": "B",
+                    "text": "By skipping micro-partitions that don't contain data matching the query's WHERE clause based on metadata"
+                },
+                {
+                    "key": "C",
+                    "text": "By splitting large partitions into smaller ones"
+                },
+                {
+                    "key": "D",
+                    "text": "By caching partition data in memory"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Partition pruning uses micro-partition metadata (min/max values per column) to skip partitions that cannot contain matching rows. If the query filters on a column and a partition's range doesn't overlap with the filter, it's pruned (not scanned), dramatically reducing I/O.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q052",
+            "question": "Which of the following can you see in the Query Profile statistics? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Number of partitions scanned vs. total partitions"
+                },
+                {
+                    "key": "B",
+                    "text": "Bytes spilled to local and remote storage"
+                },
+                {
+                    "key": "C",
+                    "text": "The user's network bandwidth"
+                },
+                {
+                    "key": "D",
+                    "text": "Cloud provider infrastructure health status"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. The Query Profile shows detailed execution statistics including partition scan ratios (how many partitions were scanned vs. pruned), bytes spilled, bytes sent between operators, cache hit rates, and execution time breakdowns.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q053",
+            "question": "What is query queuing in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A feature to schedule queries for future execution"
+                },
+                {
+                    "key": "B",
+                    "text": "When a warehouse's compute resources are fully utilized, additional queries wait in a queue until resources become available"
+                },
+                {
+                    "key": "C",
+                    "text": "A priority system for important queries"
+                },
+                {
+                    "key": "D",
+                    "text": "A queue for queries that have syntax errors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Query queuing occurs when all available compute threads in a warehouse are busy. New queries enter a queue and wait until resources free up. Multi-cluster warehouses can reduce queuing by automatically adding clusters for concurrency.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q054",
+            "question": "What is the recommended approach when the Query Profile shows 'Exploding Joins'?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Use a larger warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Review join conditions — an exploding join produces many more rows than input tables, usually due to missing or incorrect join predicates"
+                },
+                {
+                    "key": "C",
+                    "text": "Add more clustering keys"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable the Search Optimization Service"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Exploding joins (Cartesian products or unintentional many-to-many joins) produce far more output rows than input rows. The fix is to review and correct join conditions, add proper predicates, or filter data before joining.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q055",
+            "question": "Can you disable the result cache for a session?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, it is always enabled"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, using ALTER SESSION SET USE_CACHED_RESULT = FALSE"
+                },
+                {
+                    "key": "C",
+                    "text": "Only ACCOUNTADMIN can disable it"
+                },
+                {
+                    "key": "D",
+                    "text": "It can only be disabled at the account level"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The result cache can be disabled per session with ALTER SESSION SET USE_CACHED_RESULT = FALSE. This is useful for benchmarking or when you need to ensure fresh query execution. It can also be set at the user or account level.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q056",
+            "question": "What is the Warehouse Load Monitoring chart used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Monitoring data loading into tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Visualizing warehouse query load, queuing, and resource utilization over time to identify if resizing or scaling is needed"
+                },
+                {
+                    "key": "C",
+                    "text": "Monitoring storage capacity"
+                },
+                {
+                    "key": "D",
+                    "text": "Loading warehouse configurations from a file"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Warehouse Load Monitoring shows the query load, queuing patterns, and execution statistics over time. It helps determine if a warehouse is over- or under-provisioned and whether scaling up (larger size) or out (multi-cluster) would be beneficial.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q057",
+            "question": "What is the benefit of using the LIMIT clause with large result sets?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It increases the accuracy of results"
+                },
+                {
+                    "key": "B",
+                    "text": "It reduces the amount of data processed and returned, improving performance and reducing resource usage"
+                },
+                {
+                    "key": "C",
+                    "text": "It enables partition pruning"
+                },
+                {
+                    "key": "D",
+                    "text": "It enables result caching automatically"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LIMIT reduces the rows returned and can reduce the work Snowflake needs to do, especially when combined with ORDER BY. For exploratory queries on large tables, LIMIT significantly reduces compute and I/O.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q058",
+            "question": "What best practice should you follow for warehouse sizing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Always use the largest warehouse available"
+                },
+                {
+                    "key": "B",
+                    "text": "Start small and scale up based on query performance needs; separate workloads into different warehouses"
+                },
+                {
+                    "key": "C",
+                    "text": "Use one large warehouse for all workloads"
+                },
+                {
+                    "key": "D",
+                    "text": "Always use X-Small to minimize costs"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Best practice is to start with a smaller warehouse and scale up as needed. Group similar workloads on the same warehouse and separate different workloads (ETL vs. reporting) into different warehouses for better resource management and cost control.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q059",
+            "question": "Which Snowflake feature helps identify unused or underused tables?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Query Profile"
+                },
+                {
+                    "key": "B",
+                    "text": "ACCESS_HISTORY and TABLE_STORAGE_METRICS in ACCOUNT_USAGE"
+                },
+                {
+                    "key": "C",
+                    "text": "Clustering keys"
+                },
+                {
+                    "key": "D",
+                    "text": "Resource Monitors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ACCESS_HISTORY shows which tables/columns are accessed by queries (and which are not). TABLE_STORAGE_METRICS shows storage size for each table. Together, they help identify unused tables that can be dropped to save storage costs.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q060",
+            "question": "What is the effect of using ORDER BY on a large result set without LIMIT?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No performance impact"
+                },
+                {
+                    "key": "B",
+                    "text": "It forces a global sort of all results, which can cause significant memory and compute usage, potentially spilling to disk"
+                },
+                {
+                    "key": "C",
+                    "text": "ORDER BY is ignored on large datasets"
+                },
+                {
+                    "key": "D",
+                    "text": "It uses the result cache automatically"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ORDER BY requires sorting the entire result set, which can be very expensive for large datasets. It may cause spilling to local or remote storage. Use LIMIT with ORDER BY when possible, and only sort when necessary.",
+            "difficulty": "easy"
+        }
+    ]
+}
