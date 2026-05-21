@@ -1,0 +1,3975 @@
+{
+    "setId": "set4-performance-querying",
+    "setName": "Performance Optimization, Querying, and Transformation",
+    "domain": "Performance Optimization, Querying, and Transformation",
+    "domainWeight": 21,
+    "questions": [
+        {
+            "id": "s4q001",
+            "question": "Your end-user queries against a SALES table WHERE SALE_DATE = current day are increasingly slow on a MEDIUM warehouse as data grew from 250GB to 1TB. What's the most cost-efficient way to improve performance?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Add more clusters with ALTER WAREHOUSE SET MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 5"
+                },
+                {
+                    "key": "B",
+                    "text": "Resize the warehouse to LARGE"
+                },
+                {
+                    "key": "C",
+                    "text": "Sort the data by SALE_DATE using INSERT OVERWRITE to improve partition elimination"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable Search Optimization on the SALES table"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. For a large table queried by a specific date, improving data clustering by sorting is the most cost-efficient approach. This improves partition pruning so fewer micro-partitions are scanned. A adds concurrency (not needed here). B adds more compute (expensive). D is for point lookups, not date range filtering.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q002",
+            "question": "Under what conditions will multiple users benefit from the Result Cache? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "They run queries using the same virtual warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "They use the same USER name"
+                },
+                {
+                    "key": "C",
+                    "text": "Their query SQL text is exactly the same (except for spaces)"
+                },
+                {
+                    "key": "D",
+                    "text": "They run their queries within the same 24-hour period"
+                }
+            ],
+            "correctAnswers": [
+                "C",
+                "D"
+            ],
+            "multiSelect": true,
+            "explanation": "C and D are correct. The Result Cache serves results when the query text matches (whitespace differences are ignored) and the query is run within 24 hours of the cached result. The warehouse used and user name are irrelevant — the result cache is shared at the Cloud Services layer.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q003",
+            "question": "What are the three types of caching in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Result Cache (Query Result Cache)"
+                },
+                {
+                    "key": "B",
+                    "text": "Local Disk Cache (Warehouse Cache)"
+                },
+                {
+                    "key": "C",
+                    "text": "Metadata Cache"
+                },
+                {
+                    "key": "D",
+                    "text": "Application Cache"
+                },
+                {
+                    "key": "E",
+                    "text": "Browser Cache"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake has three cache layers: 1) Result Cache — stores complete query results for 24 hours in Cloud Services. 2) Local Disk Cache — stores micro-partition data on warehouse SSD for re-use. 3) Metadata Cache — stores micro-partition statistics for query optimization and pruning.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q004",
+            "question": "How long does the Snowflake Result Cache persist?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Until the warehouse is suspended"
+                },
+                {
+                    "key": "B",
+                    "text": "24 hours from when the query was last executed"
+                },
+                {
+                    "key": "C",
+                    "text": "Indefinitely until the underlying data changes"
+                },
+                {
+                    "key": "D",
+                    "text": "1 hour"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Query results are cached for 24 hours. If the same query is run again within 24 hours and the underlying data hasn't changed, the cached result is returned without using a warehouse. If data changes, the cache is invalidated.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q005",
+            "question": "What is the primary purpose of a clustering key in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To create a primary key constraint on the table"
+                },
+                {
+                    "key": "B",
+                    "text": "To define how data is organized within micro-partitions to improve query pruning"
+                },
+                {
+                    "key": "C",
+                    "text": "To partition the table into separate physical segments"
+                },
+                {
+                    "key": "D",
+                    "text": "To create an index on frequently queried columns"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A clustering key defines the order in which data is maintained within micro-partitions. Well-clustered data enables more effective partition pruning, meaning fewer micro-partitions need to be scanned during queries. It is not a primary key, traditional partition, or index.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q006",
+            "question": "Which tables benefit the most from clustering keys?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Tables in the 100MB to 250MB range"
+                },
+                {
+                    "key": "B",
+                    "text": "Tables of 1TB or larger"
+                },
+                {
+                    "key": "C",
+                    "text": "Tables in the 100GB to 250GB range"
+                },
+                {
+                    "key": "D",
+                    "text": "All tables regardless of size"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Clustering keys provide the most benefit on large tables (1TB or more) where query pruning can eliminate scanning thousands of micro-partitions. Smaller tables have fewer partitions, so the overhead of maintaining clustering may not justify the performance gain.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q007",
+            "question": "What does the Query Profile in Snowflake help you understand?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The credit cost of each query"
+                },
+                {
+                    "key": "B",
+                    "text": "The execution plan, operator statistics, and performance bottlenecks of a query"
+                },
+                {
+                    "key": "C",
+                    "text": "The user who submitted the query"
+                },
+                {
+                    "key": "D",
+                    "text": "The network latency between the client and Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Query Profile provides a graphical representation of the query execution plan including operator nodes, data flow, partition pruning statistics, bytes scanned, and spilling information. It is the primary tool for diagnosing query performance issues.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q008",
+            "question": "What does 'spilling to local storage' indicate in a query profile?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The query is writing results to a local file"
+                },
+                {
+                    "key": "B",
+                    "text": "The query ran out of memory and is using the warehouse's local SSD disk as overflow"
+                },
+                {
+                    "key": "C",
+                    "text": "The data is being cached for future queries"
+                },
+                {
+                    "key": "D",
+                    "text": "The query is being replicated to a secondary warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Spilling occurs when a query's memory requirements exceed the available RAM. Data spills first to local SSD (faster) and then to remote cloud storage (slower). Spilling to local storage is a sign the warehouse may be undersized for the query workload.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q009",
+            "question": "If a query is spilling to remote storage, what is the recommended first action?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Add more clusters to the warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Increase the warehouse size to provide more memory and local storage"
+                },
+                {
+                    "key": "C",
+                    "text": "Add a clustering key to the table"
+                },
+                {
+                    "key": "D",
+                    "text": "Reduce the query's result set with LIMIT"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Spilling to remote storage means the query exhausted both memory and local SSD. Increasing the warehouse size provides more memory and local storage, which can reduce or eliminate spilling. Adding clusters helps concurrency, not individual query performance.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q010",
+            "question": "What is the Search Optimization Service in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A full-text search engine for documents"
+                },
+                {
+                    "key": "B",
+                    "text": "A service that creates access search structures to speed up point lookup queries and range queries"
+                },
+                {
+                    "key": "C",
+                    "text": "A query optimizer that rewrites SQL statements"
+                },
+                {
+                    "key": "D",
+                    "text": "A warehouse auto-tuning service"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Search Optimization Service creates persistent data structures (search access paths) that significantly improve the performance of point lookup queries (equality predicates), substring/regex searches, and queries on VARIANT fields. It is an Enterprise edition feature.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q011",
+            "question": "Which type of query benefits most from the Search Optimization Service?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Full table scans with complex aggregations"
+                },
+                {
+                    "key": "B",
+                    "text": "Point lookup queries that return a small number of rows from a large table"
+                },
+                {
+                    "key": "C",
+                    "text": "Joins between multiple large tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Queries that use ORDER BY on large result sets"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Search Optimization is designed for selective queries that filter on specific column values (point lookups) and return a small fraction of rows from a large table. It is not beneficial for full table scans, complex joins, or sorting operations.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q012",
+            "question": "What is the difference between scaling UP and scaling OUT a warehouse?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scaling up increases warehouse size (more compute per query); scaling out adds more clusters (handles more concurrent queries)"
+                },
+                {
+                    "key": "B",
+                    "text": "Scaling up adds more clusters; scaling out increases warehouse size"
+                },
+                {
+                    "key": "C",
+                    "text": "They are the same thing"
+                },
+                {
+                    "key": "D",
+                    "text": "Scaling up increases storage; scaling out increases compute"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Scaling UP means resizing the warehouse (e.g., Small to Medium) to provide more compute resources per query, improving individual query performance. Scaling OUT means adding more clusters (multi-cluster warehouse) to handle more concurrent queries without queuing.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q013",
+            "question": "When should you consider scaling UP (resizing) a warehouse instead of scaling OUT?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "When queries are queuing due to too many concurrent users"
+                },
+                {
+                    "key": "B",
+                    "text": "When individual queries are running slowly due to large data volumes"
+                },
+                {
+                    "key": "C",
+                    "text": "When the warehouse is frequently auto-suspending"
+                },
+                {
+                    "key": "D",
+                    "text": "When storage costs are too high"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Scaling up (increasing warehouse size) provides more compute resources to individual queries, making them run faster when dealing with large data volumes. Scaling out (adding clusters) helps with concurrency. Auto-suspend frequency is a configuration issue, not a sizing issue.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q014",
+            "question": "What does partition pruning mean in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Deleting old partitions to save storage"
+                },
+                {
+                    "key": "B",
+                    "text": "Skipping micro-partitions that don't contain relevant data based on metadata"
+                },
+                {
+                    "key": "C",
+                    "text": "Compressing partitions to reduce their size"
+                },
+                {
+                    "key": "D",
+                    "text": "Splitting large partitions into smaller ones"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Partition pruning uses micro-partition metadata (min/max values, null counts) to skip partitions that cannot contain data matching the query's filter conditions. This significantly reduces the amount of data scanned and improves query performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q015",
+            "question": "Which Snowflake view helps you determine the clustering quality of a table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SYSTEM$CLUSTERING_INFORMATION"
+                },
+                {
+                    "key": "B",
+                    "text": "INFORMATION_SCHEMA.CLUSTER_STATUS"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNT_USAGE.CLUSTERING_HISTORY"
+                },
+                {
+                    "key": "D",
+                    "text": "SHOW CLUSTER STATUS"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. SYSTEM$CLUSTERING_INFORMATION is a system function that returns clustering information for a table, including the clustering depth, average overlap, and the percentage of constants. Lower depth and overlap values indicate better clustering.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q016",
+            "question": "What does a high 'clustering depth' value indicate about a table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The data is well-clustered and queries will be efficient"
+                },
+                {
+                    "key": "B",
+                    "text": "The data is poorly clustered and many overlapping micro-partitions may need to be scanned"
+                },
+                {
+                    "key": "C",
+                    "text": "The table has many columns"
+                },
+                {
+                    "key": "D",
+                    "text": "The table is very large"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A high clustering depth means micro-partitions have significant overlap in their data ranges for the clustering key columns. This means the query optimizer cannot effectively prune partitions, leading to more data being scanned. A value of 1 indicates perfect clustering.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q017",
+            "question": "Which of the following scenarios would NOT benefit from a Materialized View?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Frequent queries that aggregate large amounts of data"
+                },
+                {
+                    "key": "B",
+                    "text": "Tables where the underlying data changes very frequently"
+                },
+                {
+                    "key": "C",
+                    "text": "Complex queries with multiple joins that are run repeatedly"
+                },
+                {
+                    "key": "D",
+                    "text": "Queries that filter on a different clustering key than the base table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Materialized Views store pre-computed results that must be refreshed when underlying data changes. If data changes very frequently, the maintenance cost of continuously refreshing the materialized view may outweigh the performance benefit. They work best when the base table is relatively stable.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q018",
+            "question": "Which column in the Query History view indicates the percentage of data scanned from cache vs. remote storage?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "BYTES_SCANNED"
+                },
+                {
+                    "key": "B",
+                    "text": "PERCENTAGE_SCANNED_FROM_CACHE"
+                },
+                {
+                    "key": "C",
+                    "text": "CACHE_HIT_RATIO"
+                },
+                {
+                    "key": "D",
+                    "text": "BYTES_READ_FROM_CACHE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. PERCENTAGE_SCANNED_FROM_CACHE in the query history indicates what fraction of data was read from the warehouse local disk cache rather than from remote cloud storage. A high percentage means good cache utilization and typically faster query performance.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q019",
+            "question": "Which action can help improve performance when many queries are queuing on a warehouse?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Increase the warehouse size from SMALL to MEDIUM"
+                },
+                {
+                    "key": "B",
+                    "text": "Enable multi-cluster warehouses to add additional clusters"
+                },
+                {
+                    "key": "C",
+                    "text": "Add a clustering key to all tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable the Result Cache"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Query queuing occurs when there are more concurrent queries than the warehouse can handle. Multi-cluster warehouses scale out additional clusters to handle increased concurrency. Increasing warehouse size helps individual query speed but not concurrency. The Result Cache is always enabled.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q020",
+            "question": "A Resource Monitor can perform which of the following actions when a credit threshold is reached? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Send a notification to account administrators"
+                },
+                {
+                    "key": "B",
+                    "text": "Suspend the warehouse (allow running queries to complete)"
+                },
+                {
+                    "key": "C",
+                    "text": "Suspend the warehouse immediately (kill running queries)"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatically resize the warehouse to a smaller size"
+                },
+                {
+                    "key": "E",
+                    "text": "Delete the warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Resource Monitors can: Notify (send alert to admins), Suspend (stop the warehouse after current queries finish), or Suspend Immediately (kill running queries and stop). They cannot resize or delete warehouses.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q021",
+            "question": "What is the EXPLAIN command used for in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To execute a query and display results with timing information"
+                },
+                {
+                    "key": "B",
+                    "text": "To display the logical execution plan of a query without actually running it"
+                },
+                {
+                    "key": "C",
+                    "text": "To show the estimated credit cost of a query"
+                },
+                {
+                    "key": "D",
+                    "text": "To describe the structure of a table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. EXPLAIN generates the logical execution plan for a SQL statement without executing it. This shows the operations Snowflake would perform, helping you understand the query's approach before running it. For detailed runtime statistics, use the Query Profile.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q022",
+            "question": "What is automatic reclustering in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Snowflake automatically creates clustering keys on all tables"
+                },
+                {
+                    "key": "B",
+                    "text": "A background service that maintains the clustering of a table after DML operations modify data"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatic defragmentation of micro-partitions daily"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatic redistribution of data across warehouses"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When a clustering key is defined, Snowflake's automatic reclustering service runs in the background to maintain data clustering as new data is inserted or existing data is modified. This reclustering is serverless and charged separately from warehouse compute.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q023",
+            "question": "Which statement about the local disk cache (warehouse cache) is true?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It persists indefinitely until explicitly cleared"
+                },
+                {
+                    "key": "B",
+                    "text": "It is maintained on the warehouse's SSD storage and cleared when the warehouse is suspended"
+                },
+                {
+                    "key": "C",
+                    "text": "It is shared across all warehouses in the account"
+                },
+                {
+                    "key": "D",
+                    "text": "It caches query results, not raw data"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The local disk cache stores raw micro-partition data on the warehouse nodes' SSD. When a warehouse is suspended, the cache is dropped. This is why frequent suspend/resume cycles can reduce cache efficiency. The cache is warehouse-specific, not shared.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q024",
+            "question": "When does Snowflake's query result cache become invalidated?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "When the warehouse is resized"
+                },
+                {
+                    "key": "B",
+                    "text": "When the underlying data changes or 24 hours have passed"
+                },
+                {
+                    "key": "C",
+                    "text": "When a different user runs the same query"
+                },
+                {
+                    "key": "D",
+                    "text": "When the warehouse is suspended"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The result cache is invalidated when: 1) The underlying data in any table referenced by the query changes, 2) 24 hours have passed since the result was cached, or 3) The micro-partitions referenced have changed. Warehouse state changes do not affect the result cache.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q025",
+            "question": "What does the 'Pruning' metric in the Query Profile indicate?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The number of columns removed from the result set"
+                },
+                {
+                    "key": "B",
+                    "text": "The number and percentage of micro-partitions skipped vs. total partitions"
+                },
+                {
+                    "key": "C",
+                    "text": "The amount of memory freed during query execution"
+                },
+                {
+                    "key": "D",
+                    "text": "The number of duplicate rows removed"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The pruning statistic shows how many micro-partitions were scanned vs. how many could have been scanned (total). A query that scans 10 out of 1000 partitions has 99% pruning efficiency, indicating excellent data organization relative to the query's filter.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q026",
+            "question": "Which factor does NOT affect the local disk cache hit rate?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "How recently the warehouse was resumed"
+                },
+                {
+                    "key": "B",
+                    "text": "Whether queries access the same micro-partitions repeatedly"
+                },
+                {
+                    "key": "C",
+                    "text": "The number of users querying the same data"
+                },
+                {
+                    "key": "D",
+                    "text": "The size of the underlying cloud object storage"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. The size of cloud object storage does not affect cache hit rates. Cache hits depend on: recency of warehouse resume (cache is empty after suspend), access patterns (repeated access to same data improves hits), and concurrent queries accessing similar data on the same warehouse.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q027",
+            "question": "How can you disable the Result Cache for a specific session?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ALTER SESSION SET USE_CACHED_RESULT = FALSE"
+                },
+                {
+                    "key": "B",
+                    "text": "ALTER WAREHOUSE SET RESULT_CACHE = FALSE"
+                },
+                {
+                    "key": "C",
+                    "text": "SET QUERY_CACHE = OFF"
+                },
+                {
+                    "key": "D",
+                    "text": "The Result Cache cannot be disabled"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. ALTER SESSION SET USE_CACHED_RESULT = FALSE disables the result cache for the current session. This forces queries to re-execute even if cached results exist. This is useful for benchmarking or when you want fresh results. The default is TRUE.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q028",
+            "question": "Which approach is recommended for choosing clustering key columns?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Choose high-cardinality columns like unique IDs"
+                },
+                {
+                    "key": "B",
+                    "text": "Choose columns frequently used in WHERE clauses and JOIN conditions, preferring low-to-medium cardinality"
+                },
+                {
+                    "key": "C",
+                    "text": "Always cluster on the primary key columns"
+                },
+                {
+                    "key": "D",
+                    "text": "Cluster on all columns in the table for maximum flexibility"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Clustering keys should be columns frequently used in query filters and joins, with low-to-medium cardinality. High-cardinality columns (unique IDs) produce poor clustering because values rarely repeat across partitions. Clustering on all columns adds overhead with no benefit. A typical clustering key has 3-4 columns maximum.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q029",
+            "question": "Which Snowflake edition is required for the Search Optimization Service?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Search Optimization Service requires Enterprise edition or higher. It is billed based on serverless compute used for maintenance and storage for the search access paths.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q030",
+            "question": "What is the recommended maximum number of columns in a clustering key?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "1 column only"
+                },
+                {
+                    "key": "B",
+                    "text": "3 to 4 columns, ordered from lowest to highest cardinality"
+                },
+                {
+                    "key": "C",
+                    "text": "10 or more columns for best coverage"
+                },
+                {
+                    "key": "D",
+                    "text": "All columns in the table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake recommends 3-4 columns maximum for a clustering key. Columns should be ordered from lowest cardinality to highest. Too many columns increase maintenance costs without improving pruning.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q031",
+            "question": "Which Query Profile operator would indicate a performance-intensive join?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "TableScan"
+                },
+                {
+                    "key": "B",
+                    "text": "Join (with high bytes sent or spilling indicators)"
+                },
+                {
+                    "key": "C",
+                    "text": "Result"
+                },
+                {
+                    "key": "D",
+                    "text": "WithClause"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. In the Query Profile, a Join operator showing high bytes processed, significant data flow, or spilling to disk/remote storage indicates a performance-intensive join. Consider filtering data before the join, using appropriate join types, or scaling up the warehouse.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q032",
+            "question": "What is the impact of using SELECT * versus selecting specific columns on performance?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No impact since Snowflake stores data row-based"
+                },
+                {
+                    "key": "B",
+                    "text": "SELECT * reads all columns from micro-partitions; selecting specific columns reads only those columns, improving performance due to columnar storage"
+                },
+                {
+                    "key": "C",
+                    "text": "SELECT * is faster because it avoids column lookup overhead"
+                },
+                {
+                    "key": "D",
+                    "text": "They perform identically in all cases"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake uses columnar storage, so selecting specific columns means only those columns are read from the micro-partitions. SELECT * reads all columns, increasing I/O and memory usage. Always select only the columns you need for better performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q033",
+            "question": "What is a Materialized View in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A view whose results are precomputed and stored, automatically refreshed when the base table changes"
+                },
+                {
+                    "key": "B",
+                    "text": "A regular view with a name saved in the catalog"
+                },
+                {
+                    "key": "C",
+                    "text": "A temporary cache of view results"
+                },
+                {
+                    "key": "D",
+                    "text": "A view that can only be accessed by the owner"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Materialized Views precompute and store query results. They are automatically and incrementally refreshed by a serverless background process when the base table changes. This makes subsequent queries faster, especially for aggregations or complex transformations.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q034",
+            "question": "Which Snowflake edition is required for Materialized Views?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Materialized Views require Enterprise edition or higher. They incur costs for serverless compute (for automatic background maintenance/refresh) and additional storage for the materialized results.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q035",
+            "question": "Which of the following can you see in the Query Profile statistics? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Number of partitions scanned vs. total partitions"
+                },
+                {
+                    "key": "B",
+                    "text": "Bytes spilled to local and remote storage"
+                },
+                {
+                    "key": "C",
+                    "text": "The user's network bandwidth"
+                },
+                {
+                    "key": "D",
+                    "text": "Cloud provider infrastructure health status"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. The Query Profile shows detailed execution statistics including partition scan ratios (how many partitions were scanned vs. pruned), bytes spilled, bytes sent between operators, cache hit rates, and execution time breakdowns.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q036",
+            "question": "What is query queuing in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A feature to schedule queries for future execution"
+                },
+                {
+                    "key": "B",
+                    "text": "When a warehouse's compute resources are fully utilized, additional queries wait in a queue until resources become available"
+                },
+                {
+                    "key": "C",
+                    "text": "A priority system for important queries"
+                },
+                {
+                    "key": "D",
+                    "text": "A queue for queries that have syntax errors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Query queuing occurs when all available compute threads in a warehouse are busy. New queries enter a queue and wait until resources free up. Multi-cluster warehouses can reduce queuing by automatically adding clusters for concurrency.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q037",
+            "question": "What is the recommended approach when the Query Profile shows 'Exploding Joins'?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Use a larger warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Review join conditions — an exploding join produces many more rows than input tables, usually due to missing or incorrect join predicates"
+                },
+                {
+                    "key": "C",
+                    "text": "Add more clustering keys"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable the Search Optimization Service"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Exploding joins (Cartesian products or unintentional many-to-many joins) produce far more output rows than input rows. The fix is to review and correct join conditions, add proper predicates, or filter data before joining.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q038",
+            "question": "What is the Warehouse Load Monitoring chart used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Monitoring data loading into tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Visualizing warehouse query load, queuing, and resource utilization over time to identify if resizing or scaling is needed"
+                },
+                {
+                    "key": "C",
+                    "text": "Monitoring storage capacity"
+                },
+                {
+                    "key": "D",
+                    "text": "Loading warehouse configurations from a file"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Warehouse Load Monitoring shows the query load, queuing patterns, and execution statistics over time. It helps determine if a warehouse is over- or under-provisioned and whether scaling up (larger size) or out (multi-cluster) would be beneficial.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q039",
+            "question": "What is the benefit of using the LIMIT clause with large result sets?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It increases the accuracy of results"
+                },
+                {
+                    "key": "B",
+                    "text": "It reduces the amount of data processed and returned, improving performance and reducing resource usage"
+                },
+                {
+                    "key": "C",
+                    "text": "It enables partition pruning"
+                },
+                {
+                    "key": "D",
+                    "text": "It enables result caching automatically"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LIMIT reduces the rows returned and can reduce the work Snowflake needs to do, especially when combined with ORDER BY. For exploratory queries on large tables, LIMIT significantly reduces compute and I/O.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q040",
+            "question": "What best practice should you follow for warehouse sizing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Always use the largest warehouse available"
+                },
+                {
+                    "key": "B",
+                    "text": "Start small and scale up based on query performance needs; separate workloads into different warehouses"
+                },
+                {
+                    "key": "C",
+                    "text": "Use one large warehouse for all workloads"
+                },
+                {
+                    "key": "D",
+                    "text": "Always use X-Small to minimize costs"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Best practice is to start with a smaller warehouse and scale up as needed. Group similar workloads on the same warehouse and separate different workloads (ETL vs. reporting) into different warehouses for better resource management and cost control.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q041",
+            "question": "Which Snowflake feature helps identify unused or underused tables?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Query Profile"
+                },
+                {
+                    "key": "B",
+                    "text": "ACCESS_HISTORY and TABLE_STORAGE_METRICS in ACCOUNT_USAGE"
+                },
+                {
+                    "key": "C",
+                    "text": "Clustering keys"
+                },
+                {
+                    "key": "D",
+                    "text": "Resource Monitors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ACCESS_HISTORY shows which tables/columns are accessed by queries (and which are not). TABLE_STORAGE_METRICS shows storage size for each table. Together, they help identify unused tables that can be dropped to save storage costs.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q042",
+            "question": "What is the effect of using ORDER BY on a large result set without LIMIT?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No performance impact"
+                },
+                {
+                    "key": "B",
+                    "text": "It forces a global sort of all results, which can cause significant memory and compute usage, potentially spilling to disk"
+                },
+                {
+                    "key": "C",
+                    "text": "ORDER BY is ignored on large datasets"
+                },
+                {
+                    "key": "D",
+                    "text": "It uses the result cache automatically"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ORDER BY requires sorting the entire result set, which can be very expensive for large datasets. It may cause spilling to local or remote storage. Use LIMIT with ORDER BY when possible, and only sort when necessary.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q043",
+            "question": "Which of the following are valid types of Snowflake VIEW? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Permanent View"
+                },
+                {
+                    "key": "B",
+                    "text": "Temporary View"
+                },
+                {
+                    "key": "C",
+                    "text": "Secure View"
+                },
+                {
+                    "key": "D",
+                    "text": "Materialized View"
+                },
+                {
+                    "key": "E",
+                    "text": "External View"
+                }
+            ],
+            "correctAnswers": [
+                "C",
+                "D"
+            ],
+            "multiSelect": true,
+            "explanation": "C and D are correct. Snowflake supports standard (non-temporary) views, Secure Views, and Materialized Views. There is no 'Permanent View' or 'External View' keyword. 'Temporary View' is not a supported view type in Snowflake SQL syntax. Note: standard views can be created without any special keyword.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q044",
+            "question": "What is a Stream in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A real-time data streaming service like Apache Kafka"
+                },
+                {
+                    "key": "B",
+                    "text": "An object that records DML changes (inserts, updates, deletes) made to a table — change data capture (CDC)"
+                },
+                {
+                    "key": "C",
+                    "text": "A continuous query that runs in the background"
+                },
+                {
+                    "key": "D",
+                    "text": "A pipeline that loads data from external sources"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Snowflake Stream is a change data capture (CDC) object that tracks DML changes (INSERT, UPDATE, DELETE) to a source table. It records what changed since the last time the stream was consumed, enabling incremental data processing.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q045",
+            "question": "What metadata columns does a Stream add to track changes? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "METADATA$ACTION (INSERT or DELETE)"
+                },
+                {
+                    "key": "B",
+                    "text": "METADATA$ISUPDATE (TRUE if the action is part of an UPDATE)"
+                },
+                {
+                    "key": "C",
+                    "text": "METADATA$ROW_ID (unique row identifier)"
+                },
+                {
+                    "key": "D",
+                    "text": "METADATA$TIMESTAMP (time of the change)"
+                },
+                {
+                    "key": "E",
+                    "text": "METADATA$CHANGED_COLUMNS (list of modified columns)"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Streams add three metadata columns: METADATA$ACTION (INSERT or DELETE — updates produce a DELETE+INSERT pair), METADATA$ISUPDATE (TRUE for update-related rows), and METADATA$ROW_ID (unique identifier for each row). TIMESTAMP and CHANGED_COLUMNS are not stream metadata columns.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q046",
+            "question": "What is a Task in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A scheduled object that executes a SQL statement on a defined schedule or when triggered by a stream"
+                },
+                {
+                    "key": "B",
+                    "text": "A background process that optimizes query performance"
+                },
+                {
+                    "key": "C",
+                    "text": "A unit of work assigned to a virtual warehouse"
+                },
+                {
+                    "key": "D",
+                    "text": "A monitoring alert for account activity"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. A Task is a schedulable object that executes a single SQL statement on a defined schedule (using CRON or interval) or when triggered by preceding tasks in a task tree. Tasks can be configured to run when a stream has new data using SYSTEM$STREAM_HAS_DATA().",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q047",
+            "question": "What compute options are available for running Tasks? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "User-managed virtual warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowflake-managed serverless compute"
+                },
+                {
+                    "key": "C",
+                    "text": "Cloud provider compute (e.g., AWS Lambda)"
+                },
+                {
+                    "key": "D",
+                    "text": "Local compute on the client machine"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Tasks can run on either a user-managed virtual warehouse (specified with WAREHOUSE = wh_name) or Snowflake-managed serverless compute (specified with USER_TASK_MANAGED_INITIAL_WAREHOUSE_SIZE). They cannot use external compute resources.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q048",
+            "question": "What is a Stored Procedure in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A precompiled query stored in the Result Cache"
+                },
+                {
+                    "key": "B",
+                    "text": "A named block of procedural code (using SQL, JavaScript, Python, Java, or Scala) that can execute SQL statements"
+                },
+                {
+                    "key": "C",
+                    "text": "A scheduled task that runs automatically"
+                },
+                {
+                    "key": "D",
+                    "text": "A type of view that stores intermediate results"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Stored Procedures in Snowflake are named objects containing procedural code written in SQL (Snowflake Scripting), JavaScript, Python, Java, or Scala. They can execute multiple SQL statements, include control flow logic, and return values.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q049",
+            "question": "What is the difference between a UDF and a Stored Procedure in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "UDFs return a value and can be used in SQL expressions; Stored Procedures execute procedural logic and are called with CALL"
+                },
+                {
+                    "key": "B",
+                    "text": "There is no difference; they are the same thing"
+                },
+                {
+                    "key": "C",
+                    "text": "UDFs can only be written in SQL; Stored Procedures support multiple languages"
+                },
+                {
+                    "key": "D",
+                    "text": "Stored Procedures are faster than UDFs"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. UDFs (User-Defined Functions) return a scalar or tabular value and can be used inline in SQL statements (SELECT, WHERE, etc.). Stored Procedures contain procedural logic, are invoked with CALL, and can execute multiple SQL statements, but cannot be used inline in queries.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q050",
+            "question": "Which function is used to flatten semi-structured data (arrays and objects) in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "PARSE_JSON"
+                },
+                {
+                    "key": "B",
+                    "text": "FLATTEN"
+                },
+                {
+                    "key": "C",
+                    "text": "UNNEST"
+                },
+                {
+                    "key": "D",
+                    "text": "EXPLODE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FLATTEN is used with LATERAL to expand semi-structured data (arrays and objects) into individual rows. PARSE_JSON converts a JSON string into a VARIANT. UNNEST and EXPLODE are not Snowflake functions (they exist in other databases).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q051",
+            "question": "Snowflake recommends always extracting VARIANT data to a fixed table structure.",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "True"
+                },
+                {
+                    "key": "B",
+                    "text": "False"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B (False) is correct. Snowflake can efficiently query VARIANT data directly without extraction. However, if query performance on VARIANT columns is insufficient, extracting frequently queried fields to fixed columns can improve partition pruning and overall performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q052",
+            "question": "How do you access a nested key 'city' inside a VARIANT column named 'data' that contains JSON?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "data.address.city or data['address']['city']"
+                },
+                {
+                    "key": "B",
+                    "text": "JSON_EXTRACT(data, 'address.city')"
+                },
+                {
+                    "key": "C",
+                    "text": "data->address->city"
+                },
+                {
+                    "key": "D",
+                    "text": "GET_JSON_VALUE(data, '$.address.city')"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Snowflake uses dot notation (data.address.city) or bracket notation (data['address']['city']) to traverse VARIANT/OBJECT data. Both syntaxes are equivalent. JSON_EXTRACT, ->, and GET_JSON_VALUE are from other databases.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q053",
+            "question": "What does the LATERAL keyword do when used with FLATTEN?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It creates a cross join between the table and the flattened results"
+                },
+                {
+                    "key": "B",
+                    "text": "It allows FLATTEN to reference columns from the preceding table expression in the FROM clause"
+                },
+                {
+                    "key": "C",
+                    "text": "It sorts the flattened results horizontally"
+                },
+                {
+                    "key": "D",
+                    "text": "It restricts FLATTEN output to unique values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LATERAL allows FLATTEN to reference columns from preceding table expressions in the FROM clause. This is how FLATTEN accesses the VARIANT column from the source table. The typical pattern is: FROM table, LATERAL FLATTEN(input => table.variant_col).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q054",
+            "question": "What is the purpose of the PARSE_JSON function?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To validate JSON syntax"
+                },
+                {
+                    "key": "B",
+                    "text": "To convert a JSON-formatted string into a VARIANT value"
+                },
+                {
+                    "key": "C",
+                    "text": "To extract a specific field from JSON data"
+                },
+                {
+                    "key": "D",
+                    "text": "To convert VARIANT data back to a JSON string"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. PARSE_JSON takes a string containing valid JSON and converts it into a VARIANT value that can be queried using Snowflake's semi-structured data functions. TO_JSON does the reverse — converts VARIANT to a JSON string.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q055",
+            "question": "Which type of function returns a single value for a set of input rows?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scalar Function"
+                },
+                {
+                    "key": "B",
+                    "text": "Aggregate Function"
+                },
+                {
+                    "key": "C",
+                    "text": "Table Function"
+                },
+                {
+                    "key": "D",
+                    "text": "Window Function"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Aggregate functions (SUM, COUNT, AVG, MIN, MAX, etc.) take a set of input rows and return a single value. Scalar functions return one value per input row. Table functions return multiple rows. Window functions return a value for each row but compute it over a window of rows.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q056",
+            "question": "Which types of functions return a single value? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Aggregate Function"
+                },
+                {
+                    "key": "B",
+                    "text": "Window Function"
+                },
+                {
+                    "key": "C",
+                    "text": "Scalar Function"
+                },
+                {
+                    "key": "D",
+                    "text": "Table Function"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A and C are correct. Scalar functions return a single value per input row (e.g., UPPER, LENGTH). Aggregate functions return a single value for a group of rows (e.g., SUM, COUNT). Window functions return a value per row but use a window frame. Table functions return a set of rows.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q057",
+            "question": "What is a User-Defined Table Function (UDTF)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A function that returns a scalar value"
+                },
+                {
+                    "key": "B",
+                    "text": "A function that returns a set of rows (tabular result) and can be used in the FROM clause"
+                },
+                {
+                    "key": "C",
+                    "text": "A function that modifies table data"
+                },
+                {
+                    "key": "D",
+                    "text": "A function that creates a new table"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A UDTF returns a set of rows (a table) for each input row. It's used in the FROM clause like a table. UDTFs are useful for generating multiple output rows from a single input row, such as splitting a comma-separated string into multiple rows.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q058",
+            "question": "What does CREATE TABLE ... AS SELECT (CTAS) do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creates a table and populates it with the result of a SELECT query"
+                },
+                {
+                    "key": "B",
+                    "text": "Creates a view based on a SELECT query"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates a clone of the selected table"
+                },
+                {
+                    "key": "D",
+                    "text": "Creates a table definition only, without loading any data"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. CTAS (CREATE TABLE AS SELECT) creates a new table and populates it with the results of a SELECT query in a single operation. The table structure is inferred from the query's output columns. This is different from CREATE TABLE LIKE (structure only) or CLONE (shares storage).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q059",
+            "question": "What is a Sequence in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "An ordered list of SQL statements"
+                },
+                {
+                    "key": "B",
+                    "text": "A schema-level object that generates unique sequential numbers"
+                },
+                {
+                    "key": "C",
+                    "text": "A type of constraint that enforces row ordering"
+                },
+                {
+                    "key": "D",
+                    "text": "A task execution order definition"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Sequence is a schema-level object that generates unique, incrementing numbers. Sequences are commonly used to generate surrogate keys. Unlike auto-increment columns, sequences guarantee uniqueness but may not be gap-free.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q060",
+            "question": "Which languages can be used to write User-Defined Functions (UDFs) in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SQL"
+                },
+                {
+                    "key": "B",
+                    "text": "JavaScript"
+                },
+                {
+                    "key": "C",
+                    "text": "Python"
+                },
+                {
+                    "key": "D",
+                    "text": "Ruby"
+                },
+                {
+                    "key": "E",
+                    "text": "PHP"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake UDFs can be written in SQL, JavaScript, Python, Java, and Scala. Ruby and PHP are not supported languages for Snowflake UDFs.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q061",
+            "question": "What happens to a stream after its data is consumed (read in a DML transaction)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The stream is automatically dropped"
+                },
+                {
+                    "key": "B",
+                    "text": "The stream offset advances past the consumed changes, and the stream shows only new changes"
+                },
+                {
+                    "key": "C",
+                    "text": "The consumed data remains visible in the stream indefinitely"
+                },
+                {
+                    "key": "D",
+                    "text": "The stream must be manually reset using ALTER STREAM"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When stream data is consumed within a DML transaction (e.g., INSERT INTO ... SELECT FROM stream), the stream's offset advances past the consumed changes. After consumption, the stream only shows changes that occurred after the consumption point.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q062",
+            "question": "How can you check if a stream has new data to process?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SELECT COUNT(*) FROM stream_name"
+                },
+                {
+                    "key": "B",
+                    "text": "SYSTEM$STREAM_HAS_DATA('stream_name')"
+                },
+                {
+                    "key": "C",
+                    "text": "SHOW STREAMS LIKE 'stream_name' and check the HAS_DATA column"
+                },
+                {
+                    "key": "D",
+                    "text": "Both A and B are valid approaches"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. Both methods work: SELECT COUNT(*) will show the number of change records, and SYSTEM$STREAM_HAS_DATA() returns TRUE/FALSE. SYSTEM$STREAM_HAS_DATA is more efficient and is commonly used in Task WHEN conditions to avoid running tasks unnecessarily.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q063",
+            "question": "What is a Task Tree (DAG of Tasks) in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A single task that executes multiple SQL statements"
+                },
+                {
+                    "key": "B",
+                    "text": "A hierarchy of tasks where child tasks run after their parent task completes successfully"
+                },
+                {
+                    "key": "C",
+                    "text": "A backup schedule for task definitions"
+                },
+                {
+                    "key": "D",
+                    "text": "A monitoring dashboard for task execution"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Task Tree is a directed acyclic graph (DAG) where child tasks are triggered after their parent task completes. The root task has a schedule (CRON or interval), and child tasks are defined with AFTER parent_task_name. This enables multi-step data pipelines.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q064",
+            "question": "What is the MERGE statement used for in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Combining two tables into one permanently"
+                },
+                {
+                    "key": "B",
+                    "text": "Performing upsert operations — inserting new rows and updating existing rows based on a match condition"
+                },
+                {
+                    "key": "C",
+                    "text": "Merging two schemas"
+                },
+                {
+                    "key": "D",
+                    "text": "Joining data for read-only queries"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. MERGE performs upsert operations by matching source rows against target rows. When matched, it can UPDATE or DELETE. When not matched, it can INSERT. This is commonly used in ETL/ELT pipelines to keep dimension tables up to date.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q065",
+            "question": "What is the SAMPLE / TABLESAMPLE clause used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Taking a random sample of rows from a table for testing or analysis"
+                },
+                {
+                    "key": "B",
+                    "text": "Creating a sample database"
+                },
+                {
+                    "key": "C",
+                    "text": "Generating sample data for testing"
+                },
+                {
+                    "key": "D",
+                    "text": "Sampling query execution times"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. SAMPLE (or TABLESAMPLE) returns a random subset of rows from a table. You can specify the sample size as a percentage (SAMPLE(10)) or a fixed number of rows (SAMPLE(100 ROWS)). This is useful for exploratory analysis on large tables.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q066",
+            "question": "What does INSERT OVERWRITE do in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Inserts data and overwrites duplicate rows based on primary key"
+                },
+                {
+                    "key": "B",
+                    "text": "Truncates the target table and inserts the new data in a single atomic operation"
+                },
+                {
+                    "key": "C",
+                    "text": "Overwrites specific columns in existing rows"
+                },
+                {
+                    "key": "D",
+                    "text": "Inserts data only if the table is empty"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. INSERT OVERWRITE INTO table SELECT ... atomically replaces all data in the table with the result of the SELECT query. It's equivalent to TRUNCATE + INSERT but performed atomically, meaning readers see either the old or new data, never a partially loaded state.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q067",
+            "question": "Which statement about Snowflake Stored Procedures is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Stored Procedures can be used directly in SELECT statements like functions"
+                },
+                {
+                    "key": "B",
+                    "text": "Stored Procedures are invoked using the CALL statement"
+                },
+                {
+                    "key": "C",
+                    "text": "Stored Procedures cannot contain transaction control statements"
+                },
+                {
+                    "key": "D",
+                    "text": "Stored Procedures must be written in JavaScript"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Stored Procedures are invoked using CALL procedure_name(args). They cannot be used directly in SELECT statements — that's what UDFs are for. Procedures can contain transaction control (BEGIN/COMMIT/ROLLBACK) and can be written in SQL, JavaScript, Python, Java, or Scala.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q068",
+            "question": "What is the difference between a standard view and a materialized view?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A standard view stores data; a materialized view is just a query definition"
+                },
+                {
+                    "key": "B",
+                    "text": "A standard view is a named query definition; a materialized view stores precomputed results that are automatically maintained"
+                },
+                {
+                    "key": "C",
+                    "text": "There is no difference; they are interchangeable"
+                },
+                {
+                    "key": "D",
+                    "text": "Materialized views can only be created on external tables"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A standard view is a stored query definition — it runs the query each time it's accessed. A materialized view stores the precomputed query results and Snowflake automatically refreshes them when the base table data changes. Materialized views trade storage cost for query performance.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q069",
+            "question": "What types of operations can a Stream track? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "INSERT"
+                },
+                {
+                    "key": "B",
+                    "text": "UPDATE"
+                },
+                {
+                    "key": "C",
+                    "text": "DELETE"
+                },
+                {
+                    "key": "D",
+                    "text": "TRUNCATE"
+                },
+                {
+                    "key": "E",
+                    "text": "ALTER TABLE"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Streams track DML operations: INSERT, UPDATE, and DELETE. Updates are represented as a DELETE+INSERT pair. DDL operations like TRUNCATE and ALTER TABLE are not tracked by streams.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q070",
+            "question": "What is Snowflake Scripting?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "JavaScript code executed in Snowflake"
+                },
+                {
+                    "key": "B",
+                    "text": "A SQL extension that adds procedural constructs (variables, loops, branching) to SQL in stored procedures and anonymous blocks"
+                },
+                {
+                    "key": "C",
+                    "text": "Python scripts that run in Snowpark"
+                },
+                {
+                    "key": "D",
+                    "text": "Shell scripts for managing Snowflake via CLI"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake Scripting is a SQL extension that adds procedural programming constructs to SQL, including variables (LET/DECLARE), IF-THEN-ELSE, FOR/WHILE loops, cursors, and exception handling. It can be used in stored procedures and anonymous blocks (EXECUTE IMMEDIATE).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q071",
+            "question": "What does the GENERATOR table function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Generates random test data matching a table's schema"
+                },
+                {
+                    "key": "B",
+                    "text": "Generates a specified number of rows, useful for creating sequences or test data"
+                },
+                {
+                    "key": "C",
+                    "text": "Generates DDL statements for existing tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Generates query execution plans"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. GENERATOR(ROWCOUNT => n) produces n rows with no columns. Combined with SEQ4(), RANDOM(), and other functions, it's commonly used to generate test data, number sequences, or date ranges. For example: SELECT SEQ4() FROM TABLE(GENERATOR(ROWCOUNT => 100)).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q072",
+            "question": "What is a Recursive CTE (Common Table Expression) in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A CTE that references external tables"
+                },
+                {
+                    "key": "B",
+                    "text": "A CTE that references itself to traverse hierarchical or graph-like data structures"
+                },
+                {
+                    "key": "C",
+                    "text": "A CTE that runs multiple times in a loop"
+                },
+                {
+                    "key": "D",
+                    "text": "A CTE that is cached for reuse across sessions"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Recursive CTE (WITH RECURSIVE) references itself to iteratively process hierarchical data like organizational charts, bill of materials, or graph structures. It has an anchor member (base case) and a recursive member that references the CTE name.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q073",
+            "question": "What is the difference between QUALIFY and HAVING in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "QUALIFY filters rows based on window function results; HAVING filters groups based on aggregate function results"
+                },
+                {
+                    "key": "B",
+                    "text": "They are interchangeable and do the same thing"
+                },
+                {
+                    "key": "C",
+                    "text": "QUALIFY works on JOINs; HAVING works on GROUP BY"
+                },
+                {
+                    "key": "D",
+                    "text": "HAVING is standard SQL; QUALIFY is not supported in Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. QUALIFY filters rows based on the result of window functions (like ROW_NUMBER, RANK), similar to how HAVING filters based on aggregate results. Example: SELECT * FROM t QUALIFY ROW_NUMBER() OVER(PARTITION BY col ORDER BY col2) = 1.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q074",
+            "question": "Which statement about external functions in Snowflake is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "External functions execute code on Snowflake's compute resources"
+                },
+                {
+                    "key": "B",
+                    "text": "External functions call code hosted on external cloud services (e.g., AWS Lambda, Azure Functions) via API integrations"
+                },
+                {
+                    "key": "C",
+                    "text": "External functions can only return scalar values"
+                },
+                {
+                    "key": "D",
+                    "text": "External functions are deprecated in favor of Snowpark"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. External functions allow Snowflake to call remote services (AWS Lambda, Azure Functions, GCP Cloud Functions) via API Gateway integrations. This enables calling ML models, external APIs, or custom logic from within SQL queries.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q075",
+            "question": "What does the ARRAY_AGG function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Sums all elements in an array"
+                },
+                {
+                    "key": "B",
+                    "text": "Aggregates values from multiple rows into a single ARRAY"
+                },
+                {
+                    "key": "C",
+                    "text": "Counts the elements in an array"
+                },
+                {
+                    "key": "D",
+                    "text": "Flattens nested arrays into a single array"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ARRAY_AGG is an aggregate function that collects values from multiple rows into a single ARRAY value. For example, SELECT dept, ARRAY_AGG(employee_name) FROM employees GROUP BY dept would return an array of names per department.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q076",
+            "question": "What does the PIVOT function do in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Rotates rows into columns, transforming unique values from one column into multiple columns"
+                },
+                {
+                    "key": "B",
+                    "text": "Rotates columns into rows"
+                },
+                {
+                    "key": "C",
+                    "text": "Joins two tables side by side"
+                },
+                {
+                    "key": "D",
+                    "text": "Transposes the entire table"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. PIVOT rotates rows into columns. It takes distinct values from a column and creates new columns for each value, aggregating a specified measure. Example: SELECT * FROM sales PIVOT(SUM(amount) FOR quarter IN ('Q1', 'Q2', 'Q3', 'Q4'));",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q077",
+            "question": "What does the UNPIVOT function do in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Rotates rows into columns"
+                },
+                {
+                    "key": "B",
+                    "text": "Rotates columns into rows, creating name-value pairs from multiple columns"
+                },
+                {
+                    "key": "C",
+                    "text": "Removes pivot tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Undoes the last PIVOT operation"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. UNPIVOT is the reverse of PIVOT. It transforms columns into rows, creating name-value pairs. Example: If you have columns Q1, Q2, Q3, Q4 with amounts, UNPIVOT creates two columns: quarter_name and amount, with one row per original column.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q078",
+            "question": "What is the OBJECT_CONSTRUCT function used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating database objects like tables and views"
+                },
+                {
+                    "key": "B",
+                    "text": "Building a JSON object (OBJECT/VARIANT) from key-value pairs"
+                },
+                {
+                    "key": "C",
+                    "text": "Constructing SQL queries dynamically"
+                },
+                {
+                    "key": "D",
+                    "text": "Creating stored procedures"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. OBJECT_CONSTRUCT creates a VARIANT value containing a JSON object from key-value pair arguments. Example: OBJECT_CONSTRUCT('name', 'John', 'age', 30) returns {\"name\": \"John\", \"age\": 30}. OBJECT_CONSTRUCT(*) creates an object from all columns in a row.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q079",
+            "question": "What does the GET_PATH function (or : notation) do with semi-structured data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Gets the file path of the data source"
+                },
+                {
+                    "key": "B",
+                    "text": "Extracts a value from a VARIANT column using a path expression (e.g., data:customer.address.city)"
+                },
+                {
+                    "key": "C",
+                    "text": "Returns the directory path of a stage"
+                },
+                {
+                    "key": "D",
+                    "text": "Gets the execution path of a stored procedure"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. GET_PATH (or the : and . dot notation) extracts values from nested VARIANT/OBJECT data. Example: SELECT data:customer.address.city FROM my_table extracts the city field from nested JSON. Bracket notation also works: data['customer']['address']['city'].",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q080",
+            "question": "What does the TYPEOF function return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The Snowflake SQL data type of a column"
+                },
+                {
+                    "key": "B",
+                    "text": "The JSON/VARIANT data type of a value within a VARIANT column (e.g., VARCHAR, INTEGER, BOOLEAN, ARRAY, OBJECT)"
+                },
+                {
+                    "key": "C",
+                    "text": "The type of a database object"
+                },
+                {
+                    "key": "D",
+                    "text": "The type of warehouse being used"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. TYPEOF returns the data type of a value stored within a VARIANT column — such as VARCHAR, INTEGER, DOUBLE, BOOLEAN, ARRAY, OBJECT, or NULL_VALUE. This is useful for inspecting semi-structured data where types can vary.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q081",
+            "question": "What is the difference between TRY_CAST and CAST?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "TRY_CAST is faster than CAST"
+                },
+                {
+                    "key": "B",
+                    "text": "TRY_CAST returns NULL on conversion failure instead of raising an error, while CAST raises an error"
+                },
+                {
+                    "key": "C",
+                    "text": "TRY_CAST works with more data types"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no difference"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. TRY_CAST attempts a type conversion and returns NULL if it fails (e.g., TRY_CAST('abc' AS INT) returns NULL). CAST raises an error on failure. TRY_CAST is useful for data cleansing when values may not be valid for the target type.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q082",
+            "question": "What does the RESULT_SCAN function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scans table results for errors"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns the result set of a previous SQL statement as a table, allowing further querying"
+                },
+                {
+                    "key": "C",
+                    "text": "Scans query history for specific patterns"
+                },
+                {
+                    "key": "D",
+                    "text": "Scans the result cache for matching queries"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. RESULT_SCAN returns the result of a previous command as a table. Example: SELECT * FROM TABLE(RESULT_SCAN(LAST_QUERY_ID())) WHERE column1 > 100; This lets you query the output of SHOW, DESCRIBE, or any other command.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q083",
+            "question": "What does LAST_QUERY_ID() return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The ID of the last table queried"
+                },
+                {
+                    "key": "B",
+                    "text": "The query ID of the most recently executed statement in the current session"
+                },
+                {
+                    "key": "C",
+                    "text": "The ID of the last user who ran a query"
+                },
+                {
+                    "key": "D",
+                    "text": "The timestamp of the last query"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LAST_QUERY_ID() returns the UUID query ID of the most recent statement executed in the current session. You can also pass an offset: LAST_QUERY_ID(-2) returns the query ID of the second-to-last query. It's commonly used with RESULT_SCAN.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q084",
+            "question": "What is the difference between BERNOULLI and SYSTEM sampling methods?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "BERNOULLI samples individual rows randomly; SYSTEM samples entire micro-partitions (blocks), which is faster but less random"
+                },
+                {
+                    "key": "B",
+                    "text": "SYSTEM is more random; BERNOULLI is faster"
+                },
+                {
+                    "key": "C",
+                    "text": "They produce identical results"
+                },
+                {
+                    "key": "D",
+                    "text": "BERNOULLI only works on views; SYSTEM only on tables"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. BERNOULLI (or ROW) sampling evaluates each row independently, providing true random sampling. SYSTEM (or BLOCK) sampling selects entire micro-partitions, which is faster for large tables but may produce clustered results.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q085",
+            "question": "What is a JavaScript UDF in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A front-end JavaScript function for the Snowflake UI"
+                },
+                {
+                    "key": "B",
+                    "text": "A User-Defined Function written in JavaScript that runs inside the Snowflake engine for custom data transformations"
+                },
+                {
+                    "key": "C",
+                    "text": "A Node.js server that connects to Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "A JavaScript client library for Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake supports UDFs written in JavaScript (as well as SQL, Python, Java, Scala). JavaScript UDFs run within Snowflake's secure sandbox and can process VARIANT data, perform string manipulation, math, and complex logic not easily done in SQL.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q086",
+            "question": "What languages can be used to write User-Defined Functions (UDFs) in Snowflake? (Choose all that apply)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SQL"
+                },
+                {
+                    "key": "B",
+                    "text": "JavaScript"
+                },
+                {
+                    "key": "C",
+                    "text": "Python"
+                },
+                {
+                    "key": "D",
+                    "text": "Java"
+                },
+                {
+                    "key": "E",
+                    "text": "All of the above"
+                }
+            ],
+            "correctAnswers": [
+                "E"
+            ],
+            "multiSelect": false,
+            "explanation": "E is correct. Snowflake supports UDFs written in SQL, JavaScript, Python, Java, and Scala. Each language has different use cases: SQL for simple logic, JavaScript/Python for complex transformations, Java/Scala for leveraging existing libraries.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q087",
+            "question": "What is the difference between a scalar UDF and a tabular UDF (UDTF)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scalar UDFs are faster; UDTFs are more accurate"
+                },
+                {
+                    "key": "B",
+                    "text": "A scalar UDF returns a single value per input row; a UDTF returns a set of rows (a table) per input row"
+                },
+                {
+                    "key": "C",
+                    "text": "Scalar UDFs use SQL; UDTFs use JavaScript"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no difference"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A scalar UDF returns exactly one value for each input row. A UDTF (User-Defined Table Function) can return zero, one, or many rows for each input row, and is used with TABLE() in the FROM clause.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q088",
+            "question": "What is the correct order of SQL clause evaluation in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SELECT → FROM → WHERE → GROUP BY → HAVING → QUALIFY → ORDER BY → LIMIT"
+                },
+                {
+                    "key": "B",
+                    "text": "FROM → WHERE → GROUP BY → HAVING → SELECT → QUALIFY → ORDER BY → LIMIT"
+                },
+                {
+                    "key": "C",
+                    "text": "FROM → WHERE → GROUP BY → HAVING → WINDOW → QUALIFY → SELECT → ORDER BY → LIMIT"
+                },
+                {
+                    "key": "D",
+                    "text": "SELECT → FROM → WHERE → QUALIFY → GROUP BY → HAVING → ORDER BY → LIMIT"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SQL clauses are logically evaluated in this order: FROM → WHERE → GROUP BY → HAVING → SELECT (including window functions) → QUALIFY → DISTINCT → ORDER BY → LIMIT. QUALIFY runs after window functions are computed.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q089",
+            "question": "Which window function returns the value from the previous row without a self-join?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "LEAD"
+                },
+                {
+                    "key": "B",
+                    "text": "LAG"
+                },
+                {
+                    "key": "C",
+                    "text": "FIRST_VALUE"
+                },
+                {
+                    "key": "D",
+                    "text": "NTH_VALUE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LAG accesses a value from a previous row (by default, the immediately preceding row) within the window partition. LEAD accesses the next row. Both avoid the need for self-joins when comparing rows. Example: LAG(sales, 1) OVER (ORDER BY month).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q090",
+            "question": "What is the difference between RANK() and DENSE_RANK()?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "RANK() skips numbers after ties; DENSE_RANK() does not skip numbers"
+                },
+                {
+                    "key": "B",
+                    "text": "DENSE_RANK() skips numbers after ties; RANK() does not"
+                },
+                {
+                    "key": "C",
+                    "text": "They always produce the same results"
+                },
+                {
+                    "key": "D",
+                    "text": "RANK() is for numeric data; DENSE_RANK() is for text data"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. With RANK(), if two rows tie at rank 1, the next rank is 3 (gap). With DENSE_RANK(), the next rank after a tie at 1 is 2 (no gap). ROW_NUMBER() assigns unique numbers with no ties.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q091",
+            "question": "What does the NTILE function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Returns the Nth value in a window"
+                },
+                {
+                    "key": "B",
+                    "text": "Divides the result set into a specified number of approximately equal groups (tiles) and assigns a group number to each row"
+                },
+                {
+                    "key": "C",
+                    "text": "Calculates the Nth percentile"
+                },
+                {
+                    "key": "D",
+                    "text": "Tiles data across multiple tables"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. NTILE(n) divides the ordered result set into n groups (tiles) of approximately equal size. Each row is assigned a tile number from 1 to n. Example: NTILE(4) OVER (ORDER BY sales DESC) creates quartiles.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q092",
+            "question": "What does LISTAGG do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Lists all aggregate functions available"
+                },
+                {
+                    "key": "B",
+                    "text": "Concatenates values from multiple rows into a single string with a specified delimiter"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates a list/array from rows"
+                },
+                {
+                    "key": "D",
+                    "text": "Aggregates list data types"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. LISTAGG concatenates values from multiple rows into a single delimited string. Example: SELECT dept, LISTAGG(name, ', ') WITHIN GROUP (ORDER BY name) FROM employees GROUP BY dept; produces 'Alice, Bob, Charlie' per department.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q093",
+            "question": "What does the 'caller's rights' vs 'owner's rights' distinction mean for stored procedures?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Caller's rights runs with the invoker's privileges; owner's rights runs with the creator's privileges"
+                },
+                {
+                    "key": "B",
+                    "text": "Owner's rights is always more secure"
+                },
+                {
+                    "key": "C",
+                    "text": "They are the same in Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "Caller's rights requires ACCOUNTADMIN role"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Caller's rights procedures execute with the privileges of the user who calls them. Owner's rights procedures execute with the privileges of the procedure owner, allowing controlled access to objects the caller might not have direct access to.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q094",
+            "question": "What is the difference between a Stored Procedure and a UDF? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Stored procedures are called with CALL; UDFs are used in SELECT statements"
+                },
+                {
+                    "key": "B",
+                    "text": "Stored procedures can execute DDL/DML; UDFs cannot execute DDL"
+                },
+                {
+                    "key": "C",
+                    "text": "UDFs are always faster than stored procedures"
+                },
+                {
+                    "key": "D",
+                    "text": "Stored procedures can only use SQL; UDFs support multiple languages"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Stored procedures are invoked with CALL and can execute DDL/DML operations (CREATE, DROP, INSERT, etc.). UDFs are used in SQL expressions (SELECT, WHERE) and cannot perform DDL. Both support multiple languages (SQL, JavaScript, Python, Java, Scala).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q095",
+            "question": "What does the IFF function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Checks if a value is a float"
+                },
+                {
+                    "key": "B",
+                    "text": "A shorthand for a simple IF-THEN-ELSE expression, returning one of two values based on a condition"
+                },
+                {
+                    "key": "C",
+                    "text": "Tests if two values are identical"
+                },
+                {
+                    "key": "D",
+                    "text": "Returns the inverse of a boolean value"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. IFF(condition, true_value, false_value) is Snowflake's shorthand for a simple conditional expression. It's equivalent to CASE WHEN condition THEN true_value ELSE false_value END. Example: IFF(score >= 70, 'Pass', 'Fail').",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q096",
+            "question": "What does the COALESCE function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Combines two tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns the first non-NULL expression from a list of arguments"
+                },
+                {
+                    "key": "C",
+                    "text": "Converts NULL to zero"
+                },
+                {
+                    "key": "D",
+                    "text": "Counts the number of NULL values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. COALESCE evaluates arguments left to right and returns the first non-NULL value. Example: COALESCE(phone_mobile, phone_work, phone_home, 'No phone') returns the first available phone number.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q097",
+            "question": "What does NVL do and how does it differ from COALESCE?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "NVL takes exactly two arguments (value, replacement); COALESCE accepts multiple arguments"
+                },
+                {
+                    "key": "B",
+                    "text": "NVL is faster than COALESCE"
+                },
+                {
+                    "key": "C",
+                    "text": "They are identical in all ways"
+                },
+                {
+                    "key": "D",
+                    "text": "NVL handles arrays; COALESCE does not"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. NVL(expr1, expr2) returns expr2 if expr1 is NULL (takes exactly 2 arguments). COALESCE(expr1, expr2, ..., exprN) returns the first non-NULL among any number of arguments. COALESCE is more flexible for multiple fallback values.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q098",
+            "question": "What does the NULLIF function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Replaces NULL with a specified value"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns NULL if the two arguments are equal; otherwise returns the first argument"
+                },
+                {
+                    "key": "C",
+                    "text": "Checks if a value is NULL"
+                },
+                {
+                    "key": "D",
+                    "text": "Converts empty strings to NULL"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. NULLIF(expr1, expr2) returns NULL if expr1 = expr2, otherwise returns expr1. Common use: NULLIF(value, 0) to avoid division by zero (returns NULL instead of 0, and dividing by NULL yields NULL instead of an error).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q099",
+            "question": "What does the TO_VARIANT function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Converts any SQL value to a VARIANT type"
+                },
+                {
+                    "key": "B",
+                    "text": "Converts VARIANT to a specific SQL type"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates a new VARIANT column"
+                },
+                {
+                    "key": "D",
+                    "text": "Lists all VARIANT values in a table"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. TO_VARIANT converts a value of any supported SQL type into a VARIANT value. This is useful when constructing semi-structured data or when inserting structured data into VARIANT columns.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q100",
+            "question": "What is the RECURSIVE keyword used for in FLATTEN?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It creates a recursive CTE automatically"
+                },
+                {
+                    "key": "B",
+                    "text": "When TRUE, FLATTEN recursively expands all nested arrays and objects in the input"
+                },
+                {
+                    "key": "C",
+                    "text": "It repeats the FLATTEN operation a specified number of times"
+                },
+                {
+                    "key": "D",
+                    "text": "It enables recursion in stored procedures"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FLATTEN with RECURSIVE => TRUE expands all nested structures (arrays and objects) at every level of the input, not just the top level. Default is FALSE (only the top-level element is flattened).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q101",
+            "question": "What does the AUTOINCREMENT (or IDENTITY) column property do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Automatically increments the warehouse size"
+                },
+                {
+                    "key": "B",
+                    "text": "Automatically generates unique sequential numeric values for a column when rows are inserted without providing a value"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatically increases the table's storage allocation"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatically increments the row count displayed in metadata"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. AUTOINCREMENT (or IDENTITY) on a numeric column auto-generates unique sequential values. Syntax: column_name INT AUTOINCREMENT START 1 INCREMENT 1. Unlike Sequences, this is a column-level property and doesn't require a separate object.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q102",
+            "question": "What does OBJECT_KEYS return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The primary keys of a table"
+                },
+                {
+                    "key": "B",
+                    "text": "An array of the top-level keys in an OBJECT (VARIANT containing a JSON object)"
+                },
+                {
+                    "key": "C",
+                    "text": "All encryption keys in the account"
+                },
+                {
+                    "key": "D",
+                    "text": "The key columns used in clustering"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. OBJECT_KEYS returns an ARRAY containing the top-level key names from a VARIANT value that holds an OBJECT/JSON. Example: OBJECT_KEYS(PARSE_JSON('{\"a\":1,\"b\":2}')) returns ['a','b'].",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q103",
+            "question": "What is the FLATTEN output column 'path' used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The file path of the source data"
+                },
+                {
+                    "key": "B",
+                    "text": "The path to the element within the original nested structure that was flattened"
+                },
+                {
+                    "key": "C",
+                    "text": "The execution path of the query"
+                },
+                {
+                    "key": "D",
+                    "text": "The network path to the Snowflake server"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FLATTEN produces several output columns. 'path' shows the location of the element within the original structure. Other columns include 'key' (object key name), 'index' (array position), 'value' (the element value), and 'this' (the current element being flattened).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q104",
+            "question": "What does the ARRAY_SIZE function return?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The memory size of an array in bytes"
+                },
+                {
+                    "key": "B",
+                    "text": "The number of elements in an ARRAY"
+                },
+                {
+                    "key": "C",
+                    "text": "The maximum allowed array size"
+                },
+                {
+                    "key": "D",
+                    "text": "The size of all arrays in a column"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ARRAY_SIZE returns the count of elements in an ARRAY. For NULL arrays, it returns NULL. Example: ARRAY_SIZE(ARRAY_CONSTRUCT(1, 2, 3)) returns 3.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q105",
+            "question": "What does the ARRAY_CONTAINS function check?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Whether a column contains an array data type"
+                },
+                {
+                    "key": "B",
+                    "text": "Whether a specified value exists within an ARRAY"
+                },
+                {
+                    "key": "C",
+                    "text": "Whether two arrays share common elements"
+                },
+                {
+                    "key": "D",
+                    "text": "Whether an array contains NULL values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ARRAY_CONTAINS(value, array) checks if the specified value is present in the ARRAY and returns TRUE or FALSE. The value to search for must be a VARIANT. Example: ARRAY_CONTAINS('apple'::VARIANT, fruit_array).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q106",
+            "question": "What is the difference between UNION and UNION ALL?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "UNION removes duplicate rows; UNION ALL keeps all rows including duplicates"
+                },
+                {
+                    "key": "B",
+                    "text": "UNION ALL removes duplicates; UNION keeps all"
+                },
+                {
+                    "key": "C",
+                    "text": "UNION works on tables; UNION ALL works on views"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no difference in Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. UNION combines result sets and removes duplicates (requiring a sort/distinct operation). UNION ALL combines result sets keeping all rows including duplicates. UNION ALL is faster because it skips deduplication.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q107",
+            "question": "What does the HAVING clause do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Filters rows before grouping"
+                },
+                {
+                    "key": "B",
+                    "text": "Filters groups based on aggregate function results, applied after GROUP BY"
+                },
+                {
+                    "key": "C",
+                    "text": "Defines the columns to group by"
+                },
+                {
+                    "key": "D",
+                    "text": "Specifies the sort order of groups"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. HAVING filters groups after the GROUP BY aggregation. WHERE filters individual rows before grouping. Example: SELECT dept, COUNT(*) FROM employees GROUP BY dept HAVING COUNT(*) > 5; returns only departments with more than 5 employees.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q108",
+            "question": "What does the VALUES clause do in INSERT statements?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Validates the data before insertion"
+                },
+                {
+                    "key": "B",
+                    "text": "Specifies literal row values to insert; multiple rows can be inserted in a single statement"
+                },
+                {
+                    "key": "C",
+                    "text": "Returns the values of an existing row"
+                },
+                {
+                    "key": "D",
+                    "text": "Creates a temporary table with the values"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. INSERT INTO table VALUES (val1, val2), (val3, val4) inserts one or more rows of literal values. For multi-row inserts, this is more efficient than separate INSERT statements. VALUES can also be used as a table source in FROM clauses.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q109",
+            "question": "What is the purpose of the WITHIN GROUP clause?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Defines the grouping columns"
+                },
+                {
+                    "key": "B",
+                    "text": "Specifies the sort order for ordered-set aggregate functions like LISTAGG, PERCENTILE_CONT, and ARRAY_AGG"
+                },
+                {
+                    "key": "C",
+                    "text": "Groups tables within a schema"
+                },
+                {
+                    "key": "D",
+                    "text": "Defines group-level security"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. WITHIN GROUP (ORDER BY ...) specifies the ordering for ordered-set aggregate functions. Example: LISTAGG(name, ', ') WITHIN GROUP (ORDER BY name) concatenates names alphabetically. Also used with PERCENTILE_CONT and PERCENTILE_DISC.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q110",
+            "question": "What does the TRY_TO_NUMBER function do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Converts a string to a number, raising an error on failure"
+                },
+                {
+                    "key": "B",
+                    "text": "Attempts to convert a string to a number and returns NULL (instead of an error) if the conversion fails"
+                },
+                {
+                    "key": "C",
+                    "text": "Returns TRUE if the input is a number"
+                },
+                {
+                    "key": "D",
+                    "text": "Rounds a number to the nearest integer"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. TRY_TO_NUMBER (and related TRY_TO_DECIMAL, TRY_TO_DOUBLE, TRY_TO_DATE, TRY_TO_TIMESTAMP) attempts the conversion and returns NULL on failure instead of raising an error. These TRY_ functions are essential for handling dirty or inconsistent data.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q111",
+            "question": "What happens when you resize a virtual warehouse from X-Small to Small?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "All running queries are terminated and restarted on the new size"
+                },
+                {
+                    "key": "B",
+                    "text": "The warehouse must be suspended before resizing"
+                },
+                {
+                    "key": "C",
+                    "text": "Running queries continue on the current size; new queries use the new size"
+                },
+                {
+                    "key": "D",
+                    "text": "The resize is queued until all current queries finish"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. When you resize a warehouse, existing queries continue running with the current compute resources. New queries submitted after the resize will use the new warehouse size. There is no need to suspend the warehouse or wait for queries to finish.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q112",
+            "question": "Which Snowflake edition is required to use multi-cluster warehouses?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard Edition"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise Edition"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical Edition"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions support multi-cluster warehouses"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Multi-cluster warehouses require Enterprise Edition or higher. Standard Edition does not support multi-cluster warehouses. Business Critical and VPS also support them, but Enterprise is the minimum required edition.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q113",
+            "question": "Which Snowflake feature enables automatic scaling of compute clusters to handle varying concurrency loads?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Auto-resume"
+                },
+                {
+                    "key": "B",
+                    "text": "Multi-cluster warehouses"
+                },
+                {
+                    "key": "C",
+                    "text": "Warehouse resizing"
+                },
+                {
+                    "key": "D",
+                    "text": "Query acceleration service"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Multi-cluster warehouses can automatically scale out additional clusters to handle increased concurrency. Auto-resume starts a suspended warehouse. Warehouse resizing changes the size of the warehouse (vertically). Query acceleration offloads portions of queries to shared compute.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q114",
+            "question": "What is the primary purpose of the scaling policy on a multi-cluster warehouse?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To determine the warehouse size"
+                },
+                {
+                    "key": "B",
+                    "text": "To control when additional clusters are started and shut down"
+                },
+                {
+                    "key": "C",
+                    "text": "To set the maximum number of queries per cluster"
+                },
+                {
+                    "key": "D",
+                    "text": "To configure the auto-suspend timeout"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The scaling policy (STANDARD or ECONOMY) controls how aggressively Snowflake starts and shuts down additional clusters. STANDARD starts clusters more aggressively to minimize queuing. ECONOMY conserves credits by only starting new clusters when queries would be queued.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q115",
+            "question": "Which scaling policy for multi-cluster warehouses prioritizes minimizing credit usage over minimizing query queuing time?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "STANDARD"
+                },
+                {
+                    "key": "B",
+                    "text": "ECONOMY"
+                },
+                {
+                    "key": "C",
+                    "text": "CONSERVATIVE"
+                },
+                {
+                    "key": "D",
+                    "text": "AGGRESSIVE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The ECONOMY scaling policy conserves credits by only starting additional clusters when enough queries are queued to keep a cluster busy for at least 6 minutes. STANDARD is more aggressive and starts clusters immediately when queuing begins. CONSERVATIVE and AGGRESSIVE are not valid policy names.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q116",
+            "question": "Which Snowflake feature can be used to monitor and control credit usage for virtual warehouses?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Resource Monitors"
+                },
+                {
+                    "key": "B",
+                    "text": "Query Profile"
+                },
+                {
+                    "key": "C",
+                    "text": "Data Sharing"
+                },
+                {
+                    "key": "D",
+                    "text": "Information Schema"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Resource Monitors allow you to set credit quotas on warehouses and take actions (notify, suspend, suspend immediately) when thresholds are reached. Query Profile is for analyzing query execution plans. Data Sharing is for sharing data between accounts.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q117",
+            "question": "Which data types does Snowflake use to store semi-structured data? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "VARIANT"
+                },
+                {
+                    "key": "B",
+                    "text": "OBJECT"
+                },
+                {
+                    "key": "C",
+                    "text": "ARRAY"
+                },
+                {
+                    "key": "D",
+                    "text": "JSON"
+                },
+                {
+                    "key": "E",
+                    "text": "XML"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. VARIANT can hold any type of data (including JSON, XML, Avro, etc.). OBJECT stores key-value pairs. ARRAY stores ordered lists. JSON and XML are data formats that can be stored in a VARIANT column, but they are not Snowflake data types.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q118",
+            "question": "Which of the following is NOT a feature of the Snowflake Standard edition?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Time Travel (up to 1 day)"
+                },
+                {
+                    "key": "B",
+                    "text": "Multi-cluster warehouses"
+                },
+                {
+                    "key": "C",
+                    "text": "Always-on encryption"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatic data replication for disaster recovery"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Multi-cluster warehouses require Enterprise edition or higher. Standard edition includes 1 day of Time Travel, always-on encryption, and data replication. Multi-cluster warehouses are an Enterprise+ feature.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q119",
+            "question": "What is the purpose of Snowflake's Query Acceleration Service?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To cache frequently run queries for faster execution"
+                },
+                {
+                    "key": "B",
+                    "text": "To offload portions of eligible queries to shared serverless compute resources"
+                },
+                {
+                    "key": "C",
+                    "text": "To automatically resize warehouses based on query complexity"
+                },
+                {
+                    "key": "D",
+                    "text": "To compress query results for faster transmission"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Query Acceleration Service (QAS) can accelerate parts of eligible queries by offloading work to serverless compute resources. It is particularly effective for queries that scan large amounts of data or have specific filter predicates.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q120",
+            "question": "Snowflake supports which of the following as a native file format for loading and unloading data? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CSV"
+                },
+                {
+                    "key": "B",
+                    "text": "JSON"
+                },
+                {
+                    "key": "C",
+                    "text": "Parquet"
+                },
+                {
+                    "key": "D",
+                    "text": "Excel (XLSX)"
+                },
+                {
+                    "key": "E",
+                    "text": "PDF"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake natively supports CSV, JSON, Avro, Parquet, ORC, and XML file formats. Excel (XLSX) and PDF are not supported as native load/unload formats.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q121",
+            "question": "Under what circumstances would you execute ALTER WAREHOUSE SET MIN_CLUSTER_COUNT = 1, MAX_CLUSTER_COUNT = 5?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "You are executing queries that process terabytes of data and need more clusters to complete on time"
+                },
+                {
+                    "key": "B",
+                    "text": "There is a significant increase in concurrent users executing queries on the warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "Neither of the above is correct"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Setting MIN_CLUSTER_COUNT and MAX_CLUSTER_COUNT configures multi-cluster warehouses to handle increased concurrency (more simultaneous users/queries). It does NOT improve performance for large individual queries — for that, you would resize the warehouse (increase its size).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q122",
+            "question": "What is the purpose of the Query Tag parameter in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It specifies the warehouse to use for a query"
+                },
+                {
+                    "key": "B",
+                    "text": "It attaches a custom label to SQL statements for tracking, monitoring, and cost attribution"
+                },
+                {
+                    "key": "C",
+                    "text": "It tags tables with metadata categories"
+                },
+                {
+                    "key": "D",
+                    "text": "It assigns priority levels to queries"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The QUERY_TAG session parameter lets you attach a custom string to all SQL statements in a session. This tag appears in QUERY_HISTORY and can be used for cost attribution, workload identification, and monitoring.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q123",
+            "question": "What are the two main categories of Snowflake costs?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Compute (credits) and Storage"
+                },
+                {
+                    "key": "B",
+                    "text": "Licensing and Support"
+                },
+                {
+                    "key": "C",
+                    "text": "Ingress and Egress"
+                },
+                {
+                    "key": "D",
+                    "text": "CPU and Memory"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Snowflake billing has two primary components: Compute (measured in credits for warehouse usage and cloud services) and Storage (billed per TB per month for data stored including Time Travel and Fail-safe). Data transfer costs may also apply for cross-region/cross-cloud transfers.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q124",
+            "question": "What is a Resource Monitor in Snowflake used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Monitoring CPU and memory usage of queries"
+                },
+                {
+                    "key": "B",
+                    "text": "Setting credit usage limits and notifications for warehouses or the account"
+                },
+                {
+                    "key": "C",
+                    "text": "Monitoring data storage growth"
+                },
+                {
+                    "key": "D",
+                    "text": "Monitoring network traffic to Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Resource Monitors track credit usage over a specified interval and can trigger notifications or actions (suspend warehouse, suspend immediately, notify only) when thresholds are reached. They can be set at the account level or on individual warehouses.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q125",
+            "question": "Which actions can a Resource Monitor trigger when a credit threshold is reached? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Notify administrators"
+                },
+                {
+                    "key": "B",
+                    "text": "Suspend the warehouse after running queries complete"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatically resize the warehouse"
+                },
+                {
+                    "key": "D",
+                    "text": "Delete old data to reduce costs"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Resource Monitors can send notifications to account administrators, suspend the warehouse (after current queries finish), or suspend immediately (killing running queries). They cannot resize warehouses or delete data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q126",
+            "question": "What is Snowflake's native support for semi-structured data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Semi-structured data must be converted to relational format before loading"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowflake natively stores and queries semi-structured data (JSON, Avro, Parquet, ORC, XML) using the VARIANT data type"
+                },
+                {
+                    "key": "C",
+                    "text": "Semi-structured data is stored as plain text strings"
+                },
+                {
+                    "key": "D",
+                    "text": "Snowflake does not support semi-structured data"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake natively supports semi-structured data formats including JSON, Avro, Parquet, ORC, and XML. Data is stored in the VARIANT, OBJECT, or ARRAY data types and can be queried using dot notation and bracket notation.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q127",
+            "question": "How is Snowflake storage billed?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Per query scanned"
+                },
+                {
+                    "key": "B",
+                    "text": "Per TB per month based on average daily storage including Time Travel and Fail-safe"
+                },
+                {
+                    "key": "C",
+                    "text": "A flat rate regardless of data volume"
+                },
+                {
+                    "key": "D",
+                    "text": "Only when data is actively queried"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Storage is billed per TB per month based on the average amount of compressed data stored each day. This includes active data, Time Travel data, and Fail-safe data. Snowflake compresses data automatically, so you pay for the compressed size.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q128",
+            "question": "Does Snowflake charge for data ingress (loading data into Snowflake)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, Snowflake charges for all data ingress"
+                },
+                {
+                    "key": "B",
+                    "text": "No, Snowflake does not charge for data ingress, but the cloud provider may charge for egress from source"
+                },
+                {
+                    "key": "C",
+                    "text": "Only for data loaded via Snowpipe"
+                },
+                {
+                    "key": "D",
+                    "text": "Only for cross-region data loading"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake does not charge for data ingress. However, data egress (transferring data out of Snowflake to a different region or cloud provider) does incur charges. The source cloud provider may also charge egress fees on their side.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q129",
+            "question": "Which scaling policy determines when to shut down additional clusters in a multi-cluster warehouse?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Economy — keeps clusters running longer to avoid startup costs"
+                },
+                {
+                    "key": "B",
+                    "text": "Standard — shuts down clusters quickly when no longer needed"
+                },
+                {
+                    "key": "C",
+                    "text": "Both Economy and Standard are scaling policies with different shutdown behaviors"
+                },
+                {
+                    "key": "D",
+                    "text": "Scaling policies only control startup, not shutdown"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Both are scaling policies. Standard mode starts clusters quickly and shuts them down as soon as load decreases. Economy mode conserves credits by keeping clusters running longer (waits 5-6 minutes of reduced load) to avoid frequent start/stop cycles.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q130",
+            "question": "Can a Snowflake virtual warehouse be resized while it is running?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, the warehouse must be suspended first"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, resizing takes effect immediately for new queries"
+                },
+                {
+                    "key": "C",
+                    "text": "Only if no queries are currently running"
+                },
+                {
+                    "key": "D",
+                    "text": "Only ACCOUNTADMIN can resize running warehouses"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Warehouses can be resized while running. The new size takes effect for subsequent queries. Currently running queries may or may not use the additional resources depending on their execution stage.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s4q131",
+            "question": "What does collation in Snowflake control?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The physical sort order of rows stored in micro-partitions"
+                },
+                {
+                    "key": "B",
+                    "text": "The locale-based rules used for comparing and sorting string values"
+                },
+                {
+                    "key": "C",
+                    "text": "The character encoding format (UTF-8 vs UTF-16) for VARCHAR columns"
+                },
+                {
+                    "key": "D",
+                    "text": "The default language used in error messages returned by Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Collation in Snowflake specifies locale-based rules that determine how string values are compared, sorted, and matched in WHERE clauses and ORDER BY. It does not affect physical storage order (A), character encoding (C), or error message language (D). Collation can be set at the column level or applied inline using the COLLATE function.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q132",
+            "question": "A developer needs to perform a case-insensitive comparison on a VARCHAR column named CITY. Which SQL expression correctly uses the COLLATE function for this purpose?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "COLLATE(CITY, 'en-ci')"
+                },
+                {
+                    "key": "B",
+                    "text": "COLLATE(CITY, 'case-insensitive')"
+                },
+                {
+                    "key": "C",
+                    "text": "CITY COLLATE 'en-ci'"
+                },
+                {
+                    "key": "D",
+                    "text": "COLLATE(CITY, 'en_US.CI')"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. The COLLATE function syntax in Snowflake is COLLATE(expression, 'collation_specification'). The collation specification 'en-ci' means English locale with case-insensitive comparison. B uses an invalid specification name. C uses incorrect syntax (Snowflake uses function-call style, not the SQL-standard postfix syntax). D uses an incorrect format for the collation specification.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q133",
+            "question": "Which statement correctly describes the INSERT ALL syntax for multi-table inserts in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "INSERT ALL allows inserting rows from a single SELECT query into multiple target tables in a single statement"
+                },
+                {
+                    "key": "B",
+                    "text": "INSERT ALL requires each target table to have identical column definitions"
+                },
+                {
+                    "key": "C",
+                    "text": "INSERT ALL can only insert into tables within the same schema"
+                },
+                {
+                    "key": "D",
+                    "text": "INSERT ALL automatically deduplicates rows across the target tables"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. The INSERT ALL (unconditional multi-table insert) statement takes a single subquery and inserts its rows into multiple target tables. Each INTO clause can specify different columns and values expressions. The target tables do not need identical schemas (B), can be in different schemas/databases (C), and no automatic deduplication occurs (D).",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q134",
+            "question": "How does INSERT FIRST differ from INSERT ALL WHEN in conditional multi-table inserts? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "INSERT FIRST inserts each row into only the first matching WHEN clause, while INSERT ALL WHEN inserts into every matching WHEN clause"
+                },
+                {
+                    "key": "B",
+                    "text": "INSERT FIRST is faster because it evaluates fewer conditions"
+                },
+                {
+                    "key": "C",
+                    "text": "INSERT ALL WHEN can result in the same source row being inserted into multiple target tables"
+                },
+                {
+                    "key": "D",
+                    "text": "INSERT FIRST does not support an ELSE clause, while INSERT ALL WHEN does"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A and C are correct. INSERT FIRST evaluates WHEN conditions in order and inserts each source row only into the first matching target, then moves to the next row. INSERT ALL WHEN evaluates all conditions for each row and inserts into every target whose condition is satisfied, so a single row can land in multiple tables. B is not guaranteed (performance depends on data). D is incorrect — both INSERT FIRST and INSERT ALL WHEN support an ELSE clause.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q135",
+            "question": "What is the primary performance benefit of using a multi-table INSERT statement instead of multiple separate INSERT ... SELECT statements against the same source?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Multi-table inserts use less warehouse credit consumption per row"
+                },
+                {
+                    "key": "B",
+                    "text": "The source data is scanned only once and distributed to all target tables in a single operation"
+                },
+                {
+                    "key": "C",
+                    "text": "Multi-table inserts bypass the transaction log for faster writes"
+                },
+                {
+                    "key": "D",
+                    "text": "Multi-table inserts automatically create clustering keys on target tables"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The key advantage of multi-table INSERT is that the source query is executed once and the results are routed to multiple target tables, avoiding repeated scans of the same source data. Separate INSERT statements would each independently scan the source. A is misleading — credit consumption depends on total compute, not per-row pricing. C is incorrect — all DML is logged. D is incorrect — clustering keys are not created automatically.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q136",
+            "question": "What is the primary purpose of Dynamic Tables in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To create temporary tables that are automatically dropped at the end of a session"
+                },
+                {
+                    "key": "B",
+                    "text": "To declaratively define the result of a query and let Snowflake automatically materialize and refresh it as underlying data changes"
+                },
+                {
+                    "key": "C",
+                    "text": "To dynamically add or remove columns based on incoming data schemas"
+                },
+                {
+                    "key": "D",
+                    "text": "To automatically scale warehouse size based on query complexity"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Dynamic Tables let you define data transformations declaratively as a SQL query. Snowflake automatically materializes the results and keeps them up to date as the underlying data changes, creating a simplified alternative to building and managing streams and tasks for data pipelines. A describes temporary tables, C and D are not Snowflake features.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q137",
+            "question": "What does the TARGET_LAG parameter control when creating a Dynamic Table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The maximum time allowed for the initial creation of the Dynamic Table"
+                },
+                {
+                    "key": "B",
+                    "text": "The maximum allowable staleness of the Dynamic Table data relative to its base tables"
+                },
+                {
+                    "key": "C",
+                    "text": "The delay before a Dynamic Table becomes visible to other users after creation"
+                },
+                {
+                    "key": "D",
+                    "text": "The replication lag threshold for cross-region Dynamic Table copies"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. TARGET_LAG specifies the maximum amount of time the Dynamic Table's content should lag behind updates to its base tables. Snowflake uses this target to determine how frequently to refresh the Dynamic Table. For example, TARGET_LAG = '10 minutes' means Snowflake will refresh the table as needed so data is never more than 10 minutes behind. It can also be set to DOWNSTREAM to inherit the lag from downstream Dynamic Tables.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q138",
+            "question": "Which statements correctly describe how Dynamic Tables compare to the traditional Streams and Tasks approach for data pipelines? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Dynamic Tables require you to define both a stream to capture changes and a task to process them"
+                },
+                {
+                    "key": "B",
+                    "text": "Dynamic Tables simplify pipeline development by letting you specify only the desired query result, and Snowflake manages the refresh process automatically"
+                },
+                {
+                    "key": "C",
+                    "text": "Streams and Tasks provide more granular control over change processing logic and scheduling"
+                },
+                {
+                    "key": "D",
+                    "text": "Dynamic Tables cannot be chained together to form multi-step pipelines"
+                }
+            ],
+            "correctAnswers": [
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "B and C are correct. Dynamic Tables are a declarative approach — you define the query and Snowflake handles refresh scheduling and incremental processing. Streams and Tasks are an imperative approach that gives you fine-grained control over how changes are captured (streams) and when/how they are processed (tasks). A is incorrect because Dynamic Tables eliminate the need for separate streams and tasks. D is incorrect — Dynamic Tables can reference other Dynamic Tables, forming DAG-based pipelines.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s4q139",
+            "question": "At which levels can parameters be set in Snowflake, and in what order of precedence do they apply (highest to lowest)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Account → Database → Schema → Session (session overrides all)"
+                },
+                {
+                    "key": "B",
+                    "text": "Session → User → Account (session has highest precedence)"
+                },
+                {
+                    "key": "C",
+                    "text": "Account → User → Session (account has highest precedence)"
+                },
+                {
+                    "key": "D",
+                    "text": "Session → Object → User → Account (session has highest precedence, account has lowest)"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake session parameters follow a hierarchy where session-level settings override user-level settings, which in turn override account-level defaults. Parameters set with ALTER SESSION take the highest precedence for that session. Parameters set with ALTER USER apply as defaults for all sessions of that user. Parameters set with ALTER ACCOUNT apply as defaults for all users in the account. Note that some parameters can also be set at the object level (warehouse, database, schema) depending on the parameter type.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s4q140",
+            "question": "A Snowflake administrator wants to tag all queries from a specific ETL application for monitoring and troubleshooting. Which session parameter should they set, and how is it used?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Set QUERY_TAG — its value is recorded in QUERY_HISTORY and can be used to filter and identify queries from the ETL application"
+                },
+                {
+                    "key": "B",
+                    "text": "Set STATEMENT_TIMEOUT_IN_SECONDS — it tags queries that exceed the time limit for later review"
+                },
+                {
+                    "key": "C",
+                    "text": "Set TIMEZONE — it records the application timezone as metadata on each query"
+                },
+                {
+                    "key": "D",
+                    "text": "Set LOG_LEVEL — it labels all queries with the application name in the query log"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. QUERY_TAG is a session-level parameter that allows you to set an arbitrary string (e.g., 'ETL_APP_V2') that is then recorded in the QUERY_HISTORY view for every query executed in that session. This makes it easy to filter, monitor, and troubleshoot queries by application or workload. B (STATEMENT_TIMEOUT_IN_SECONDS) controls query timeout, not tagging. C (TIMEZONE) controls timestamp display. D (LOG_LEVEL) controls logging verbosity, not query tagging.",
+            "difficulty": "hard"
+        }
+    ]
+}

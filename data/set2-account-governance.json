@@ -1,0 +1,3797 @@
+{
+    "setId": "set2-account-governance",
+    "setName": "Account Management and Data Governance",
+    "domain": "Account Management and Data Governance",
+    "domainWeight": 20,
+    "questions": [
+        {
+            "id": "s2q001",
+            "question": "Which is the most powerful system-defined role in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SYSADMIN"
+                },
+                {
+                    "key": "B",
+                    "text": "SECURITYADMIN"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNTADMIN"
+                },
+                {
+                    "key": "D",
+                    "text": "USERADMIN"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. ACCOUNTADMIN is the top-level role that encapsulates both SYSADMIN and SECURITYADMIN. It should be used with caution and granted to as few users as possible. SYSADMIN manages objects, SECURITYADMIN manages grants, and USERADMIN manages users and roles.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q002",
+            "question": "Which system-defined role is recommended for creating databases, schemas, and other objects?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ACCOUNTADMIN"
+                },
+                {
+                    "key": "B",
+                    "text": "SYSADMIN"
+                },
+                {
+                    "key": "C",
+                    "text": "SECURITYADMIN"
+                },
+                {
+                    "key": "D",
+                    "text": "PUBLIC"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SYSADMIN is the recommended role for creating and managing database objects like databases, schemas, tables, and warehouses. Using ACCOUNTADMIN for day-to-day object creation is considered a bad practice because of its elevated privileges.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q003",
+            "question": "What is the purpose of the SECURITYADMIN role?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To create and manage databases and warehouses"
+                },
+                {
+                    "key": "B",
+                    "text": "To manage users, roles, and grant/revoke privileges"
+                },
+                {
+                    "key": "C",
+                    "text": "To monitor account billing and resource usage"
+                },
+                {
+                    "key": "D",
+                    "text": "To configure network policies and encryption keys"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SECURITYADMIN manages users, roles, and privileges (GRANT/REVOKE). It inherits the USERADMIN role. Object creation is handled by SYSADMIN. Billing is managed by ACCOUNTADMIN. While SECURITYADMIN can manage network policies, its primary purpose is role and privilege management.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q004",
+            "question": "Which access control model does Snowflake primarily use?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Mandatory Access Control (MAC)"
+                },
+                {
+                    "key": "B",
+                    "text": "Discretionary Access Control (DAC) combined with Role-Based Access Control (RBAC)"
+                },
+                {
+                    "key": "C",
+                    "text": "Attribute-Based Access Control (ABAC) only"
+                },
+                {
+                    "key": "D",
+                    "text": "Access Control Lists (ACLs) only"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake uses a combination of DAC (object owners can grant access to their objects) and RBAC (privileges are assigned to roles, which are then assigned to users). This provides a flexible and secure access control framework.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q005",
+            "question": "In Snowflake's RBAC model, which statement is true about privilege inheritance?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Privileges flow from child roles up to parent roles in the role hierarchy"
+                },
+                {
+                    "key": "B",
+                    "text": "Privileges flow from parent roles down to child roles"
+                },
+                {
+                    "key": "C",
+                    "text": "There is no privilege inheritance; each role is independent"
+                },
+                {
+                    "key": "D",
+                    "text": "Only ACCOUNTADMIN inherits privileges from other roles"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. In Snowflake's role hierarchy, privileges flow upward — parent roles inherit all privileges from their child roles. For example, SYSADMIN inherits all privileges from custom roles that are granted to it. This is why best practice recommends granting custom roles to SYSADMIN.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q006",
+            "question": "What happens if you create a custom role but do NOT grant it to SYSADMIN?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The role cannot be used by any user"
+                },
+                {
+                    "key": "B",
+                    "text": "SYSADMIN will not be able to manage objects owned by that custom role"
+                },
+                {
+                    "key": "C",
+                    "text": "The role is automatically deleted after 24 hours"
+                },
+                {
+                    "key": "D",
+                    "text": "ACCOUNTADMIN loses visibility into that role's objects"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. If a custom role is not in the SYSADMIN hierarchy, SYSADMIN cannot manage objects owned by that role. This creates 'orphaned' privileges. Best practice is to always grant custom roles to SYSADMIN so that SYSADMIN can manage all objects in the account.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q007",
+            "question": "Which of the following best describes the PUBLIC role in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A role that provides public internet access to Snowflake resources"
+                },
+                {
+                    "key": "B",
+                    "text": "A role automatically granted to every user; serves as the default minimum privilege level"
+                },
+                {
+                    "key": "C",
+                    "text": "A role for external users who access data through Data Sharing"
+                },
+                {
+                    "key": "D",
+                    "text": "A role that cannot be modified or have privileges granted to it"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The PUBLIC role is automatically granted to every user in the account. Any privileges granted to PUBLIC are available to all users. It serves as the default minimum privilege level.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q008",
+            "question": "Which Snowflake feature restricts access to an account based on IP addresses?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Multi-factor Authentication (MFA)"
+                },
+                {
+                    "key": "B",
+                    "text": "Network Policies"
+                },
+                {
+                    "key": "C",
+                    "text": "Row Access Policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Column-level Security"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Network Policies allow you to create allowed and blocked IP address lists to control which IP addresses can access the Snowflake account. MFA adds an authentication factor. Row Access Policies and Column-level Security control data access, not account access.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q009",
+            "question": "How does Snowflake's Multi-Factor Authentication (MFA) work?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It is enabled by default for all users and cannot be disabled"
+                },
+                {
+                    "key": "B",
+                    "text": "It requires hardware security tokens for all users"
+                },
+                {
+                    "key": "C",
+                    "text": "It is powered by the Duo Mobile app and can be enrolled by individual users"
+                },
+                {
+                    "key": "D",
+                    "text": "It only works with federated authentication (SSO)"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Snowflake MFA is powered by the Duo Mobile service. Individual users enroll themselves through the Snowflake web interface. It is not enabled by default and does not require hardware tokens. Administrators can enforce MFA via account or user-level settings.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q010",
+            "question": "Which authentication method uses a public/private key pair instead of a password?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Federated Authentication"
+                },
+                {
+                    "key": "B",
+                    "text": "Key-Pair Authentication"
+                },
+                {
+                    "key": "C",
+                    "text": "OAuth"
+                },
+                {
+                    "key": "D",
+                    "text": "SAML"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Key-Pair Authentication uses an RSA key pair (public key stored in Snowflake, private key kept by the user) for authentication instead of username/password. This is commonly used for service accounts and programmatic access. Federated Authentication and SAML are related to SSO.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q011",
+            "question": "What is Federated Authentication in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Authentication shared between multiple Snowflake accounts"
+                },
+                {
+                    "key": "B",
+                    "text": "Single Sign-On (SSO) integration with an external identity provider using SAML 2.0"
+                },
+                {
+                    "key": "C",
+                    "text": "A method of sharing credentials between Snowflake and cloud provider consoles"
+                },
+                {
+                    "key": "D",
+                    "text": "Two-factor authentication using SMS codes"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Federated Authentication in Snowflake enables Single Sign-On (SSO) by integrating with external identity providers (such as Okta, Azure AD, or ADFS) using the SAML 2.0 protocol. This allows users to authenticate using their organization's credentials.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q012",
+            "question": "Which Snowflake feature allows you to mask sensitive data at query time based on the querying user's role?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Column-level Encryption"
+                },
+                {
+                    "key": "B",
+                    "text": "Dynamic Data Masking"
+                },
+                {
+                    "key": "C",
+                    "text": "Row Access Policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Secure Views"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Dynamic Data Masking allows you to define masking policies on columns that conditionally mask or expose data based on the role of the user executing the query. This is applied at query time without modifying the underlying data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q013",
+            "question": "What is the purpose of Row Access Policies in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To restrict which rows a user can see based on conditions tied to their role or attributes"
+                },
+                {
+                    "key": "B",
+                    "text": "To encrypt specific rows in a table"
+                },
+                {
+                    "key": "C",
+                    "text": "To limit the number of rows returned by a query for performance"
+                },
+                {
+                    "key": "D",
+                    "text": "To audit which rows have been accessed by each user"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Row Access Policies allow you to control which rows in a table or view are visible to a particular user at query time. The policy evaluates conditions (often based on the user's role) and filters rows accordingly. This is different from column-level masking which hides column values.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q014",
+            "question": "What encryption standard does Snowflake use for data at rest?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "AES-128"
+                },
+                {
+                    "key": "B",
+                    "text": "AES-256"
+                },
+                {
+                    "key": "C",
+                    "text": "RSA-2048"
+                },
+                {
+                    "key": "D",
+                    "text": "Triple DES"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake encrypts all data at rest using AES-256 strong encryption. This encryption is always on and cannot be disabled. All editions of Snowflake include this encryption at no additional cost.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q015",
+            "question": "What is Tri-Secret Secure in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A three-factor authentication method"
+                },
+                {
+                    "key": "B",
+                    "text": "A feature that combines a Snowflake-managed key, a cloud provider key, and a customer-managed key for encryption"
+                },
+                {
+                    "key": "C",
+                    "text": "A way to share secrets between three Snowflake accounts"
+                },
+                {
+                    "key": "D",
+                    "text": "Three levels of network security policies"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Tri-Secret Secure is a Business Critical feature that provides a composite encryption key made up of three components: a Snowflake-managed key, a cloud provider-managed key, and a customer-managed key. All three are required to decrypt data, giving the customer ultimate control.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q016",
+            "question": "Which Snowflake edition is required for Tri-Secret Secure (customer-managed encryption keys)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "Any edition with an add-on purchase"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Tri-Secret Secure is available only on Business Critical edition and above (including VPS). It allows customers to maintain their own encryption keys in their cloud provider's key management service (AWS KMS, Azure Key Vault, or GCP KMS).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q017",
+            "question": "Which privilege allows a user to create objects within a schema?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "USAGE on the schema"
+                },
+                {
+                    "key": "B",
+                    "text": "CREATE TABLE on the schema"
+                },
+                {
+                    "key": "C",
+                    "text": "OWNERSHIP of the schema"
+                },
+                {
+                    "key": "D",
+                    "text": "All of the above can allow object creation, depending on the object type"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. Object creation depends on specific privileges: CREATE TABLE, CREATE VIEW, etc. are individual creation privileges. OWNERSHIP provides full control including creation. USAGE alone doesn't allow creation but is needed to use the schema. The combination depends on the specific object type being created.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q018",
+            "question": "What does the USERADMIN system role allow you to do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Create and manage databases and warehouses"
+                },
+                {
+                    "key": "B",
+                    "text": "Create and manage users and roles"
+                },
+                {
+                    "key": "C",
+                    "text": "Configure network policies and security settings"
+                },
+                {
+                    "key": "D",
+                    "text": "Monitor resource consumption and billing"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. USERADMIN is specifically designed to create and manage users and roles. It can CREATE USER and CREATE ROLE. It is inherited by SECURITYADMIN, which adds the ability to GRANT and REVOKE privileges.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q019",
+            "question": "In Snowflake, who is the default owner of an object?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The user who created the object"
+                },
+                {
+                    "key": "B",
+                    "text": "The role that was active when the object was created"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNTADMIN always owns all objects"
+                },
+                {
+                    "key": "D",
+                    "text": "SYSADMIN always owns all objects"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. In Snowflake, objects are owned by the role that was active (in use) when the object was created, not the user. This is a key concept in Snowflake's role-based access control. Ownership can be transferred using GRANT OWNERSHIP.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q020",
+            "question": "Which privilege is needed to execute queries on a virtual warehouse?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "OPERATE"
+                },
+                {
+                    "key": "B",
+                    "text": "USAGE"
+                },
+                {
+                    "key": "C",
+                    "text": "EXECUTE"
+                },
+                {
+                    "key": "D",
+                    "text": "MODIFY"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The USAGE privilege on a warehouse allows a role to execute queries using that warehouse. OPERATE allows starting/stopping/resizing the warehouse. MODIFY allows changing warehouse properties. EXECUTE is not a valid warehouse privilege.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q021",
+            "question": "What does the OPERATE privilege on a virtual warehouse allow?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Execute queries using the warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Start, stop, suspend, and resume the warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "Resize the warehouse and change properties"
+                },
+                {
+                    "key": "D",
+                    "text": "Drop the warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. OPERATE allows starting, stopping (suspending), and resuming a warehouse. USAGE is for executing queries. MODIFY allows changing properties like size. DROP requires OWNERSHIP.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q022",
+            "question": "What is the purpose of Object Tagging in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To add search keywords to tables for faster queries"
+                },
+                {
+                    "key": "B",
+                    "text": "To assign metadata tags to objects for governance, tracking, and classification"
+                },
+                {
+                    "key": "C",
+                    "text": "To mark objects for deletion"
+                },
+                {
+                    "key": "D",
+                    "text": "To link related objects across databases"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Object Tagging allows you to attach key-value metadata tags to Snowflake objects (tables, columns, warehouses, etc.) for data governance, classification, billing tracking, and sensitive data identification.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q023",
+            "question": "Which system-defined role should be used for managing account-level settings like resource monitors and billing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SYSADMIN"
+                },
+                {
+                    "key": "B",
+                    "text": "SECURITYADMIN"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNTADMIN"
+                },
+                {
+                    "key": "D",
+                    "text": "USERADMIN"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. ACCOUNTADMIN is the only system-defined role that can manage account-level settings such as resource monitors, billing information, and account parameters. It combines the capabilities of SYSADMIN and SECURITYADMIN plus account-level management.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q024",
+            "question": "A network policy in Snowflake can include which types of IP lists? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Allowed IP list"
+                },
+                {
+                    "key": "B",
+                    "text": "Blocked IP list"
+                },
+                {
+                    "key": "C",
+                    "text": "Priority IP list"
+                },
+                {
+                    "key": "D",
+                    "text": "Quarantine IP list"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. A network policy contains an allowed list (IPs permitted to connect) and an optional blocked list (IPs explicitly denied). Blocked list entries take precedence over allowed list entries for overlapping ranges. Priority and Quarantine lists do not exist.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q025",
+            "question": "Network policies in Snowflake can be applied at which levels? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Account level"
+                },
+                {
+                    "key": "B",
+                    "text": "User level"
+                },
+                {
+                    "key": "C",
+                    "text": "Database level"
+                },
+                {
+                    "key": "D",
+                    "text": "Table level"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Network policies can be applied at the account level (affecting all users) or at the individual user level (overriding account-level policy for that user). They cannot be applied at database or table level.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q026",
+            "question": "Which TLS version does Snowflake require for encrypted connections?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "TLS 1.0 or higher"
+                },
+                {
+                    "key": "B",
+                    "text": "TLS 1.1 or higher"
+                },
+                {
+                    "key": "C",
+                    "text": "TLS 1.2 or higher"
+                },
+                {
+                    "key": "D",
+                    "text": "SSL 3.0 or higher"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Snowflake requires TLS 1.2 or higher for all client connections. Older protocols (TLS 1.0, 1.1, SSL 3.0) are not supported due to known security vulnerabilities.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q027",
+            "question": "What happens when you revoke a privilege from a role that has been granted to multiple users?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Only the user who originally received the privilege loses it"
+                },
+                {
+                    "key": "B",
+                    "text": "All users who have that role lose the revoked privilege"
+                },
+                {
+                    "key": "C",
+                    "text": "The privilege is only revoked for future sessions"
+                },
+                {
+                    "key": "D",
+                    "text": "Users must re-login for the change to take effect"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When a privilege is revoked from a role, all users who have that role immediately lose that privilege. Privilege changes are effective immediately for all current and future sessions — no re-login is required.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q028",
+            "question": "Which of the following is a Snowflake best practice for the ACCOUNTADMIN role?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Use ACCOUNTADMIN as the default role for all administrators"
+                },
+                {
+                    "key": "B",
+                    "text": "Grant ACCOUNTADMIN to as few users as possible and always use MFA"
+                },
+                {
+                    "key": "C",
+                    "text": "Use ACCOUNTADMIN for all day-to-day object creation tasks"
+                },
+                {
+                    "key": "D",
+                    "text": "Grant ACCOUNTADMIN to all team leads for flexibility"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake strongly recommends granting ACCOUNTADMIN to as few users as possible (at least 2 for redundancy), always enabling MFA for those users, and never using ACCOUNTADMIN as the default role. Day-to-day tasks should use lower-privilege roles like SYSADMIN.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q029",
+            "question": "What is the ORGADMIN role used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Managing objects within a single account"
+                },
+                {
+                    "key": "B",
+                    "text": "Managing accounts within a Snowflake organization, including creating new accounts and enabling replication"
+                },
+                {
+                    "key": "C",
+                    "text": "Managing network policies across all accounts"
+                },
+                {
+                    "key": "D",
+                    "text": "Auditing user activities across all accounts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ORGADMIN is an organization-level role that manages accounts within a Snowflake Organization. It can create new accounts, view usage across all accounts, and enable replication between accounts. It does not manage objects within individual accounts.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q030",
+            "question": "Which feature allows Snowflake to automatically rotate encryption keys?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Automatic Key Rotation (available in Enterprise edition)"
+                },
+                {
+                    "key": "B",
+                    "text": "Manual Key Rotation (all editions)"
+                },
+                {
+                    "key": "C",
+                    "text": "Periodic Rekeying (Enterprise edition and above)"
+                },
+                {
+                    "key": "D",
+                    "text": "Key Rotation is not supported in Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Snowflake supports Periodic Rekeying on Enterprise edition and above, which automatically re-encrypts data with new keys on a regular basis (default every 30 days). All editions rotate the key hierarchy, but periodic rekeying (re-encrypting the data itself) requires Enterprise+.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q031",
+            "question": "Which SQL command is used to grant a role to a user?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ALTER USER SET ROLE = 'role_name'"
+                },
+                {
+                    "key": "B",
+                    "text": "GRANT ROLE role_name TO USER user_name"
+                },
+                {
+                    "key": "C",
+                    "text": "ASSIGN ROLE role_name TO USER user_name"
+                },
+                {
+                    "key": "D",
+                    "text": "ADD ROLE role_name FOR USER user_name"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The GRANT ROLE command assigns a role to a user. The syntax is: GRANT ROLE role_name TO USER user_name. ALTER USER can change the default role but doesn't grant roles. ASSIGN ROLE and ADD ROLE are not valid Snowflake commands.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q032",
+            "question": "What is a Secure View in Snowflake primarily used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Encrypting view definitions so they cannot be read"
+                },
+                {
+                    "key": "B",
+                    "text": "Hiding the view definition and preventing data exposure through query optimization tricks"
+                },
+                {
+                    "key": "C",
+                    "text": "Making views available to external users only"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatically backing up view data"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Secure Views hide the view definition (DDL) from unauthorized users and prevent data exposure through techniques like pushing user-defined functions into the view's WHERE clause. The Snowflake optimizer does not expose the underlying data through its optimizations for secure views.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q033",
+            "question": "Which OAuth providers does Snowflake support for authentication? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Snowflake OAuth (built-in)"
+                },
+                {
+                    "key": "B",
+                    "text": "External OAuth (custom identity providers)"
+                },
+                {
+                    "key": "C",
+                    "text": "GitHub OAuth"
+                },
+                {
+                    "key": "D",
+                    "text": "Google OAuth only"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Snowflake supports its own built-in Snowflake OAuth for simplified integration and External OAuth for integrating with any OAuth 2.0 compliant identity provider (like Azure AD, Okta, PingFederate, etc.).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q034",
+            "question": "What is the default role assigned to a new user in Snowflake if no default role is specified?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SYSADMIN"
+                },
+                {
+                    "key": "B",
+                    "text": "PUBLIC"
+                },
+                {
+                    "key": "C",
+                    "text": "USERADMIN"
+                },
+                {
+                    "key": "D",
+                    "text": "No role is assigned; the user cannot login"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. If no default role is specified when creating a user, the PUBLIC role is used as the default. PUBLIC is automatically granted to every user and cannot be revoked. The administrator should set an appropriate default role for each user.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q035",
+            "question": "Which statement about Snowflake's data classification feature is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It manually tags columns with sensitivity labels"
+                },
+                {
+                    "key": "B",
+                    "text": "It automatically analyzes column data and metadata to identify and classify sensitive information like PII"
+                },
+                {
+                    "key": "C",
+                    "text": "It encrypts classified data with a stronger encryption algorithm"
+                },
+                {
+                    "key": "D",
+                    "text": "It deletes data classified as sensitive after 30 days"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake's data classification feature automatically analyzes column content and metadata to detect and classify sensitive data such as personally identifiable information (PII), payment card data, and other sensitive categories. It then applies system tags that can be used for governance.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q036",
+            "question": "Can a user in Snowflake have multiple roles active simultaneously?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, a user can only have one active role at a time"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, by using the USE SECONDARY ROLES ALL command"
+                },
+                {
+                    "key": "C",
+                    "text": "Yes, but only ACCOUNTADMIN users can activate multiple roles"
+                },
+                {
+                    "key": "D",
+                    "text": "No, but they can switch between roles using USE ROLE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. With secondary roles (USE SECONDARY ROLES ALL), a user can have their primary role plus all other granted roles active simultaneously. This allows queries to access objects from multiple roles without switching. Previously, only one role could be active at a time.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q037",
+            "question": "What is the purpose of the GRANT OWNERSHIP command?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To grant a user access to the Snowflake account"
+                },
+                {
+                    "key": "B",
+                    "text": "To transfer ownership of an object from one role to another"
+                },
+                {
+                    "key": "C",
+                    "text": "To create a new role with owner-level privileges"
+                },
+                {
+                    "key": "D",
+                    "text": "To share ownership between two roles simultaneously"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. GRANT OWNERSHIP transfers ownership of a Snowflake object from its current owning role to another role. An object can only have one owner at a time. The new owner gains full control over the object, including the ability to drop it.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q038",
+            "question": "Which of the following is NOT a valid Snowflake system-defined role?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ACCOUNTADMIN"
+                },
+                {
+                    "key": "B",
+                    "text": "SYSADMIN"
+                },
+                {
+                    "key": "C",
+                    "text": "DBADMIN"
+                },
+                {
+                    "key": "D",
+                    "text": "SECURITYADMIN"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. DBADMIN is not a Snowflake system-defined role. The system-defined roles are: ORGADMIN, ACCOUNTADMIN, SECURITYADMIN, USERADMIN, SYSADMIN, and PUBLIC. DBADMIN is a common role name in other database systems but not a built-in Snowflake role.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q039",
+            "question": "Which feature allows Snowflake administrators to audit all user login attempts?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ACCOUNT_USAGE.LOGIN_HISTORY view"
+                },
+                {
+                    "key": "B",
+                    "text": "INFORMATION_SCHEMA.SESSIONS view"
+                },
+                {
+                    "key": "C",
+                    "text": "LOGIN_AUDIT table"
+                },
+                {
+                    "key": "D",
+                    "text": "SECURITY_LOG function"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. The ACCOUNT_USAGE.LOGIN_HISTORY view in the shared SNOWFLAKE database provides a record of all login attempts (successful and failed) for the account, including details like the user, client IP, authentication method, and error messages.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q040",
+            "question": "What is the recommended minimum number of users who should have the ACCOUNTADMIN role?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "1"
+                },
+                {
+                    "key": "B",
+                    "text": "2"
+                },
+                {
+                    "key": "C",
+                    "text": "5"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no recommendation"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake recommends at least 2 users have ACCOUNTADMIN for redundancy (in case one user is unavailable), but no more than necessary. All ACCOUNTADMIN users should have MFA enabled and should not use ACCOUNTADMIN as their default role.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q041",
+            "question": "Which Snowflake feature allows you to set password policies for users?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Network Policies"
+                },
+                {
+                    "key": "B",
+                    "text": "Password Policies"
+                },
+                {
+                    "key": "C",
+                    "text": "Session Policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Authentication Policies"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Password Policies in Snowflake allow administrators to enforce password complexity requirements including minimum length, required character types (uppercase, lowercase, digits, special characters), password age, and history.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q042",
+            "question": "What does the MONITOR privilege on a warehouse allow?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "View warehouse usage and resource monitoring stats"
+                },
+                {
+                    "key": "B",
+                    "text": "Execute queries on the warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "Modify warehouse properties"
+                },
+                {
+                    "key": "D",
+                    "text": "Drop the warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. The MONITOR privilege allows viewing warehouse usage statistics, resource monitor alerts, and query history for that warehouse. USAGE is for executing queries, MODIFY for changing properties, and OWNERSHIP is needed to drop.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q043",
+            "question": "What is a Session Policy in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A policy that limits the number of concurrent queries"
+                },
+                {
+                    "key": "B",
+                    "text": "A policy that controls session idle timeout and maximum session duration"
+                },
+                {
+                    "key": "C",
+                    "text": "A policy that restricts which databases a session can access"
+                },
+                {
+                    "key": "D",
+                    "text": "A policy that determines the default warehouse for a session"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Session Policies allow administrators to control idle session timeout and maximum session duration. This helps enforce security best practices by automatically closing inactive or long-running sessions.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q044",
+            "question": "In Snowflake's role hierarchy, which role does SECURITYADMIN inherit?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SYSADMIN"
+                },
+                {
+                    "key": "B",
+                    "text": "USERADMIN"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNTADMIN"
+                },
+                {
+                    "key": "D",
+                    "text": "PUBLIC only"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SECURITYADMIN inherits the USERADMIN role. This means SECURITYADMIN has all USERADMIN privileges (create/manage users and roles) plus the ability to manage any grant (GRANT/REVOKE) on any object in the account.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q045",
+            "question": "What happens when a blocked IP address in a network policy overlaps with an allowed IP address?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The allowed list takes priority"
+                },
+                {
+                    "key": "B",
+                    "text": "The blocked list takes priority"
+                },
+                {
+                    "key": "C",
+                    "text": "Both lists cancel out and the IP is neither allowed nor blocked"
+                },
+                {
+                    "key": "D",
+                    "text": "An error is thrown when creating the policy"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When an IP address appears in both the allowed and blocked lists, the blocked list takes priority. The blocked list is used to deny specific IPs within a broader allowed range.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q046",
+            "question": "Which Snowflake feature provides automatic detection and classification of sensitive data in columns?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Dynamic Data Masking"
+                },
+                {
+                    "key": "B",
+                    "text": "Data Classification"
+                },
+                {
+                    "key": "C",
+                    "text": "Row Access Policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Object Tagging"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Data Classification automatically analyzes column content and metadata to classify sensitive data such as PII, email addresses, phone numbers, and payment card data. It applies system-defined tags (SEMANTIC_CATEGORY, PRIVACY_CATEGORY) to classified columns.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q047",
+            "question": "Which command shows all privileges granted to a role?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SHOW GRANTS TO ROLE role_name"
+                },
+                {
+                    "key": "B",
+                    "text": "DESCRIBE ROLE role_name"
+                },
+                {
+                    "key": "C",
+                    "text": "LIST PRIVILEGES ON ROLE role_name"
+                },
+                {
+                    "key": "D",
+                    "text": "SELECT * FROM ROLE_PRIVILEGES WHERE role = 'role_name'"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. SHOW GRANTS TO ROLE role_name displays all privileges that have been granted to the specified role. You can also use SHOW GRANTS ON object to see who has access to a specific object.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q048",
+            "question": "What is the difference between SHOW GRANTS TO ROLE and SHOW GRANTS OF ROLE?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "They are the same command"
+                },
+                {
+                    "key": "B",
+                    "text": "TO ROLE shows privileges granted to the role; OF ROLE shows which users and roles the role has been granted to"
+                },
+                {
+                    "key": "C",
+                    "text": "TO ROLE shows users; OF ROLE shows privileges"
+                },
+                {
+                    "key": "D",
+                    "text": "OF ROLE is not a valid command"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SHOW GRANTS TO ROLE shows what privileges the role has (e.g., SELECT on a table). SHOW GRANTS OF ROLE shows who has been granted that role (e.g., which users or parent roles).",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q049",
+            "question": "Can you grant the same privilege on an object to multiple roles?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, a privilege can only be granted to one role"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, the same privilege can be granted to multiple roles"
+                },
+                {
+                    "key": "C",
+                    "text": "Only if the roles are in the same hierarchy"
+                },
+                {
+                    "key": "D",
+                    "text": "Only ACCOUNTADMIN can grant the same privilege to multiple roles"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The same privilege (e.g., SELECT on a table) can be granted to multiple roles independently. Each role maintains its own set of privileges, and there is no restriction on granting the same privilege to multiple roles.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q050",
+            "question": "What is the FUTURE GRANTS feature used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Granting privileges on objects that will be created in the future within a database or schema"
+                },
+                {
+                    "key": "B",
+                    "text": "Scheduling privilege grants to take effect at a future date"
+                },
+                {
+                    "key": "C",
+                    "text": "Granting temporary privileges that expire automatically"
+                },
+                {
+                    "key": "D",
+                    "text": "Granting privileges to roles that will be created in the future"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. FUTURE GRANTS automatically apply specified privileges to new objects of a given type (e.g., tables, views) when they are created within a database or schema. This eliminates the need to manually grant privileges on every new object.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q051",
+            "question": "What does the IMPORTED PRIVILEGES privilege allow on a shared database?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It allows creating new objects in the shared database"
+                },
+                {
+                    "key": "B",
+                    "text": "It grants access to all objects in a database created from a share"
+                },
+                {
+                    "key": "C",
+                    "text": "It allows modifying the data in shared tables"
+                },
+                {
+                    "key": "D",
+                    "text": "It allows re-sharing the data with other accounts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. IMPORTED PRIVILEGES is a special privilege used on databases created from shares. Granting it to a role gives that role access to all objects in the shared database. It is the only way to grant access to shared database objects.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q052",
+            "question": "What encryption does Snowflake use for data at rest and in transit?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "AES-128 at rest, TLS 1.0 in transit"
+                },
+                {
+                    "key": "B",
+                    "text": "AES-256 at rest, TLS 1.2+ in transit"
+                },
+                {
+                    "key": "C",
+                    "text": "AES-256 at rest, no encryption in transit"
+                },
+                {
+                    "key": "D",
+                    "text": "RSA-2048 at rest and in transit"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake encrypts data at rest using AES-256 and requires TLS 1.2 or higher for all data in transit. Both are always on and cannot be disabled. This applies to all editions.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q053",
+            "question": "Which privilege allows a role to create new schemas within a database?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "USAGE on the database"
+                },
+                {
+                    "key": "B",
+                    "text": "CREATE SCHEMA on the database"
+                },
+                {
+                    "key": "C",
+                    "text": "MODIFY on the database"
+                },
+                {
+                    "key": "D",
+                    "text": "OWNERSHIP of the database"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The CREATE SCHEMA privilege on a database allows a role to create new schemas within that database. USAGE only allows using the database. OWNERSHIP provides full control but is more than needed for just creating schemas.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q054",
+            "question": "What is SCIM in Snowflake used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Managing encryption keys"
+                },
+                {
+                    "key": "B",
+                    "text": "Automated user and group provisioning/deprovisioning from identity providers"
+                },
+                {
+                    "key": "C",
+                    "text": "Monitoring query performance"
+                },
+                {
+                    "key": "D",
+                    "text": "Configuring network policies"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SCIM (System for Cross-domain Identity Management) allows automated provisioning and deprovisioning of users and groups from identity providers like Okta and Azure AD. This ensures Snowflake user accounts stay in sync with the organization's IdP.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q055",
+            "question": "Which Snowflake role hierarchy order is correct from most to least privileged?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ACCOUNTADMIN → SECURITYADMIN → SYSADMIN → USERADMIN → PUBLIC"
+                },
+                {
+                    "key": "B",
+                    "text": "ACCOUNTADMIN → SYSADMIN → SECURITYADMIN → USERADMIN → PUBLIC"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNTADMIN → SECURITYADMIN (inherits USERADMIN) and SYSADMIN → PUBLIC"
+                },
+                {
+                    "key": "D",
+                    "text": "SYSADMIN → ACCOUNTADMIN → SECURITYADMIN → USERADMIN → PUBLIC"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. ACCOUNTADMIN is at the top, inheriting both SECURITYADMIN and SYSADMIN. SECURITYADMIN inherits USERADMIN. SYSADMIN is a separate branch from SECURITYADMIN under ACCOUNTADMIN. All roles inherit PUBLIC at the bottom.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q056",
+            "question": "What is managed access in Snowflake schemas?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A schema where only the schema owner can grant privileges on objects, not individual object owners"
+                },
+                {
+                    "key": "B",
+                    "text": "A schema with automatic data masking"
+                },
+                {
+                    "key": "C",
+                    "text": "A schema with encryption enabled"
+                },
+                {
+                    "key": "D",
+                    "text": "A schema that only ACCOUNTADMIN can access"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. In a managed access schema (created with WITH MANAGED ACCESS), only the schema owner (or a role with MANAGE GRANTS privilege) can grant privileges on objects within the schema. Object owners cannot grant access to their own objects, centralizing privilege management.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q057",
+            "question": "What does the MANAGE GRANTS global privilege allow?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Grants USAGE on all warehouses"
+                },
+                {
+                    "key": "B",
+                    "text": "Allows granting and revoking privileges on any object, even without ownership"
+                },
+                {
+                    "key": "C",
+                    "text": "Allows creating new roles only"
+                },
+                {
+                    "key": "D",
+                    "text": "Allows managing resource monitors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The MANAGE GRANTS privilege allows a role to grant or revoke privileges on any object in the account, regardless of who owns the object. SECURITYADMIN has this privilege by default.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q058",
+            "question": "Which command creates a network policy in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CREATE NETWORK RULE"
+                },
+                {
+                    "key": "B",
+                    "text": "CREATE NETWORK POLICY"
+                },
+                {
+                    "key": "C",
+                    "text": "ALTER ACCOUNT SET NETWORK_POLICY"
+                },
+                {
+                    "key": "D",
+                    "text": "SET NETWORK_RESTRICTIONS"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. CREATE NETWORK POLICY creates a new network policy with allowed and blocked IP lists. After creation, it must be applied using ALTER ACCOUNT SET NETWORK_POLICY (account level) or ALTER USER SET NETWORK_POLICY (user level).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q059",
+            "question": "Can a Dynamic Data Masking policy be applied to multiple columns?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, each policy can only be applied to one column"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, the same masking policy can be applied to multiple columns of the same data type"
+                },
+                {
+                    "key": "C",
+                    "text": "Only if the columns are in the same table"
+                },
+                {
+                    "key": "D",
+                    "text": "Only ACCOUNTADMIN can apply a policy to multiple columns"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A masking policy can be reused across multiple columns, as long as the column data type matches the policy's input/output type. This promotes consistency and reduces the number of policies needed.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q060",
+            "question": "What is the difference between Dynamic Data Masking and External Tokenization?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "They are the same feature"
+                },
+                {
+                    "key": "B",
+                    "text": "Dynamic masking transforms data at query time within Snowflake; external tokenization replaces data with tokens using an external service"
+                },
+                {
+                    "key": "C",
+                    "text": "External tokenization is faster than dynamic masking"
+                },
+                {
+                    "key": "D",
+                    "text": "Dynamic masking permanently changes the data; external tokenization is reversible"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Dynamic Data Masking transforms data at query time (the underlying data is unchanged). External Tokenization uses an external tokenization service (via external functions) to replace sensitive data with tokens. Both use masking policies, but the mechanism differs.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q061",
+            "question": "What is the purpose of ACCESS_HISTORY in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Tracking which tables and columns were accessed by queries for compliance and auditing"
+                },
+                {
+                    "key": "B",
+                    "text": "Logging password change history"
+                },
+                {
+                    "key": "C",
+                    "text": "Tracking warehouse resize history"
+                },
+                {
+                    "key": "D",
+                    "text": "Recording account creation history"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. ACCESS_HISTORY (in ACCOUNT_USAGE) provides a record of which objects (tables, columns, stages) were read or written by each query. This supports compliance auditing, data governance, and understanding data lineage.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q062",
+            "question": "Which type of masking policy returns NULL for unauthorized users?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A masking policy that uses CASE WHEN CURRENT_ROLE() IN (...) THEN val ELSE NULL END"
+                },
+                {
+                    "key": "B",
+                    "text": "Row Access Policy"
+                },
+                {
+                    "key": "C",
+                    "text": "Conditional masking is not supported"
+                },
+                {
+                    "key": "D",
+                    "text": "Network Policy with NULL response"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. A Dynamic Data Masking policy can use conditional logic based on CURRENT_ROLE() or IS_ROLE_IN_SESSION() to return the actual value for authorized roles and NULL (or a masked value like '***') for unauthorized roles.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q063",
+            "question": "What is the purpose of the IS_ROLE_IN_SESSION function?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Checks if a role exists in the account"
+                },
+                {
+                    "key": "B",
+                    "text": "Checks if a specified role is active in the current session (primary or secondary)"
+                },
+                {
+                    "key": "C",
+                    "text": "Checks if a role has been granted to the current user"
+                },
+                {
+                    "key": "D",
+                    "text": "Checks if a role is a system-defined role"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. IS_ROLE_IN_SESSION checks if a specified role is currently active in the session, including as a secondary role. It is commonly used in masking policies and row access policies for role-based access control.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q064",
+            "question": "Which statement about Snowflake's key rotation is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Key rotation must be performed manually"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowflake automatically rotates the hierarchical key every 30 days on all editions"
+                },
+                {
+                    "key": "C",
+                    "text": "Key rotation is only available on VPS edition"
+                },
+                {
+                    "key": "D",
+                    "text": "Key rotation requires downtime"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake automatically rotates the hierarchical encryption keys approximately every 30 days on all editions. On Enterprise+, periodic rekeying also re-encrypts the data itself with new keys. No downtime is required.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q065",
+            "question": "What privilege is required to create a masking policy?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CREATE MASKING POLICY on the schema"
+                },
+                {
+                    "key": "B",
+                    "text": "OWNERSHIP of the table"
+                },
+                {
+                    "key": "C",
+                    "text": "ACCOUNTADMIN role only"
+                },
+                {
+                    "key": "D",
+                    "text": "APPLY MASKING POLICY privilege"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. The CREATE MASKING POLICY privilege on a schema allows creating masking policies. To apply the policy to a column, the APPLY MASKING POLICY privilege is also needed. These are separate privileges to support separation of duties.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q066",
+            "question": "Which system function returns the current user's active role?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CURRENT_ROLE()"
+                },
+                {
+                    "key": "B",
+                    "text": "CURRENT_USER()"
+                },
+                {
+                    "key": "C",
+                    "text": "SESSION_ROLE()"
+                },
+                {
+                    "key": "D",
+                    "text": "ACTIVE_ROLE()"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. CURRENT_ROLE() returns the name of the currently active (primary) role for the session. CURRENT_USER() returns the current user name. SESSION_ROLE() and ACTIVE_ROLE() are not valid Snowflake functions.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q067",
+            "question": "Can Row Access Policies and Dynamic Data Masking policies be applied to the same table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, only one type of policy can be active per table"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, both can be applied to the same table simultaneously"
+                },
+                {
+                    "key": "C",
+                    "text": "Only on Enterprise edition"
+                },
+                {
+                    "key": "D",
+                    "text": "Only if they reference different columns"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Both Row Access Policies and Dynamic Data Masking policies can be applied to the same table simultaneously. Row Access Policies filter which rows are visible, while masking policies control how column values are displayed. They complement each other.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q068",
+            "question": "What is the APPLY ROW ACCESS POLICY privilege used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating new row access policies"
+                },
+                {
+                    "key": "B",
+                    "text": "Attaching or detaching a row access policy to/from a table or view"
+                },
+                {
+                    "key": "C",
+                    "text": "Viewing which row access policies exist"
+                },
+                {
+                    "key": "D",
+                    "text": "Executing queries on tables with row access policies"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The APPLY ROW ACCESS POLICY privilege allows a role to attach or detach a row access policy to or from a table or view using ALTER TABLE ... ADD/DROP ROW ACCESS POLICY. This is separate from CREATE ROW ACCESS POLICY (for creating) and OWNERSHIP.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q069",
+            "question": "What is AWS PrivateLink used for with Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Encrypting data at rest"
+                },
+                {
+                    "key": "B",
+                    "text": "Creating a private connection between a VPC and Snowflake that does not traverse the public internet"
+                },
+                {
+                    "key": "C",
+                    "text": "Sharing data between accounts"
+                },
+                {
+                    "key": "D",
+                    "text": "Managing encryption keys"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. AWS PrivateLink (and Azure Private Link) creates a private, secure connection between your cloud VPC/VNet and Snowflake. Traffic stays within the cloud provider's private network and never traverses the public internet. Requires Business Critical edition.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q070",
+            "question": "Which Snowflake edition is required for AWS PrivateLink or Azure Private Link support?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. AWS PrivateLink and Azure Private Link connectivity require Business Critical edition or higher. These features provide enhanced network security for organizations with strict compliance requirements.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q071",
+            "question": "What happens if a user's default role is dropped?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The user cannot log in"
+                },
+                {
+                    "key": "B",
+                    "text": "The user's default role falls back to PUBLIC"
+                },
+                {
+                    "key": "C",
+                    "text": "The user's account is locked"
+                },
+                {
+                    "key": "D",
+                    "text": "ACCOUNTADMIN becomes the default role"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. If a user's default role is dropped or the user no longer has access to it, the default role falls back to PUBLIC when they log in. The user can still switch to other roles they have been granted.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q072",
+            "question": "Which command is used to enable MFA for a user?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ALTER USER SET MFA_ENABLED = TRUE"
+                },
+                {
+                    "key": "B",
+                    "text": "Users self-enroll in MFA through the Snowflake web interface"
+                },
+                {
+                    "key": "C",
+                    "text": "GRANT MFA TO USER user_name"
+                },
+                {
+                    "key": "D",
+                    "text": "CREATE MFA POLICY FOR USER user_name"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Users self-enroll in MFA through the Snowsight web interface by linking their Duo Mobile app. Administrators can enforce MFA enrollment using the MINS_TO_BYPASS_MFA parameter or authentication policies, but the actual enrollment is done by the user.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q073",
+            "question": "What is a Tag-Based Masking Policy?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A masking policy that is automatically applied to all columns with a specific tag"
+                },
+                {
+                    "key": "B",
+                    "text": "A masking policy that uses tags in its conditional logic"
+                },
+                {
+                    "key": "C",
+                    "text": "A tag that contains masking rules"
+                },
+                {
+                    "key": "D",
+                    "text": "A policy that masks tag values"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Tag-Based Masking allows you to associate a masking policy with a tag. When that tag is applied to a column, the masking policy is automatically enforced. This simplifies governance by applying consistent masking across all columns with the same classification.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q074",
+            "question": "Can Snowflake integrate with external key management services (KMS)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, Snowflake only uses its own encryption keys"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, through Tri-Secret Secure on Business Critical+ which integrates with AWS KMS, Azure Key Vault, or GCP KMS"
+                },
+                {
+                    "key": "C",
+                    "text": "Yes, on all editions"
+                },
+                {
+                    "key": "D",
+                    "text": "Only through third-party tools"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Through Tri-Secret Secure (Business Critical+), customers can bring their own encryption key stored in their cloud provider's KMS (AWS KMS, Azure Key Vault, or GCP Cloud KMS). The composite key requires all three keys to decrypt data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q075",
+            "question": "What is the SNOWFLAKE.CORE.BUDGET object used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Setting compute credit budgets with alerts when spending approaches or exceeds limits"
+                },
+                {
+                    "key": "B",
+                    "text": "Setting storage capacity limits"
+                },
+                {
+                    "key": "C",
+                    "text": "Managing user account budgets"
+                },
+                {
+                    "key": "D",
+                    "text": "Allocating roles to budget groups"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Budgets allow administrators to monitor and control credit spending. You can set up budgets at the account or specific object level, configure spending limits, and receive email notifications when spending approaches or exceeds the budget.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q076",
+            "question": "Which Snowflake view provides information about all login attempts including failures?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SNOWFLAKE.ACCOUNT_USAGE.LOGIN_HISTORY"
+                },
+                {
+                    "key": "B",
+                    "text": "INFORMATION_SCHEMA.LOGIN_HISTORY"
+                },
+                {
+                    "key": "C",
+                    "text": "SNOWFLAKE.ACCOUNT_USAGE.SESSIONS"
+                },
+                {
+                    "key": "D",
+                    "text": "SNOWFLAKE.ACCOUNT_USAGE.ACCESS_HISTORY"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. LOGIN_HISTORY in ACCOUNT_USAGE records all login attempts (successful and failed) with details including user name, client IP, authentication method, error messages, and timestamp. It retains data for up to 365 days.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q077",
+            "question": "What does the OWNERSHIP privilege on an object allow? (Choose all that apply)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Full control over the object including the ability to drop it"
+                },
+                {
+                    "key": "B",
+                    "text": "Grant privileges on the object to other roles"
+                },
+                {
+                    "key": "C",
+                    "text": "Modify the object's properties"
+                },
+                {
+                    "key": "D",
+                    "text": "All of the above"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. OWNERSHIP provides complete control over an object: the ability to alter, drop, grant privileges to other roles, and manage all aspects of the object. Every securable object has exactly one owner role at any time.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q078",
+            "question": "What is the WITH GRANT OPTION used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Allows the grantee role to further grant the same privilege to other roles"
+                },
+                {
+                    "key": "B",
+                    "text": "Grants the privilege temporarily"
+                },
+                {
+                    "key": "C",
+                    "text": "Grants the privilege with read-only access"
+                },
+                {
+                    "key": "D",
+                    "text": "Grants the privilege only during business hours"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. WITH GRANT OPTION allows the role receiving a privilege to grant that same privilege to other roles. Without this option, only the object owner or a role with MANAGE GRANTS can further grant the privilege.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q079",
+            "question": "How can you enforce MFA for all users in an account?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Create an authentication policy requiring MFA and apply it at the account level"
+                },
+                {
+                    "key": "B",
+                    "text": "Use ALTER ACCOUNT SET MFA_REQUIRED = TRUE"
+                },
+                {
+                    "key": "C",
+                    "text": "MFA cannot be enforced; it is always voluntary"
+                },
+                {
+                    "key": "D",
+                    "text": "Enable it in the Snowflake Marketplace"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Authentication policies can be created to require MFA and then applied at the account level or user level. This forces all users (or specific users) to enroll in MFA before they can log in.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q080",
+            "question": "What is the purpose of the POLICY_REFERENCES function?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Lists all policies in a schema"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns which objects a specific policy is attached to, or which policies are attached to a specific object"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates references between policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Validates policy syntax"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The POLICY_REFERENCES table function (in INFORMATION_SCHEMA) shows the relationship between policies and objects. You can query it by policy name (to see where it's applied) or by object name (to see which policies are attached to it).",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q081",
+            "question": "What is the maximum Time Travel retention period for a PERMANENT table on the Enterprise edition?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "90 days"
+                },
+                {
+                    "key": "B",
+                    "text": "7 days"
+                },
+                {
+                    "key": "C",
+                    "text": "1 day"
+                },
+                {
+                    "key": "D",
+                    "text": "365 days"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Permanent tables on Enterprise edition and above support up to 90 days of Time Travel. Standard edition supports a maximum of 1 day. Transient and temporary tables support 0-1 days on any edition.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q082",
+            "question": "What is the maximum Time Travel retention period on the Standard edition?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "90 days"
+                },
+                {
+                    "key": "B",
+                    "text": "7 days"
+                },
+                {
+                    "key": "C",
+                    "text": "1 day"
+                },
+                {
+                    "key": "D",
+                    "text": "0 days (Time Travel is not available)"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Standard edition supports a maximum of 1 day of Time Travel for permanent tables. Time Travel is available on all editions, but the retention period is limited to 1 day on Standard. Enterprise edition extends this to up to 90 days.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q083",
+            "question": "What is Fail-safe in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A user-accessible backup system for recovering data"
+                },
+                {
+                    "key": "B",
+                    "text": "A non-configurable 7-day period for data recovery by Snowflake Support only, after Time Travel expires"
+                },
+                {
+                    "key": "C",
+                    "text": "An automatic failover mechanism for warehouses"
+                },
+                {
+                    "key": "D",
+                    "text": "A redundant storage system that prevents data loss during outages"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Fail-safe provides an additional 7-day window of data protection after Time Travel expires. It is NOT user-accessible — only Snowflake Support can recover data from Fail-safe, and only in the event of a system failure or disaster. Fail-safe data contributes to storage costs.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q084",
+            "question": "Which table types have Fail-safe protection? (Choose the best answer)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Permanent tables only"
+                },
+                {
+                    "key": "B",
+                    "text": "All table types (permanent, transient, temporary)"
+                },
+                {
+                    "key": "C",
+                    "text": "Permanent and transient tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Transient and temporary tables"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Only permanent tables have Fail-safe protection (7 days). Transient and temporary tables do NOT have Fail-safe, which means they have lower storage costs but less data protection.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q085",
+            "question": "Which are valid types of Snowflake table? (Choose all that apply)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "External"
+                },
+                {
+                    "key": "B",
+                    "text": "Transient"
+                },
+                {
+                    "key": "C",
+                    "text": "Temporary"
+                },
+                {
+                    "key": "D",
+                    "text": "Permanent"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C",
+                "D"
+            ],
+            "multiSelect": true,
+            "explanation": "All four are correct. External tables reference data in external storage. Transient tables have no Fail-safe period (lower storage costs). Temporary tables exist only for the current session. Permanent tables have full Time Travel and Fail-safe protection.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q086",
+            "question": "What is the main advantage of a Transient table over a Permanent table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Faster query performance"
+                },
+                {
+                    "key": "B",
+                    "text": "Lower storage costs because transient tables have no Fail-safe period"
+                },
+                {
+                    "key": "C",
+                    "text": "Transient tables can hold more data"
+                },
+                {
+                    "key": "D",
+                    "text": "Transient tables support longer Time Travel periods"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Transient tables do not have Fail-safe protection, which reduces storage costs (no 7-day Fail-safe storage overhead). They support Time Travel of 0-1 days. They're ideal for data that can be easily recreated, like staging tables or ETL intermediate results.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q087",
+            "question": "Which Snowflake feature allows sharing live, read-only data between accounts without copying the data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Database Replication"
+                },
+                {
+                    "key": "B",
+                    "text": "Secure Data Sharing"
+                },
+                {
+                    "key": "C",
+                    "text": "Zero-Copy Cloning"
+                },
+                {
+                    "key": "D",
+                    "text": "COPY INTO command"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Secure Data Sharing allows a provider account to share live, read-only access to data with consumer accounts without copying, moving, or transferring any data. The consumer queries the shared data using their own compute resources. Database Replication does copy data across accounts.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q088",
+            "question": "Snowflake supports database replication only between accounts in the same Region.",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "True"
+                },
+                {
+                    "key": "B",
+                    "text": "False"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B (False) is correct. Snowflake supports database replication between accounts across different regions and even across different cloud providers (e.g., AWS to Azure). This enables global data distribution and disaster recovery across geographic regions.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q089",
+            "question": "What is a Share in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A file shared between warehouses"
+                },
+                {
+                    "key": "B",
+                    "text": "A named Snowflake object that encapsulates database objects to be shared with other accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "A type of role that provides shared access"
+                },
+                {
+                    "key": "D",
+                    "text": "A shared compute resource between accounts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Share is a Snowflake object created by the data provider that specifies which databases, schemas, and objects (tables, views) are shared with consumer accounts. Consumers access shared data by creating a database from the share.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q090",
+            "question": "Who pays for the compute resources when a consumer queries shared data via Secure Data Sharing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The data provider"
+                },
+                {
+                    "key": "B",
+                    "text": "The data consumer"
+                },
+                {
+                    "key": "C",
+                    "text": "Costs are split equally"
+                },
+                {
+                    "key": "D",
+                    "text": "Snowflake absorbs the compute costs"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. In Secure Data Sharing, the consumer pays for all compute resources (virtual warehouse credits) used to query the shared data. The provider incurs no compute costs for consumer queries. The provider only pays for their own storage of the shared data.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q091",
+            "question": "What is the Snowflake Marketplace?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A marketplace for buying Snowflake credits at discounted rates"
+                },
+                {
+                    "key": "B",
+                    "text": "A platform where third-party providers publish datasets that consumers can access or purchase directly in their Snowflake accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "An internal tool for sharing data between departments"
+                },
+                {
+                    "key": "D",
+                    "text": "A marketplace for Snowflake connectors and drivers"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake Marketplace is a platform where data providers (companies and organizations) can list and monetize datasets. Consumers can discover, evaluate, and access these datasets directly within their Snowflake accounts — no ETL or data copying needed.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q092",
+            "question": "What is a Reader Account in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "An account that can only read from internal tables"
+                },
+                {
+                    "key": "B",
+                    "text": "A managed account created by a data provider for consumers who don't have their own Snowflake account"
+                },
+                {
+                    "key": "C",
+                    "text": "A read-only view of another account's data"
+                },
+                {
+                    "key": "D",
+                    "text": "An account type for auditors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Reader Accounts (formerly Managed Accounts) are Snowflake accounts created and managed by a data provider for consumers who don't have their own Snowflake account. The provider manages and pays for the reader account's compute and storage costs.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q093",
+            "question": "What is Database Replication in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating a clone of a database within the same account"
+                },
+                {
+                    "key": "B",
+                    "text": "Replicating a database and its objects to another Snowflake account for disaster recovery or data distribution"
+                },
+                {
+                    "key": "C",
+                    "text": "Synchronizing data between Snowflake and an on-premises database"
+                },
+                {
+                    "key": "D",
+                    "text": "Creating read replicas of a database for load balancing"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Database Replication allows you to replicate databases (and their objects) to other Snowflake accounts across regions and cloud providers. This enables disaster recovery, data locality for global users, and data migration between accounts.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q094",
+            "question": "What is the difference between database replication and database failover?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Replication copies data; failover promotes a replica to primary (writable) in case of outage"
+                },
+                {
+                    "key": "B",
+                    "text": "They are the same feature"
+                },
+                {
+                    "key": "C",
+                    "text": "Failover copies data; replication promotes a replica"
+                },
+                {
+                    "key": "D",
+                    "text": "Replication is for the same region; failover is for cross-region"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Database replication continuously synchronizes a read-only copy of a database to another account. Database failover (Business Critical+) allows promoting that replica to become the primary (writable) database if the original account experiences an outage, then failing back when resolved.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q095",
+            "question": "Which objects can be included in a Secure Data Share? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Secure Views"
+                },
+                {
+                    "key": "C",
+                    "text": "Virtual Warehouses"
+                },
+                {
+                    "key": "D",
+                    "text": "User Accounts"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Data Shares can include tables, external tables, and secure views (recommended for controlled data access). Warehouses and user accounts are account-level objects and cannot be shared. Secure views are recommended to control exactly what data consumers can see.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q096",
+            "question": "How does Time Travel storage affect billing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Time Travel storage is free"
+                },
+                {
+                    "key": "B",
+                    "text": "Time Travel data counts toward storage costs based on the amount of changed data retained"
+                },
+                {
+                    "key": "C",
+                    "text": "Time Travel doubles the storage cost of every table"
+                },
+                {
+                    "key": "D",
+                    "text": "Time Travel is only billed when data is actually accessed"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Time Travel retains historical versions of changed micro-partitions. Storage costs are based on the amount of data that has changed during the retention period — not the full table size. If data changes frequently, Time Travel storage costs will be higher.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q097",
+            "question": "A Temporary table is visible to which users?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "All users in the account"
+                },
+                {
+                    "key": "B",
+                    "text": "All users with the same role"
+                },
+                {
+                    "key": "C",
+                    "text": "Only the user who created it, and only within the session it was created"
+                },
+                {
+                    "key": "D",
+                    "text": "All users in the same database"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Temporary tables are visible only to the user who created them and only within the session where they were created. Once the session ends, the temporary table is automatically dropped. Other users cannot see or access temporary tables.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q098",
+            "question": "What is the total data protection window for a permanent table on Enterprise edition with 90 days of Time Travel?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "90 days"
+                },
+                {
+                    "key": "B",
+                    "text": "97 days (90 days Time Travel + 7 days Fail-safe)"
+                },
+                {
+                    "key": "C",
+                    "text": "7 days"
+                },
+                {
+                    "key": "D",
+                    "text": "180 days"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The total protection window is Time Travel + Fail-safe. With 90 days of Time Travel and 7 days of Fail-safe, the total is 97 days. During Time Travel, the user can recover data. During Fail-safe (after Time Travel expires), only Snowflake Support can recover data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q099",
+            "question": "Can you set the Time Travel retention period to 0 days?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, the minimum is 1 day"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, setting it to 0 disables Time Travel for the object"
+                },
+                {
+                    "key": "C",
+                    "text": "Only for temporary tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Only ACCOUNTADMIN can set it to 0"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. DATA_RETENTION_TIME_IN_DAYS can be set to 0, which disables Time Travel for the object. This means you cannot query historical data, undrop the object, or clone from a previous point in time. This can be useful for reducing storage costs on staging tables.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q100",
+            "question": "Which statement about data shared via Secure Data Sharing is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Shared data is physically copied to the consumer's account"
+                },
+                {
+                    "key": "B",
+                    "text": "Consumers can modify the shared data"
+                },
+                {
+                    "key": "C",
+                    "text": "Shared data remains in the provider's account; consumers get read-only access to live data"
+                },
+                {
+                    "key": "D",
+                    "text": "Shared data is only accessible for 30 days"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. In Secure Data Sharing, no data is copied or transferred. The shared data remains in the provider's storage, and consumers get real-time, read-only access. Any changes the provider makes to the data are immediately visible to consumers.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q101",
+            "question": "What is a Replication Group in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A group of users who share the same role"
+                },
+                {
+                    "key": "B",
+                    "text": "A defined collection of objects in a source account that are replicated as a unit to one or more target accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "A group of warehouses that share compute"
+                },
+                {
+                    "key": "D",
+                    "text": "A backup group for disaster recovery storage"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Replication Group is a collection of objects (databases, shares, users, roles, warehouses, etc.) that are replicated together from a source account to one or more target accounts, potentially across regions and cloud platforms.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q102",
+            "question": "What is a Failover Group?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A group of queries that are retried on failure"
+                },
+                {
+                    "key": "B",
+                    "text": "A Replication Group that additionally supports failover — promoting a secondary account to serve as the primary"
+                },
+                {
+                    "key": "C",
+                    "text": "A group of warehouses that activate when the primary fails"
+                },
+                {
+                    "key": "D",
+                    "text": "A disaster recovery plan document"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Failover Group extends a Replication Group with the ability to failover. In a disaster, the secondary account can be promoted to primary, making the replicated objects writable. This enables business continuity across regions/clouds.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q103",
+            "question": "What is a Snowflake Data Exchange?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A tool for exchanging data between columns"
+                },
+                {
+                    "key": "B",
+                    "text": "A branded hub where a group of accounts can publish and discover shared data among selected participants"
+                },
+                {
+                    "key": "C",
+                    "text": "A Snowflake feature for currency exchange rates"
+                },
+                {
+                    "key": "D",
+                    "text": "An API for exporting data to external systems"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Data Exchange is a private, managed hub where selected Snowflake accounts can publish, discover, and consume shared data. Unlike the public Snowflake Marketplace, Data Exchanges are invite-only and can be branded by an organization.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q104",
+            "question": "What is the difference between a free listing and a paid listing on the Snowflake Marketplace?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Free listings are lower quality; paid listings are curated"
+                },
+                {
+                    "key": "B",
+                    "text": "Free listings grant immediate access via data sharing; paid listings require a commercial agreement and may involve monetization through Snowflake"
+                },
+                {
+                    "key": "C",
+                    "text": "There is no difference — all listings are free"
+                },
+                {
+                    "key": "D",
+                    "text": "Paid listings include compute credits; free listings do not"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Free listings provide instant access to shared data. Paid (personalized) listings require consumers to accept terms and may involve usage-based or flat-fee pricing. Providers can monetize their data products through Snowflake's commercial framework.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q105",
+            "question": "What is a Private Listing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A listing visible only to the account owner"
+                },
+                {
+                    "key": "B",
+                    "text": "A data share published on the Marketplace that is visible only to specific, invited consumer accounts"
+                },
+                {
+                    "key": "C",
+                    "text": "A listing with encrypted data only"
+                },
+                {
+                    "key": "D",
+                    "text": "A listing that requires VPN access"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Private Listings are published on the Snowflake Marketplace but are only visible to specified consumer accounts. They allow providers to share data with specific partners or customers without making the listing publicly discoverable.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q106",
+            "question": "What is a Snowflake Native App?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A mobile application for managing Snowflake"
+                },
+                {
+                    "key": "B",
+                    "text": "An application built using the Snowflake Native App Framework that can be distributed via the Marketplace, combining data, logic, and UI"
+                },
+                {
+                    "key": "C",
+                    "text": "A desktop client for Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "A pre-installed Snowflake system application"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake Native Apps are applications built using the Native App Framework. They package data content, application logic (stored procedures, UDFs), and optional Streamlit UI components. They can be distributed via the Marketplace and run within a consumer's account.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q107",
+            "question": "What is a Reader Account (formerly 'Share Reader Account')?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "An account with read-only access to the Snowflake documentation"
+                },
+                {
+                    "key": "B",
+                    "text": "A Snowflake account created by a provider for non-Snowflake consumers to access shared data"
+                },
+                {
+                    "key": "C",
+                    "text": "An account that can only read from internal stages"
+                },
+                {
+                    "key": "D",
+                    "text": "A free trial Snowflake account"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Reader Accounts (managed accounts) are created by a data provider for consumers who don't have their own Snowflake account. The provider's account pays for the Reader Account's compute costs. Reader Accounts can only consume data shared by the creating provider.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q108",
+            "question": "What are the limitations of a Reader Account? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Cannot create its own databases or load its own data"
+                },
+                {
+                    "key": "B",
+                    "text": "Can only access data shared by the provider who created the account"
+                },
+                {
+                    "key": "C",
+                    "text": "Cannot use SQL commands"
+                },
+                {
+                    "key": "D",
+                    "text": "Cannot have more than one user"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Reader Accounts cannot create databases, load data, or access shares from other providers. They are limited to querying data shared by the provider who created the account. The provider pays for compute; Reader Accounts have their own warehouses for querying.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q109",
+            "question": "Can you share data across different cloud platforms (e.g., AWS to Azure)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, sharing only works within the same cloud"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, using listings (Marketplace or Private Listings) which support cross-cloud and cross-region sharing"
+                },
+                {
+                    "key": "C",
+                    "text": "Only with data replication"
+                },
+                {
+                    "key": "D",
+                    "text": "Only for Enterprise edition"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Direct Shares work within the same region/cloud. For cross-region or cross-cloud sharing, you use Listings (via Marketplace or Private Listings), which leverage auto-fulfillment to replicate data to the consumer's region. Replication Groups also enable cross-cloud data movement.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q110",
+            "question": "What objects can be included in a Share? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Tables (including secure views)"
+                },
+                {
+                    "key": "B",
+                    "text": "Secure UDFs"
+                },
+                {
+                    "key": "C",
+                    "text": "Virtual warehouses"
+                },
+                {
+                    "key": "D",
+                    "text": "Users and roles"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Shares can include tables, external tables, secure views, secure materialized views, and secure UDFs. Warehouses, users, and roles cannot be shared — consumers use their own warehouses to query shared data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q111",
+            "question": "What is the purpose of a Secure View in data sharing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To encrypt the view definition"
+                },
+                {
+                    "key": "B",
+                    "text": "To hide the view's SQL definition from consumers while providing controlled access to underlying data"
+                },
+                {
+                    "key": "C",
+                    "text": "To make the view run faster"
+                },
+                {
+                    "key": "D",
+                    "text": "To restrict the view to ACCOUNTADMIN only"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Secure Views hide the view definition (DDL) from consumers and also prevent query optimization from exposing underlying data. In data sharing, only secure views (not regular views) can be shared, ensuring providers control what consumers can see.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q112",
+            "question": "What is Organization-level replication?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Replicating data within a single database"
+                },
+                {
+                    "key": "B",
+                    "text": "Replicating objects (databases, users, roles, warehouses, shares) across Snowflake accounts within the same organization"
+                },
+                {
+                    "key": "C",
+                    "text": "Copying organizational charts into Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "Replicating data to non-Snowflake systems"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Organization-level replication uses Replication and Failover Groups to replicate databases, shares, account-level objects (users, roles, warehouses, resource monitors, integrations) across accounts in the same Snowflake organization, enabling DR and data distribution.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q113",
+            "question": "What is the SYSTEM$GLOBAL_ACCOUNT_SET_PARAMETER function used for in replication?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Setting global parameters for all accounts"
+                },
+                {
+                    "key": "B",
+                    "text": "Enabling replication for an account by setting the allowed replication accounts list"
+                },
+                {
+                    "key": "C",
+                    "text": "Configuring global network policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Setting up global time zones"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SYSTEM$GLOBAL_ACCOUNT_SET_PARAMETER is used to enable replication by specifying which accounts are allowed to replicate to/from each other. This is a prerequisite for setting up database replication or replication groups.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q114",
+            "question": "What happens to shared data if the provider revokes a consumer's access?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The consumer keeps a copy of the data"
+                },
+                {
+                    "key": "B",
+                    "text": "The consumer immediately loses access to the shared data — no data was ever copied"
+                },
+                {
+                    "key": "C",
+                    "text": "The data is deleted from the consumer's account after 30 days"
+                },
+                {
+                    "key": "D",
+                    "text": "The consumer gets read-only access for 7 more days"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Since Secure Data Sharing doesn't copy data, revoking access immediately prevents the consumer from querying the shared objects. The consumer never had their own copy of the data, so there's nothing to delete.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q115",
+            "question": "Who pays for the compute when a consumer queries shared data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The data provider"
+                },
+                {
+                    "key": "B",
+                    "text": "The consumer pays using their own virtual warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "Snowflake covers the cost"
+                },
+                {
+                    "key": "D",
+                    "text": "Costs are split 50/50"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Consumers use their own virtual warehouses to query shared data, so they pay for their own compute costs. The provider pays only for data storage. Exception: Reader Accounts — the provider pays for the Reader Account's compute.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q116",
+            "question": "Can you share data across databases within the same account using Secure Data Sharing?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, using a share within the same account"
+                },
+                {
+                    "key": "B",
+                    "text": "No, shares are only for sharing between different accounts. For cross-database access within an account, use views or GRANT privileges"
+                },
+                {
+                    "key": "C",
+                    "text": "Only with Enterprise edition"
+                },
+                {
+                    "key": "D",
+                    "text": "Only for tables, not views"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Secure Data Sharing is designed for sharing between accounts. Within the same account, you access cross-database objects using fully qualified names (db.schema.object), views, or by granting appropriate privileges. You don't need to create shares.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q117",
+            "question": "What is auto-fulfillment in the Snowflake Marketplace?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Automatic payment processing for paid listings"
+                },
+                {
+                    "key": "B",
+                    "text": "Automatic replication of shared data to the consumer's region/cloud when they access a cross-region listing"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatic provisioning of warehouses for consumers"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatic data quality checks before sharing"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Auto-fulfillment automatically replicates the provider's shared data to the consumer's region and cloud platform when the consumer is in a different region. This enables cross-region and cross-cloud data sharing through the Marketplace transparently.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q118",
+            "question": "What is the minimum Snowflake edition required for database replication?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "All editions support replication"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Database replication is available in all Snowflake editions, including Standard. However, replication of account objects (users, roles, warehouses) requires Business Critical edition. Failover Groups also require Business Critical or higher.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q119",
+            "question": "What is the purpose of the SHOW SHARES command?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Displays stock market share prices"
+                },
+                {
+                    "key": "B",
+                    "text": "Lists all shares created by your account (outbound) and shares available to your account (inbound)"
+                },
+                {
+                    "key": "C",
+                    "text": "Shows disk space shared between databases"
+                },
+                {
+                    "key": "D",
+                    "text": "Displays sharing permissions for a specific user"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SHOW SHARES lists outbound shares (created in your account and shared with others) and inbound shares (shared by other accounts with your account). It shows the share name, kind (OUTBOUND/INBOUND), database, owner, and consumer accounts.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q120",
+            "question": "How do you add a consumer account to an existing share?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CREATE CONSUMER FOR SHARE share_name"
+                },
+                {
+                    "key": "B",
+                    "text": "ALTER SHARE share_name ADD ACCOUNTS = consumer_account"
+                },
+                {
+                    "key": "C",
+                    "text": "GRANT SHARE share_name TO ACCOUNT consumer_account"
+                },
+                {
+                    "key": "D",
+                    "text": "INSERT INTO SHARE share_name VALUES (consumer_account)"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ALTER SHARE share_name ADD ACCOUNTS = account_name adds consumer accounts to an existing share. To remove access: ALTER SHARE share_name REMOVE ACCOUNTS = account_name. You can add multiple accounts separated by commas.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q121",
+            "question": "What is Zero-Copy Cloning in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Creating a copy of an object that shares the underlying storage until data is modified"
+                },
+                {
+                    "key": "B",
+                    "text": "Creating a copy of an object by duplicating all the data physically"
+                },
+                {
+                    "key": "C",
+                    "text": "Creating a symbolic link to another table"
+                },
+                {
+                    "key": "D",
+                    "text": "Creating a view that references the original table"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Zero-Copy Cloning creates a metadata-only copy that shares the existing micro-partitions with the source. No data is physically copied at clone time, so it's nearly instantaneous and incurs no additional storage cost until data in the clone diverges from the source.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q122",
+            "question": "Which objects can be cloned in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Databases"
+                },
+                {
+                    "key": "B",
+                    "text": "Schemas"
+                },
+                {
+                    "key": "C",
+                    "text": "Tables"
+                },
+                {
+                    "key": "D",
+                    "text": "Virtual Warehouses"
+                },
+                {
+                    "key": "E",
+                    "text": "Users"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Databases, schemas, and tables can be cloned (along with stages, file formats, sequences, and streams). Virtual warehouses and users cannot be cloned as they are account-level objects, not data objects.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q123",
+            "question": "Is it possible to CLONE tables between two different Snowflake accounts?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, if both accounts are in the same region and cloud provider"
+                },
+                {
+                    "key": "B",
+                    "text": "No, cloning only works within the same Snowflake account"
+                },
+                {
+                    "key": "C",
+                    "text": "Yes, using the CLONE TO ACCOUNT syntax"
+                },
+                {
+                    "key": "D",
+                    "text": "Yes, but only for Enterprise edition accounts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Cloning is an account-level operation only — you cannot clone objects across account boundaries. To copy data between accounts, use Data Sharing, Data Replication, or COPY INTO/COPY OUT through a shared cloud storage location.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q124",
+            "question": "What is Time Travel in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A feature that replicates data to a different time zone"
+                },
+                {
+                    "key": "B",
+                    "text": "A feature that allows querying, cloning, and restoring data as it existed at a previous point in time"
+                },
+                {
+                    "key": "C",
+                    "text": "A scheduling feature for future query execution"
+                },
+                {
+                    "key": "D",
+                    "text": "A backup service that runs on a predefined schedule"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Time Travel allows you to access historical data at any point within the retention period. You can query data as of a specific timestamp (AT), before a statement (BEFORE), restore dropped objects (UNDROP), and clone from a historical point.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q125",
+            "question": "Which SQL clause is used to query data at a specific point in time using Time Travel?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "AT (TIMESTAMP => ...)"
+                },
+                {
+                    "key": "B",
+                    "text": "BEFORE (TIMESTAMP => ...)"
+                },
+                {
+                    "key": "C",
+                    "text": "AS OF (TIMESTAMP => ...)"
+                },
+                {
+                    "key": "D",
+                    "text": "Both A and B are valid Time Travel clauses"
+                }
+            ],
+            "correctAnswers": [
+                "D"
+            ],
+            "multiSelect": false,
+            "explanation": "D is correct. Both AT and BEFORE are valid Time Travel clauses. AT returns data as it existed at the specified point. BEFORE returns data as it existed just before the specified point (often used with STATEMENT to see data before a specific query ran). AS OF is not valid in Snowflake.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q126",
+            "question": "What command restores a previously dropped table?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "RESTORE TABLE table_name"
+                },
+                {
+                    "key": "B",
+                    "text": "UNDROP TABLE table_name"
+                },
+                {
+                    "key": "C",
+                    "text": "RECOVER TABLE table_name"
+                },
+                {
+                    "key": "D",
+                    "text": "ALTER TABLE table_name UNDELETE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. UNDROP TABLE restores a table that was previously dropped, as long as it's still within the Time Travel retention period. The same UNDROP command works for schemas and databases. RESTORE, RECOVER, and UNDELETE are not valid Snowflake commands.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q127",
+            "question": "What is the DATA_RETENTION_TIME_IN_DAYS parameter used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Setting how long Fail-safe data is retained"
+                },
+                {
+                    "key": "B",
+                    "text": "Setting the Time Travel retention period for a table, schema, or database"
+                },
+                {
+                    "key": "C",
+                    "text": "Setting how long query history is retained"
+                },
+                {
+                    "key": "D",
+                    "text": "Setting the result cache expiration period"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. DATA_RETENTION_TIME_IN_DAYS sets the Time Travel retention period. It can be set at the account, database, schema, or table level. Standard edition supports 0-1 days; Enterprise and above support 0-90 days for permanent tables.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q128",
+            "question": "What is the minimum Snowflake edition required for column-level security (Dynamic Data Masking)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Standard"
+                },
+                {
+                    "key": "B",
+                    "text": "Enterprise"
+                },
+                {
+                    "key": "C",
+                    "text": "Business Critical"
+                },
+                {
+                    "key": "D",
+                    "text": "Virtual Private Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Dynamic Data Masking is available starting with Enterprise edition. It allows you to define masking policies that conditionally mask sensitive column data at query time based on the user's role. Standard edition does not support this feature.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q129",
+            "question": "How does Snowflake handle data encryption?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Data is encrypted at rest only; in-transit encryption is optional"
+                },
+                {
+                    "key": "B",
+                    "text": "All data is encrypted at rest and in transit by default, with automatic key rotation"
+                },
+                {
+                    "key": "C",
+                    "text": "Encryption must be manually configured by the account administrator"
+                },
+                {
+                    "key": "D",
+                    "text": "Only Business Critical edition supports encryption"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake encrypts all data at rest using AES-256 encryption and all data in transit using TLS 1.2+. This encryption is automatic and enabled by default on all editions. Enterprise edition and above support periodic rekeying, and Business Critical supports customer-managed keys (Tri-Secret Secure).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q130",
+            "question": "What does Trust Center provide in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A centralized view of an account's security posture with security recommendations, findings, and scanner packages to evaluate compliance with best practices"
+                },
+                {
+                    "key": "B",
+                    "text": "A billing dashboard that tracks credit consumption across all warehouses and services"
+                },
+                {
+                    "key": "C",
+                    "text": "A data catalog for discovering and classifying sensitive data across schemas"
+                },
+                {
+                    "key": "D",
+                    "text": "A role management interface for creating and assigning custom roles to users"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Trust Center provides a centralized view of an account's security posture. It offers security recommendations, findings, and scanner packages that evaluate compliance with security best practices. It is not a billing dashboard, data catalog, or role management tool.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s2q131",
+            "question": "What do scanner packages in Snowflake's Trust Center evaluate?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Query performance bottlenecks and warehouse sizing recommendations"
+                },
+                {
+                    "key": "B",
+                    "text": "Data quality issues such as null values, duplicates, and schema drift"
+                },
+                {
+                    "key": "C",
+                    "text": "Potential security risks such as overly permissive network policies, missing MFA enforcement, or unused credentials"
+                },
+                {
+                    "key": "D",
+                    "text": "Storage optimization opportunities including unused tables and stale micro-partitions"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Scanner packages in Trust Center are predefined security checks that automatically scan accounts for potential security risks. These include overly permissive network policies, missing MFA enforcement, unused credentials, and other security misconfigurations. They do not evaluate query performance, data quality, or storage optimization.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q132",
+            "question": "When Trust Center generates security findings and recommendations, what characterizes the output that administrators can act upon?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Findings are informational only and cannot be acted upon within Snowflake"
+                },
+                {
+                    "key": "B",
+                    "text": "Findings have severity levels and actionable recommendations that administrators can review and remediate"
+                },
+                {
+                    "key": "C",
+                    "text": "Findings automatically remediate all detected issues without administrator intervention"
+                },
+                {
+                    "key": "D",
+                    "text": "Findings are exported exclusively to third-party SIEM tools for external analysis"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Trust Center findings include severity levels and actionable recommendations that administrators can review and remediate. They are not informational-only, they do not auto-remediate, and they are not limited to third-party SIEM export.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q133",
+            "question": "Which features collectively provide Snowflake's layered data protection strategy?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Streams, Tasks, and Snowpipe"
+                },
+                {
+                    "key": "B",
+                    "text": "Time Travel, Fail-safe, and database replication"
+                },
+                {
+                    "key": "C",
+                    "text": "Row access policies, column masking, and object tagging"
+                },
+                {
+                    "key": "D",
+                    "text": "Resource monitors, warehouse auto-suspend, and query timeout"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Time Travel, Fail-safe, and database replication together form Snowflake's layered data protection approach. Time Travel allows accessing historical data within a retention window, Fail-safe provides a non-configurable recovery period managed by Snowflake, and replication enables cross-region/cross-cloud copies for disaster recovery.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s2q134",
+            "question": "Which objects can be included in a replication group for backup purposes in Snowflake? (Select all that apply)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Databases, shares, and users"
+                },
+                {
+                    "key": "B",
+                    "text": "Roles, warehouses, and resource monitors"
+                },
+                {
+                    "key": "C",
+                    "text": "Integrations and network policies"
+                },
+                {
+                    "key": "D",
+                    "text": "Stages, pipes, and streams only"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Replication groups can include databases, shares, users, roles, warehouses, resource monitors, integrations, and network policies. Stages, pipes, and streams are database-level objects that are replicated as part of a database, not as standalone replication group members.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s2q135",
+            "question": "What is the purpose of a failover group in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To automatically scale warehouse clusters during peak query loads"
+                },
+                {
+                    "key": "B",
+                    "text": "To extend replication groups with the ability to promote a secondary deployment to primary, enabling business continuity during outages"
+                },
+                {
+                    "key": "C",
+                    "text": "To group failed queries together for batch retry processing"
+                },
+                {
+                    "key": "D",
+                    "text": "To define a set of users who receive alert notifications when tasks fail"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A failover group extends the concept of replication groups by adding the ability to promote a secondary deployment to primary. This enables business continuity during outages by allowing a replicated account to take over as the primary when needed.",
+            "difficulty": "medium"
+        }
+    ]
+}

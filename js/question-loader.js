@@ -11,43 +11,36 @@ const QUESTION_SETS = [
   {
     id: 'set1-architecture',
     file: 'data/set1-architecture.json',
-    name: 'Snowflake Architecture & Features',
+    name: 'Snowflake AI Data Cloud Features & Architecture',
     domain: 'Snowflake AI Data Cloud Features & Architecture',
-    domainWeight: 25
+    domainWeight: 31
   },
   {
-    id: 'set2-security',
-    file: 'data/set2-security.json',
-    name: 'Account Access & Security',
-    domain: 'Account Access and Security',
+    id: 'set2-account-governance',
+    file: 'data/set2-account-governance.json',
+    name: 'Account Management and Data Governance',
+    domain: 'Account Management and Data Governance',
     domainWeight: 20
   },
   {
-    id: 'set3-performance',
-    file: 'data/set3-performance.json',
-    name: 'Performance Concepts',
-    domain: 'Performance Concepts',
-    domainWeight: 15
+    id: 'set3-data-loading',
+    file: 'data/set3-data-loading.json',
+    name: 'Data Loading, Unloading, and Connectivity',
+    domain: 'Data Loading, Unloading, and Connectivity',
+    domainWeight: 18
   },
   {
-    id: 'set4-data-loading',
-    file: 'data/set4-data-loading.json',
-    name: 'Data Loading & Unloading',
-    domain: 'Data Loading and Unloading',
-    domainWeight: 10
+    id: 'set4-performance-querying',
+    file: 'data/set4-performance-querying.json',
+    name: 'Performance Optimization, Querying, and Transformation',
+    domain: 'Performance Optimization, Querying, and Transformation',
+    domainWeight: 21
   },
   {
-    id: 'set5-transformations',
-    file: 'data/set5-transformations.json',
-    name: 'Data Transformations',
-    domain: 'Data Transformations',
-    domainWeight: 20
-  },
-  {
-    id: 'set6-data-protection',
-    file: 'data/set6-data-protection.json',
-    name: 'Data Protection & Sharing',
-    domain: 'Data Protection and Data Sharing',
+    id: 'set5-data-collaboration',
+    file: 'data/set5-data-collaboration.json',
+    name: 'Data Collaboration',
+    domain: 'Data Collaboration',
     domainWeight: 10
   },
   {

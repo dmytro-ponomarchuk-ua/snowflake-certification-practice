@@ -1,0 +1,2057 @@
+{
+    "setId": "set3-data-loading",
+    "setName": "Data Loading, Unloading, and Connectivity",
+    "domain": "Data Loading, Unloading, and Connectivity",
+    "domainWeight": 18,
+    "questions": [
+        {
+            "id": "s3q001",
+            "question": "You execute a COPY statement against table X, then CLONE it to X2 and repeat the COPY to the new table. What's the outcome?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The X2 table has the data loaded twice"
+                },
+                {
+                    "key": "B",
+                    "text": "The COPY against X2 fails with an error"
+                },
+                {
+                    "key": "C",
+                    "text": "The COPY against X2 finishes but loads no entries"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. When a table is cloned, the load metadata (which tracks previously loaded files) is NOT copied to the clone. Therefore, the COPY command against X2 will re-load the same files since X2 has no record of them being previously loaded, resulting in duplicate data.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q002",
+            "question": "You have executed a COPY statement but find no rows were loaded. What's the most likely reason?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The data has already been loaded and Snowflake tracks files loaded using metadata"
+                },
+                {
+                    "key": "B",
+                    "text": "The format is incorrect and the load silently failed"
+                },
+                {
+                    "key": "C",
+                    "text": "The columns don't match the data and the load failed to complete"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Snowflake maintains load metadata that tracks which files have been loaded into a table. If the same files are referenced in a subsequent COPY command, Snowflake skips them by default (within the 64-day metadata retention period). This prevents duplicate loading.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q003",
+            "question": "What are the three types of internal stages in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "User Stage (@~)"
+                },
+                {
+                    "key": "B",
+                    "text": "Table Stage (@%table_name)"
+                },
+                {
+                    "key": "C",
+                    "text": "Named Stage (@stage_name)"
+                },
+                {
+                    "key": "D",
+                    "text": "Database Stage (@database_name)"
+                },
+                {
+                    "key": "E",
+                    "text": "Schema Stage (@schema_name)"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake has three types of internal stages: User Stage (@~) — allocated to each user. Table Stage (@%table_name) — allocated to each table. Named Stage — a named database object created with CREATE STAGE. Database Stage and Schema Stage do not exist.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q004",
+            "question": "Which command is used to upload files from a local file system to a Snowflake internal stage?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "COPY INTO"
+                },
+                {
+                    "key": "B",
+                    "text": "PUT"
+                },
+                {
+                    "key": "C",
+                    "text": "UPLOAD"
+                },
+                {
+                    "key": "D",
+                    "text": "INSERT"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The PUT command uploads (stages) files from a local file system to a Snowflake internal stage. PUT automatically compresses and encrypts files. COPY INTO loads data from staged files into tables. UPLOAD is not a valid Snowflake command.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q005",
+            "question": "Which command is used to download files from a Snowflake internal stage to a local file system?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "COPY INTO"
+                },
+                {
+                    "key": "B",
+                    "text": "GET"
+                },
+                {
+                    "key": "C",
+                    "text": "DOWNLOAD"
+                },
+                {
+                    "key": "D",
+                    "text": "EXPORT"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The GET command downloads files from a Snowflake internal stage to a local directory. It automatically decrypts files during download. GET and PUT are only available through SnowSQL or the Snowflake connectors, not through the web UI.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q006",
+            "question": "What is Snowpipe used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Scheduling batch data loads at specific times"
+                },
+                {
+                    "key": "B",
+                    "text": "Continuous, serverless data loading as new files arrive in a stage"
+                },
+                {
+                    "key": "C",
+                    "text": "Transforming data during the loading process"
+                },
+                {
+                    "key": "D",
+                    "text": "Moving data between Snowflake accounts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowpipe provides continuous, serverless data ingestion. It automatically loads data as new files appear in a stage, using event notifications (e.g., S3 event notifications) or REST API calls. It uses serverless compute, so no warehouse is needed.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q007",
+            "question": "How does Snowpipe differ from COPY INTO in terms of compute resources?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Snowpipe uses a user-specified virtual warehouse; COPY uses serverless compute"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowpipe uses serverless, Snowflake-managed compute; COPY uses a user-specified virtual warehouse"
+                },
+                {
+                    "key": "C",
+                    "text": "Both use serverless compute"
+                },
+                {
+                    "key": "D",
+                    "text": "Both require a user-specified virtual warehouse"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowpipe uses Snowflake-managed serverless compute resources, so you don't need to manage a warehouse. COPY INTO requires a running virtual warehouse to process the data load. Snowpipe is billed per file loaded, while COPY is billed per warehouse credits consumed.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q008",
+            "question": "Which file formats does Snowflake support for data loading? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CSV"
+                },
+                {
+                    "key": "B",
+                    "text": "Parquet"
+                },
+                {
+                    "key": "C",
+                    "text": "Avro"
+                },
+                {
+                    "key": "D",
+                    "text": "Excel (XLSX)"
+                },
+                {
+                    "key": "E",
+                    "text": "PDF"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake supports loading from CSV, JSON, Avro, ORC, Parquet, and XML formats. Excel (XLSX) and PDF are not directly supported — data from these formats must first be converted to a supported format.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q009",
+            "question": "What does the ON_ERROR option in COPY INTO control?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The maximum number of errors allowed before the load is aborted"
+                },
+                {
+                    "key": "B",
+                    "text": "The behavior when errors are encountered during data loading (continue, skip, abort)"
+                },
+                {
+                    "key": "C",
+                    "text": "Where error logs are stored"
+                },
+                {
+                    "key": "D",
+                    "text": "Whether to send email notifications on errors"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. ON_ERROR specifies the action when a data loading error is encountered. Options include: CONTINUE (skip the error row), SKIP_FILE (skip the entire file), ABORT_STATEMENT (abort the entire load), and SKIP_FILE_<num> (skip file if errors exceed a threshold).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q010",
+            "question": "What does VALIDATION_MODE in COPY INTO do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Validates the data and loads it if valid"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns validation errors without loading any data — a dry-run mode"
+                },
+                {
+                    "key": "C",
+                    "text": "Validates the stage permissions before loading"
+                },
+                {
+                    "key": "D",
+                    "text": "Validates the target table schema"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. VALIDATION_MODE performs a 'dry run' — it validates the data files and returns any errors without actually loading any data into the table. Options include RETURN_n_ROWS (validate n rows) and RETURN_ERRORS (return all errors). This is useful for testing before actual loads.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q011",
+            "question": "When unloading data to an internal stage, which option will unload the data fastest?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "PARALLEL_EXECUTION=TRUE"
+                },
+                {
+                    "key": "B",
+                    "text": "PARALLEL_UNLOAD=TRUE"
+                },
+                {
+                    "key": "C",
+                    "text": "SINGLE=FALSE"
+                },
+                {
+                    "key": "D",
+                    "text": "None of the above"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. SINGLE=FALSE (the default) allows the unload to execute in parallel across all compute nodes, producing multiple output files. SINGLE=TRUE creates a single file but is slower. PARALLEL_EXECUTION and PARALLEL_UNLOAD are not valid Snowflake options.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q012",
+            "question": "What is the default behavior of the COPY INTO command when loading files that have already been loaded?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It reloads all files regardless"
+                },
+                {
+                    "key": "B",
+                    "text": "It skips files that have been loaded within the last 64 days"
+                },
+                {
+                    "key": "C",
+                    "text": "It asks the user whether to reload"
+                },
+                {
+                    "key": "D",
+                    "text": "It only reloads files that have been modified since the last load"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. By default, COPY INTO tracks loaded files via metadata for 64 days and skips previously loaded files. To force reload, you can use FORCE=TRUE. The metadata tracks files by name, size, and checksum.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q013",
+            "question": "Which option forces the COPY INTO command to reload previously loaded files?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "RELOAD=TRUE"
+                },
+                {
+                    "key": "B",
+                    "text": "FORCE=TRUE"
+                },
+                {
+                    "key": "C",
+                    "text": "SKIP_DUPLICATES=FALSE"
+                },
+                {
+                    "key": "D",
+                    "text": "OVERWRITE=TRUE"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FORCE=TRUE tells COPY INTO to reload all matching files regardless of whether they've been loaded before. Use this carefully as it can create duplicate data if the table already contains previously loaded records.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q014",
+            "question": "Can you perform transformations during a COPY INTO load? (Choose the best answer)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, COPY INTO only loads raw data without any transformations"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, you can perform column reordering, column omission, casts, and use a subset of SQL functions"
+                },
+                {
+                    "key": "C",
+                    "text": "Yes, you can use any SQL expression including JOINs and subqueries"
+                },
+                {
+                    "key": "D",
+                    "text": "Only type casting is allowed during COPY INTO"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. COPY INTO supports basic transformations during loading: column reordering, column omission, casting data types, truncating text, and simple SQL functions. However, it does not support JOINs, subqueries, GROUP BY, or complex expressions.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q015",
+            "question": "What is an external stage in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A stage located in a different Snowflake account"
+                },
+                {
+                    "key": "B",
+                    "text": "A stage that references a cloud storage location outside of Snowflake (e.g., S3 bucket, Azure container)"
+                },
+                {
+                    "key": "C",
+                    "text": "A temporary stage that exists only during a session"
+                },
+                {
+                    "key": "D",
+                    "text": "A stage used exclusively for unloading data"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. An external stage references a cloud storage location (Amazon S3, Azure Blob Storage, or Google Cloud Storage) outside of Snowflake's internal storage. It allows COPY INTO to load data directly from external cloud storage or unload data to it.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q016",
+            "question": "What does the FILE_FORMAT option in a COPY INTO command specify?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The size of the output files"
+                },
+                {
+                    "key": "B",
+                    "text": "The format specification (CSV, JSON, Parquet, etc.) and parsing options for the data files"
+                },
+                {
+                    "key": "C",
+                    "text": "The compression algorithm to use"
+                },
+                {
+                    "key": "D",
+                    "text": "The encoding of the file names"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. FILE_FORMAT specifies the data file format type (CSV, JSON, Avro, Parquet, ORC, XML) and its associated parsing options (delimiter, skip_header, date_format, etc.). It can reference a named file format object or be specified inline.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q017",
+            "question": "What is the recommended maximum compressed file size for efficient data loading in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "10-50 MB"
+                },
+                {
+                    "key": "B",
+                    "text": "100-250 MB"
+                },
+                {
+                    "key": "C",
+                    "text": "1-5 GB"
+                },
+                {
+                    "key": "D",
+                    "text": "There is no recommendation"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake recommends compressed data files in the range of 100-250 MB for optimal parallel loading. Files that are too small create overhead; files that are too large cannot be efficiently parallelized across warehouse nodes.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q018",
+            "question": "Which approach triggers Snowpipe to load new data files automatically?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Polling the stage directory every minute"
+                },
+                {
+                    "key": "B",
+                    "text": "Cloud event notifications (e.g., S3 event notifications, Azure Event Grid)"
+                },
+                {
+                    "key": "C",
+                    "text": "Database triggers on the target table"
+                },
+                {
+                    "key": "D",
+                    "text": "Scheduled CRON jobs in Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowpipe is most commonly triggered automatically using cloud event notifications (S3 SQS notifications, Azure Event Grid, GCS Pub/Sub). When a new file arrives in the stage, the cloud provider sends a notification that triggers Snowpipe. Alternatively, Snowpipe can be triggered via REST API calls.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q019",
+            "question": "Can the PUT command be executed from the Snowflake web interface (Snowsight)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Yes, PUT works from any Snowflake client"
+                },
+                {
+                    "key": "B",
+                    "text": "No, PUT can only be executed from SnowSQL or Snowflake connectors/drivers"
+                },
+                {
+                    "key": "C",
+                    "text": "Yes, but only for files under 50MB"
+                },
+                {
+                    "key": "D",
+                    "text": "No, PUT is deprecated in favor of COPY INTO"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The PUT and GET commands can only be executed from SnowSQL (the command-line client) or through Snowflake connectors and drivers (JDBC, ODBC, Python, etc.). They are not available through the Snowflake web interface. However, Snowsight does support file upload through a drag-and-drop UI.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q020",
+            "question": "What compression method does the PUT command use by default?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "ZIP"
+                },
+                {
+                    "key": "B",
+                    "text": "GZIP"
+                },
+                {
+                    "key": "C",
+                    "text": "SNAPPY"
+                },
+                {
+                    "key": "D",
+                    "text": "No compression is applied"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. By default, the PUT command automatically compresses files using GZIP before uploading them to the internal stage. You can specify a different compression method or disable compression with AUTO_COMPRESS=FALSE.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q021",
+            "question": "What is the recommended file size for data loading into Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Less than 1 MB"
+                },
+                {
+                    "key": "B",
+                    "text": "10–100 MB compressed (or 100–250 MB compressed for continuous loading)"
+                },
+                {
+                    "key": "C",
+                    "text": "At least 1 GB per file"
+                },
+                {
+                    "key": "D",
+                    "text": "File size doesn't matter"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowflake recommends compressed data files of 10–100 MB for bulk loading (COPY INTO) and 100–250 MB for continuous loading (Snowpipe). Too many small files create overhead; too-large files reduce parallelism. Splitting large files into this range maximizes parallel processing.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q022",
+            "question": "What does the COPY INTO command do when loading data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Copies data between two Snowflake tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Loads data from staged files (internal or external stages) into a Snowflake table"
+                },
+                {
+                    "key": "C",
+                    "text": "Creates a copy of a database"
+                },
+                {
+                    "key": "D",
+                    "text": "Copies data from Snowflake to an external database"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. COPY INTO <table> loads data from files in a stage (internal or external) into a target table. It supports various file formats (CSV, JSON, Parquet, Avro, ORC, XML), transformation during load, and error handling options.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q023",
+            "question": "What does the COPY INTO command do when unloading data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Deletes data from a table"
+                },
+                {
+                    "key": "B",
+                    "text": "Exports data from a Snowflake table to files in a stage"
+                },
+                {
+                    "key": "C",
+                    "text": "Moves data to another Snowflake account"
+                },
+                {
+                    "key": "D",
+                    "text": "Converts table data to a different format in place"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. COPY INTO <stage> exports (unloads) data from a Snowflake table or query result into one or more files in a stage location (internal or external). You can specify file format, compression, and partitioning options.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q024",
+            "question": "What is the VALIDATE function used for after a COPY INTO load?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Validates that the table has the correct schema"
+                },
+                {
+                    "key": "B",
+                    "text": "Returns errors from the most recent COPY INTO execution, allowing you to inspect rejected rows"
+                },
+                {
+                    "key": "C",
+                    "text": "Validates SQL syntax"
+                },
+                {
+                    "key": "D",
+                    "text": "Validates user permissions for loading"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The VALIDATE table function returns errors from the last COPY INTO execution in the session. Usage: SELECT * FROM TABLE(VALIDATE(my_table, JOB_ID => '_last')). It shows rejected rows and error details for debugging data load issues.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q025",
+            "question": "What is a Storage Integration object used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Integrating Snowflake with on-premise storage"
+                },
+                {
+                    "key": "B",
+                    "text": "A Snowflake object that stores cloud credentials and allowed storage locations for external stages, avoiding inline credentials"
+                },
+                {
+                    "key": "C",
+                    "text": "Integrating multiple Snowflake databases"
+                },
+                {
+                    "key": "D",
+                    "text": "Compressing data for storage optimization"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A Storage Integration is an account-level object that stores IAM role/service principal credentials and defines allowed/blocked storage locations. External stages reference the integration instead of storing credentials directly, improving security and manageability.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q026",
+            "question": "What does FORCE = TRUE do in a COPY INTO command?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Forces the warehouse to scale up for faster loading"
+                },
+                {
+                    "key": "B",
+                    "text": "Reloads files that have already been loaded (bypassing the load metadata tracking)"
+                },
+                {
+                    "key": "C",
+                    "text": "Forces the use of a specific file format"
+                },
+                {
+                    "key": "D",
+                    "text": "Forces the creation of the target table if it doesn't exist"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. By default, COPY INTO skips files that have already been loaded (tracked via load metadata for 64 days). FORCE = TRUE bypasses this check and reloads files even if they've been loaded before, which may cause duplicate data.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q027",
+            "question": "How long does Snowflake track load metadata to prevent duplicate file loads?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "24 hours"
+                },
+                {
+                    "key": "B",
+                    "text": "14 days"
+                },
+                {
+                    "key": "C",
+                    "text": "64 days"
+                },
+                {
+                    "key": "D",
+                    "text": "Indefinitely"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. Snowflake tracks load metadata for 64 days. Within this window, COPY INTO will skip files that have already been successfully loaded. After 64 days, the metadata expires and files could be reloaded if COPY INTO is re-executed.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q028",
+            "question": "What is the difference between a User Stage and a Table Stage?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "User stages can load into any table; table stages can only load into their associated table"
+                },
+                {
+                    "key": "B",
+                    "text": "User stages are faster; table stages are more secure"
+                },
+                {
+                    "key": "C",
+                    "text": "There is no difference"
+                },
+                {
+                    "key": "D",
+                    "text": "Table stages support external files; user stages do not"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. A User Stage (@~) is per-user and files can be loaded into any table. A Table Stage (@%table_name) is per-table and files can only be loaded into that specific table. Neither can be altered or dropped (they're automatic). Named stages offer the most flexibility.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q029",
+            "question": "Which command downloads data files from an internal stage to a local machine?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "COPY INTO"
+                },
+                {
+                    "key": "B",
+                    "text": "PUT"
+                },
+                {
+                    "key": "C",
+                    "text": "GET"
+                },
+                {
+                    "key": "D",
+                    "text": "DOWNLOAD"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. The GET command downloads files from an internal Snowflake stage to a local directory on the client machine. PUT uploads files from local to stage, and COPY INTO loads/unloads data between stages and tables.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q030",
+            "question": "Can you transform data during the COPY INTO load process?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, data must be loaded as-is"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, you can use a SELECT statement with column transformations, filtering, and reordering in the COPY INTO command"
+                },
+                {
+                    "key": "C",
+                    "text": "Only with Snowpipe"
+                },
+                {
+                    "key": "D",
+                    "text": "Only for JSON data"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. COPY INTO supports transformations during loading using a SELECT statement: COPY INTO table FROM (SELECT $1, $2::INT, ... FROM @stage). You can cast data types, reorder columns, apply functions, and filter rows during the load.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q031",
+            "question": "What is Snowpipe Streaming?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A faster version of regular Snowpipe"
+                },
+                {
+                    "key": "B",
+                    "text": "A low-latency API for inserting rows directly into tables without staging files, using the Snowflake Ingest SDK"
+                },
+                {
+                    "key": "C",
+                    "text": "A tool for streaming video data"
+                },
+                {
+                    "key": "D",
+                    "text": "A CDC feature for tracking changes"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowpipe Streaming (via the Snowflake Ingest SDK) enables low-latency row-level data insertion directly into Snowflake tables without first staging data as files. It's ideal for real-time data feeds, IoT, and event-driven architectures.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q032",
+            "question": "How does Snowpipe know when new files arrive in a stage?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It continuously polls the stage"
+                },
+                {
+                    "key": "B",
+                    "text": "Through cloud event notifications (e.g., S3 event notifications, Azure Event Grid) or REST API calls"
+                },
+                {
+                    "key": "C",
+                    "text": "A scheduled timer checks every minute"
+                },
+                {
+                    "key": "D",
+                    "text": "Users must manually trigger it"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowpipe can be triggered automatically by cloud event notifications (S3 SQS notifications, Azure Event Grid, GCP Pub/Sub) when new files arrive in a stage, or manually via the Snowpipe REST API (insertFiles endpoint).",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q033",
+            "question": "What compute does Snowpipe use for loading data?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The user's default virtual warehouse"
+                },
+                {
+                    "key": "B",
+                    "text": "Serverless compute managed by Snowflake"
+                },
+                {
+                    "key": "C",
+                    "text": "The Cloud Services Layer only"
+                },
+                {
+                    "key": "D",
+                    "text": "A dedicated Snowpipe warehouse that must be created"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowpipe uses Snowflake-managed serverless compute resources. No user-managed virtual warehouse is required. Costs are based on the actual compute time used for loading, billed per-second at a serverless compute rate.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q034",
+            "question": "What file formats does COPY INTO support for loading? (Choose all that apply)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CSV"
+                },
+                {
+                    "key": "B",
+                    "text": "JSON"
+                },
+                {
+                    "key": "C",
+                    "text": "Parquet"
+                },
+                {
+                    "key": "D",
+                    "text": "Avro"
+                },
+                {
+                    "key": "E",
+                    "text": "All of the above"
+                }
+            ],
+            "correctAnswers": [
+                "E"
+            ],
+            "multiSelect": false,
+            "explanation": "E is correct. COPY INTO supports CSV, JSON, Parquet, Avro, ORC, and XML file formats for loading data. Each format has specific options (delimiters for CSV, strip_outer_array for JSON, etc.) that can be configured via file format options.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q035",
+            "question": "What does the PURGE = TRUE option do in COPY INTO?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Deletes the target table data before loading"
+                },
+                {
+                    "key": "B",
+                    "text": "Automatically removes (deletes) the staged files after they are successfully loaded"
+                },
+                {
+                    "key": "C",
+                    "text": "Purges the result cache"
+                },
+                {
+                    "key": "D",
+                    "text": "Removes duplicate rows during loading"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. PURGE = TRUE deletes the source data files from the stage after they have been successfully loaded into the target table. This helps keep stages clean and avoids accidental reloading of already-processed files.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q036",
+            "question": "Can you load data from an external stage directly into Snowflake without copying files to an internal stage first?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "No, files must first be copied to an internal stage"
+                },
+                {
+                    "key": "B",
+                    "text": "Yes, COPY INTO can load directly from external stages (S3, Azure Blob, GCS)"
+                },
+                {
+                    "key": "C",
+                    "text": "Only with Snowpipe"
+                },
+                {
+                    "key": "D",
+                    "text": "Only for Parquet files"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. COPY INTO can load data directly from external stages without first moving files to an internal stage. The external stage references a cloud storage location (S3 bucket, Azure container, GCS bucket) with appropriate credentials.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q037",
+            "question": "What does the MATCH_BY_COLUMN_NAME option do in COPY INTO?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Matches source columns to target columns by position"
+                },
+                {
+                    "key": "B",
+                    "text": "Matches source columns to target table columns by name (case-insensitive), regardless of column order"
+                },
+                {
+                    "key": "C",
+                    "text": "Matches files by naming pattern"
+                },
+                {
+                    "key": "D",
+                    "text": "Matches rows for deduplication"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. MATCH_BY_COLUMN_NAME (for semi-structured formats like Parquet, Avro, ORC) matches source data columns to target table columns by their names rather than by position. This allows source and target columns to be in different orders.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q038",
+            "question": "What is the STRIP_OUTER_ARRAY option used for when loading JSON?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Removes the outer brackets from a JSON array, loading each element as a separate row"
+                },
+                {
+                    "key": "B",
+                    "text": "Strips all array data types from the JSON"
+                },
+                {
+                    "key": "C",
+                    "text": "Removes nested arrays"
+                },
+                {
+                    "key": "D",
+                    "text": "Converts arrays to strings"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. STRIP_OUTER_ARRAY = TRUE removes the outer array brackets from a JSON file containing an array of objects (e.g., [{...}, {...}]) and loads each object as a separate row in the table. Without this, the entire array loads as one row.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q039",
+            "question": "Which command would you use to list files in a stage?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SHOW FILES IN @stage_name"
+                },
+                {
+                    "key": "B",
+                    "text": "LIST @stage_name (or LS @stage_name)"
+                },
+                {
+                    "key": "C",
+                    "text": "SELECT * FROM @stage_name"
+                },
+                {
+                    "key": "D",
+                    "text": "DESCRIBE STAGE stage_name"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The LIST command (or its alias LS) shows files in a stage along with their size, MD5 hash, and last modified date. Example: LIST @my_stage; or LIST @my_stage PATTERN = '.*\\.csv';",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q040",
+            "question": "What is the PATTERN option in COPY INTO used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Defining the data format pattern (CSV, JSON, etc.)"
+                },
+                {
+                    "key": "B",
+                    "text": "Filtering which files to load from a stage using a regex pattern on file names"
+                },
+                {
+                    "key": "C",
+                    "text": "Defining the naming pattern for output files during unload"
+                },
+                {
+                    "key": "D",
+                    "text": "Matching row patterns within the data"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The PATTERN option accepts a regular expression to filter which files in the stage should be loaded. For example: COPY INTO my_table FROM @my_stage PATTERN = '.*sales.*\\.csv\\.gz'; loads only files matching the pattern.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q041",
+            "question": "Which connector is Snowflake's command-line client for executing SQL?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "SnowSQL"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowpipe"
+                },
+                {
+                    "key": "C",
+                    "text": "SnowCD"
+                },
+                {
+                    "key": "D",
+                    "text": "SnowSight"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. SnowSQL is Snowflake's command-line client for executing SQL queries and performing DDL/DML operations. Snowpipe is for continuous data loading. SnowCD is a connectivity diagnostic tool. Snowsight is the web-based UI.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q042",
+            "question": "Which of the following are valid Snowflake connectors/drivers? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "JDBC Driver"
+                },
+                {
+                    "key": "B",
+                    "text": "ODBC Driver"
+                },
+                {
+                    "key": "C",
+                    "text": "Python Connector"
+                },
+                {
+                    "key": "D",
+                    "text": "Redis Connector"
+                },
+                {
+                    "key": "E",
+                    "text": "MongoDB Connector"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake provides JDBC, ODBC, and Python connectors natively, along with Node.js, .NET, Go, and PHP drivers. There are no native Redis or MongoDB connectors provided by Snowflake.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q043",
+            "question": "What is SnowCD used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Continuous data loading"
+                },
+                {
+                    "key": "B",
+                    "text": "Diagnosing and troubleshooting network connectivity to Snowflake"
+                },
+                {
+                    "key": "C",
+                    "text": "Continuous deployment of Snowflake objects"
+                },
+                {
+                    "key": "D",
+                    "text": "Managing Snowflake credits and billing"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SnowCD (Snowflake Connectivity Diagnostic Tool) is a command-line utility that checks network connectivity to Snowflake. It verifies that all required hosts and ports are accessible, which is useful for troubleshooting connection issues behind firewalls or proxies.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q044",
+            "question": "Which Snowflake connector allows direct integration with Apache Spark?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Snowflake JDBC Driver"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowflake Connector for Spark"
+                },
+                {
+                    "key": "C",
+                    "text": "Snowflake ODBC Driver"
+                },
+                {
+                    "key": "D",
+                    "text": "SnowSQL CLI"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake Connector for Spark enables bidirectional data transfer between Snowflake and Apache Spark. It pushes query processing to Snowflake when possible and supports reading/writing data between the two platforms.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q045",
+            "question": "What is SnowSQL?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A web-based query editor"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowflake's command-line client for executing SQL and DDL/DML operations"
+                },
+                {
+                    "key": "C",
+                    "text": "A Python library for connecting to Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "A stored procedure language"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SnowSQL is Snowflake's official command-line interface (CLI) that allows users to execute SQL queries, perform DDL/DML operations, and manage Snowflake objects from a terminal. It supports scripting and automation.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q046",
+            "question": "Which Snowflake feature allows you to access data stored in external cloud storage without loading it into Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Data Sharing"
+                },
+                {
+                    "key": "B",
+                    "text": "External Tables"
+                },
+                {
+                    "key": "C",
+                    "text": "Internal Stages"
+                },
+                {
+                    "key": "D",
+                    "text": "Materialized Views"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. External tables allow you to query data stored in external cloud storage (S3, Azure Blob, GCS) without loading it into Snowflake. Data Sharing shares Snowflake-native data between accounts. Internal stages are for loading data. Materialized views are pre-computed query results.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q047",
+            "question": "Which Snowflake feature allows you to run queries on data stored in external cloud storage without loading it?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Internal Stages"
+                },
+                {
+                    "key": "B",
+                    "text": "External Tables"
+                },
+                {
+                    "key": "C",
+                    "text": "Data Shares"
+                },
+                {
+                    "key": "D",
+                    "text": "Snowpipe"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. External Tables allow you to query data stored in external cloud storage (S3, Azure Blob, GCS) without loading it into Snowflake. The data remains in the external location, and Snowflake accesses it on demand. External tables are read-only.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q048",
+            "question": "Which Snowflake feature enables continuous, serverless data loading from cloud storage?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "COPY INTO command"
+                },
+                {
+                    "key": "B",
+                    "text": "Snowpipe"
+                },
+                {
+                    "key": "C",
+                    "text": "PUT command"
+                },
+                {
+                    "key": "D",
+                    "text": "External Tables"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowpipe enables continuous, serverless data loading. It automatically detects new files in a stage (via cloud event notifications or REST API) and loads them into tables. It uses serverless compute, so no virtual warehouse is needed.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q049",
+            "question": "Which Snowflake object is used to define the format of data files for loading and unloading?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Stage"
+                },
+                {
+                    "key": "B",
+                    "text": "File Format"
+                },
+                {
+                    "key": "C",
+                    "text": "Pipe"
+                },
+                {
+                    "key": "D",
+                    "text": "Stream"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A File Format object defines the format of data files (CSV, JSON, Parquet, Avro, ORC, XML) including options like delimiters, compression, encoding, and error handling. File Formats can be named objects or specified inline in COPY commands.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q050",
+            "question": "What are Snowflake Stages used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Staging areas for data files before loading into tables or after unloading from tables"
+                },
+                {
+                    "key": "B",
+                    "text": "Development environments for testing queries"
+                },
+                {
+                    "key": "C",
+                    "text": "Intermediate compute steps in query processing"
+                },
+                {
+                    "key": "D",
+                    "text": "Approval workflows for data changes"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. Stages are locations (internal or external) where data files are stored for loading into Snowflake tables or unloading from Snowflake tables. Internal stages store files within Snowflake; external stages reference cloud storage locations (S3, Azure Blob, GCS).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q051",
+            "question": "Which types of internal stages exist in Snowflake? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "User stage (@~)"
+                },
+                {
+                    "key": "B",
+                    "text": "Table stage (@%table_name)"
+                },
+                {
+                    "key": "C",
+                    "text": "Named stage (@stage_name)"
+                },
+                {
+                    "key": "D",
+                    "text": "Schema stage"
+                },
+                {
+                    "key": "E",
+                    "text": "Database stage"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. Snowflake has three types of internal stages: User stages (@~, one per user), Table stages (@%table_name, one per table), and Named stages (created with CREATE STAGE). Schema and Database stages do not exist.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q052",
+            "question": "What is a Snowflake Partner Connect?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A private network connection between Snowflake and on-premises systems"
+                },
+                {
+                    "key": "B",
+                    "text": "A feature that allows easy integration with third-party tools like Tableau, dbt, and Fivetran directly from the Snowflake UI"
+                },
+                {
+                    "key": "C",
+                    "text": "A data sharing mechanism between Snowflake partners"
+                },
+                {
+                    "key": "D",
+                    "text": "A technical support portal for Snowflake partners"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Partner Connect provides a streamlined way to create trial accounts and integrate with third-party tools and services (like ETL, BI, ML tools) directly from the Snowsight interface. It simplifies the setup process for partner integrations.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q053",
+            "question": "What ingestion method does the Snowflake Kafka Connector use to load data from Kafka topics into Snowflake tables?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "It uses a virtual warehouse with COPY INTO commands"
+                },
+                {
+                    "key": "B",
+                    "text": "It uses Snowpipe or Snowpipe Streaming for serverless ingestion"
+                },
+                {
+                    "key": "C",
+                    "text": "It uses INSERT statements through the JDBC driver"
+                },
+                {
+                    "key": "D",
+                    "text": "It uses external tables to query Kafka topics directly"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake Kafka Connector reads data from Apache Kafka topics and loads it into Snowflake tables using either Snowpipe (file-based ingestion) or Snowpipe Streaming (low-latency row-based ingestion). Both methods are serverless and do not require a user-managed warehouse.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q054",
+            "question": "What is the primary purpose of the Snowflake Connector for Python (snowflake-connector-python)?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "To create visualizations from Snowflake data"
+                },
+                {
+                    "key": "B",
+                    "text": "To develop and execute SQL queries, manage Snowflake objects, and transfer data between Python applications and Snowflake"
+                },
+                {
+                    "key": "C",
+                    "text": "To replace Snowpipe for continuous data loading"
+                },
+                {
+                    "key": "D",
+                    "text": "To deploy machine learning models to Snowflake"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake Connector for Python (installed via pip as snowflake-connector-python) enables Python applications to connect to Snowflake, execute SQL queries, perform DDL/DML operations, and transfer data. It follows the Python DB API 2.0 specification (PEP 249).",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q055",
+            "question": "Which standard Go interface does the Snowflake Go Driver implement to enable database connectivity?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "net/http"
+                },
+                {
+                    "key": "B",
+                    "text": "database/sql"
+                },
+                {
+                    "key": "C",
+                    "text": "io/reader"
+                },
+                {
+                    "key": "D",
+                    "text": "encoding/json"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake Go Driver (gosnowflake) implements the Go standard library database/sql interface, allowing Go applications to interact with Snowflake using the same patterns used for other SQL databases. It supports key-pair authentication, MFA, and bulk data operations.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q056",
+            "question": "Which Snowflake driver enables JavaScript applications running on Node.js to connect to and interact with Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "snowflake-jdbc"
+                },
+                {
+                    "key": "B",
+                    "text": "snowflake-connector-nodejs"
+                },
+                {
+                    "key": "C",
+                    "text": "snowflake-sdk"
+                },
+                {
+                    "key": "D",
+                    "text": "snowflake-js"
+                }
+            ],
+            "correctAnswers": [
+                "C"
+            ],
+            "multiSelect": false,
+            "explanation": "C is correct. The Snowflake Node.js Driver is distributed as the 'snowflake-sdk' npm package. It provides an asynchronous interface for connecting Node.js applications to Snowflake, executing SQL, and managing data transfers.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q057",
+            "question": "Which capabilities does the Snowflake .NET Driver provide? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Executing SQL queries and DML/DDL statements from .NET applications"
+                },
+                {
+                    "key": "B",
+                    "text": "Asynchronous query execution"
+                },
+                {
+                    "key": "C",
+                    "text": "Support for key-pair authentication"
+                },
+                {
+                    "key": "D",
+                    "text": "Built-in ETL pipeline management"
+                },
+                {
+                    "key": "E",
+                    "text": "Automatic Snowflake account provisioning"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "C"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and C are correct. The Snowflake .NET Driver allows .NET applications (C#, F#, VB.NET) to execute SQL queries and DDL/DML, supports asynchronous query execution, and supports multiple authentication methods including key-pair authentication. It does not provide ETL management or account provisioning.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q058",
+            "question": "What is the key difference between the Snowflake CLI (snow) and SnowSQL?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "They are the same tool with different names"
+                },
+                {
+                    "key": "B",
+                    "text": "The Snowflake CLI (snow) focuses on managing Snowflake objects, Snowpark, and Native Apps, while SnowSQL is primarily a SQL execution client"
+                },
+                {
+                    "key": "C",
+                    "text": "SnowSQL replaces the Snowflake CLI for all purposes"
+                },
+                {
+                    "key": "D",
+                    "text": "The Snowflake CLI can only manage Snowpark projects, while SnowSQL handles everything else"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake CLI (snow) is a newer tool designed for managing Snowflake objects, deploying Snowpark projects, managing Streamlit apps, creating Native Apps, and executing SQL. SnowSQL is the traditional command-line client focused primarily on interactive SQL execution and scripting. Both can execute SQL, but they serve different primary workflows.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q059",
+            "question": "Which of the following can the Snowflake CLI (snow) be used for?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Managing Snowpark project deployments only"
+                },
+                {
+                    "key": "B",
+                    "text": "Deploying Snowpark projects, managing Streamlit apps, creating Native Apps, and executing SQL queries"
+                },
+                {
+                    "key": "C",
+                    "text": "Only executing SQL queries as a replacement for SnowSQL"
+                },
+                {
+                    "key": "D",
+                    "text": "Only managing Snowflake account settings and user permissions"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake CLI (snow) is a versatile tool that supports deploying Snowpark Python functions and procedures, managing Streamlit in Snowflake apps, creating and managing Native Apps, executing SQL queries (snow sql), and managing other Snowflake objects like stages, warehouses, and databases.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q060",
+            "question": "Where does the Snowflake CLI (snow) store its connection configuration by default?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "In a .snowsql/config file in the user's home directory"
+                },
+                {
+                    "key": "B",
+                    "text": "In a config.toml file inside the ~/.snowflake/ directory"
+                },
+                {
+                    "key": "C",
+                    "text": "In environment variables only"
+                },
+                {
+                    "key": "D",
+                    "text": "In the Snowflake account's session parameters"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. The Snowflake CLI (snow) stores connection configuration in a config.toml file located in the ~/.snowflake/ directory. This is different from SnowSQL, which uses ~/.snowsql/config. The config.toml file supports multiple named connection profiles.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q061",
+            "question": "What does the Snowflake Extension for Visual Studio Code allow developers to do?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Write and execute Snowflake SQL queries, and view results directly within VS Code"
+                },
+                {
+                    "key": "B",
+                    "text": "Replace Snowsight entirely for all Snowflake administration tasks"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatically deploy data pipelines to Snowflake"
+                },
+                {
+                    "key": "D",
+                    "text": "Create and manage Snowflake accounts from VS Code"
+                }
+            ],
+            "correctAnswers": [
+                "A"
+            ],
+            "multiSelect": false,
+            "explanation": "A is correct. The Snowflake Extension for VS Code lets developers write SQL, execute queries, and view results within the VS Code editor. It supports SQL autocompletion, syntax highlighting, and object explorer for browsing databases, schemas, and tables.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q062",
+            "question": "How do you create a chart from query results in Snowsight?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Export the results to Excel and create a chart there"
+                },
+                {
+                    "key": "B",
+                    "text": "Click the 'Chart' button above the query results panel after running a query"
+                },
+                {
+                    "key": "C",
+                    "text": "Use a CREATE CHART SQL command"
+                },
+                {
+                    "key": "D",
+                    "text": "Charts can only be created using third-party BI tools via Partner Connect"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. In Snowsight, after running a query, you can switch from the tabular results view to a chart view by clicking the 'Chart' button above the results panel. You can then customize the chart type, axes, and other settings. There is no CREATE CHART SQL command.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q063",
+            "question": "Which chart types are available in Snowsight for visualizing query results?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Only bar charts and line charts"
+                },
+                {
+                    "key": "B",
+                    "text": "Bar, line, scatter plot, heatmap, and scorecard"
+                },
+                {
+                    "key": "C",
+                    "text": "Only tabular data views with no visualization options"
+                },
+                {
+                    "key": "D",
+                    "text": "Pie, donut, and gauge charts only"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowsight offers several chart types including bar charts, line charts, scatter plots, heatmaps, and scorecards (single-value display). These can be customized with different axes, aggregations, and groupings to visualize query results directly in the Snowsight interface.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q064",
+            "question": "How are dashboards created in Snowsight?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "By writing dashboard configuration files in JSON format and uploading them"
+                },
+                {
+                    "key": "B",
+                    "text": "By creating a new dashboard and adding tiles, where each tile is powered by a query from a worksheet"
+                },
+                {
+                    "key": "C",
+                    "text": "By using the CREATE DASHBOARD SQL command"
+                },
+                {
+                    "key": "D",
+                    "text": "By connecting Snowflake to an external BI tool through Partner Connect"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. In Snowsight, dashboards are created by adding tiles, where each tile contains a query and displays its results as a chart or table. Tiles can be rearranged, resized, and configured independently. There is no CREATE DASHBOARD SQL command.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q065",
+            "question": "How can you share a dashboard in Snowsight with other users?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "By exporting it as a PDF and distributing it manually"
+                },
+                {
+                    "key": "B",
+                    "text": "By sharing it with specific Snowflake users or roles through the Snowsight sharing interface"
+                },
+                {
+                    "key": "C",
+                    "text": "By publishing it to the Snowflake Marketplace"
+                },
+                {
+                    "key": "D",
+                    "text": "Dashboards cannot be shared; each user must create their own"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowsight dashboards can be shared with other Snowflake users or roles using the built-in sharing feature. Users with whom a dashboard is shared can view or edit it depending on the permissions granted. The dashboard owner controls access through the sharing interface.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q066",
+            "question": "Which of the following statements about Snowsight dashboards is correct?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Dashboard tiles cannot be resized or rearranged once created"
+                },
+                {
+                    "key": "B",
+                    "text": "Dashboards support filters that can be applied across multiple tiles, and tiles can be rearranged and resized"
+                },
+                {
+                    "key": "C",
+                    "text": "Dashboards can only display static snapshots captured at creation time"
+                },
+                {
+                    "key": "D",
+                    "text": "Each dashboard tile must query data from the same database and schema"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. Snowsight dashboards are interactive — tiles can be rearranged and resized within the dashboard layout. Dashboard filters (such as date range filters) can be connected to multiple tiles, allowing users to filter data across the entire dashboard. Each tile runs its own query independently and can use different databases and schemas.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q067",
+            "question": "When creating an external stage for loading data from cloud storage, which elements vary depending on the cloud provider? (Choose three)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "The URL prefix (s3://, azure://, gcs://)"
+                },
+                {
+                    "key": "B",
+                    "text": "The type of storage integration credentials (IAM role for AWS, service principal for Azure, service account for GCS)"
+                },
+                {
+                    "key": "C",
+                    "text": "The COPY INTO command syntax for loading data"
+                },
+                {
+                    "key": "D",
+                    "text": "The file format options available for loading"
+                },
+                {
+                    "key": "E",
+                    "text": "The encryption type configuration (AWS_SSE_S3, AZURE_CSE, GCS_SSE_KMS)"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B",
+                "E"
+            ],
+            "multiSelect": true,
+            "explanation": "A, B, and E are correct. The URL prefix differs per provider (s3:// for AWS, azure:// for Azure, gcs:// for GCS). Storage integration credentials use IAM roles (AWS), service principals (Azure), or service accounts (GCS). Encryption options are provider-specific (e.g., AWS_SSE_S3, AZURE_CSE). The COPY INTO syntax and file format options are the same regardless of cloud provider.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q068",
+            "question": "What does enabling schema evolution on a table allow during COPY INTO data loading?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Automatically drops columns that are no longer present in the source data"
+                },
+                {
+                    "key": "B",
+                    "text": "Automatically adds new columns from the source data to the target table when used with MATCH_BY_COLUMN_NAME"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatically creates a new table version for each schema change"
+                },
+                {
+                    "key": "D",
+                    "text": "Automatically converts all data to VARIANT type to avoid schema conflicts"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. When ENABLE_SCHEMA_EVOLUTION = TRUE is set on a table, COPY INTO with MATCH_BY_COLUMN_NAME can automatically add new columns to the target table if the source files contain columns not yet in the table. It does not drop existing columns. This is supported for CSV, Parquet, Avro, ORC, and JSON formats.",
+            "difficulty": "hard"
+        },
+        {
+            "id": "s3q069",
+            "question": "What does the INFER_SCHEMA function do in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Validates that data in a table matches its defined schema"
+                },
+                {
+                    "key": "B",
+                    "text": "Detects the column definitions (names and data types) from a set of staged data files"
+                },
+                {
+                    "key": "C",
+                    "text": "Automatically creates tables based on schemas imported from other database platforms"
+                },
+                {
+                    "key": "D",
+                    "text": "Infers the optimal warehouse size for a query based on the data schema"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. INFER_SCHEMA is a table function that detects the column definitions (column names, data types, and ordering) from staged files. It supports Apache Parquet, Avro, ORC, and CSV files. It is commonly used with CREATE TABLE ... USING TEMPLATE to create tables that match the source file schema automatically.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q070",
+            "question": "Which ON_ERROR option in a COPY INTO command causes the load to skip the entire file if any error is found in that file?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "CONTINUE"
+                },
+                {
+                    "key": "B",
+                    "text": "SKIP_FILE"
+                },
+                {
+                    "key": "C",
+                    "text": "ABORT_STATEMENT"
+                },
+                {
+                    "key": "D",
+                    "text": "IGNORE_ERRORS"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. SKIP_FILE skips the entire file if any error is encountered in it. CONTINUE skips only the error row and continues loading the rest of the file. ABORT_STATEMENT aborts the entire COPY INTO operation on the first error. IGNORE_ERRORS is not a valid ON_ERROR option.",
+            "difficulty": "easy"
+        },
+        {
+            "id": "s3q071",
+            "question": "Which approaches can be used to load and query nested JSON data in Snowflake? (Choose two)",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "Load the JSON document into a VARIANT column and use dot notation or bracket notation to query nested elements"
+                },
+                {
+                    "key": "B",
+                    "text": "Use the FLATTEN table function to expand nested arrays or objects into individual rows"
+                },
+                {
+                    "key": "C",
+                    "text": "Use the PARSE_XML function to convert JSON into a queryable relational format"
+                },
+                {
+                    "key": "D",
+                    "text": "Use the JSON_TO_TABLE SQL command to automatically create relational tables from JSON"
+                }
+            ],
+            "correctAnswers": [
+                "A",
+                "B"
+            ],
+            "multiSelect": true,
+            "explanation": "A and B are correct. Semi-structured JSON data is typically loaded into a VARIANT column, then queried using dot notation (col:key.subkey) or bracket notation (col['key']). The FLATTEN table function is used to expand nested arrays or objects into rows for relational-style queries. PARSE_XML is for XML data, and JSON_TO_TABLE is not a valid Snowflake command.",
+            "difficulty": "medium"
+        },
+        {
+            "id": "s3q072",
+            "question": "What is a directory table in Snowflake?",
+            "options": [
+                {
+                    "key": "A",
+                    "text": "A system table that lists all database objects in a schema"
+                },
+                {
+                    "key": "B",
+                    "text": "A built-in feature of stages that catalogs staged files and their metadata, such as file URL, size, and last modified timestamp"
+                },
+                {
+                    "key": "C",
+                    "text": "A table used to store folder hierarchies for organizing data"
+                },
+                {
+                    "key": "D",
+                    "text": "A table that tracks all COPY INTO operations performed in an account"
+                }
+            ],
+            "correctAnswers": [
+                "B"
+            ],
+            "multiSelect": false,
+            "explanation": "B is correct. A directory table is an implicit object layered on a stage (enabled with DIRECTORY = (ENABLE = TRUE)). It stores file-level metadata for staged files, including the file URL, relative path, size, MD5 checksum, last modified timestamp, and ETag. Directory tables can be queried with SELECT and are automatically refreshed or manually refreshed with ALTER STAGE ... REFRESH.",
+            "difficulty": "hard"
+        }
+    ]
+}
