@@ -207,9 +207,7 @@ function renderCurrentQuestion() {
     if (isSubmitted) {
       div.classList.add('disabled');
       const isCorrect = q.correctAnswers.includes(opt.key);
-      if (isCorrect) {
-        div.classList.add('correct');
-      } else if (isSelected && !isCorrect) {
+      if (isSelected && !isCorrect) {
         div.classList.add('incorrect');
       }
     }
