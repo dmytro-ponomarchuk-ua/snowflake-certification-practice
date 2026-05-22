@@ -868,8 +868,9 @@ a:hover { color: var(--primary-dark); }
   .question-card { padding: 18px; }
   .timer-config { grid-template-columns: 1fr; }
   .results-stats { grid-template-columns: 1fr; gap: 8px; }
-  .quiz-nav { flex-direction: column; }
-  .quiz-nav-left, .quiz-nav-right { width: 100%; justify-content: center; }
+  .quiz-nav { flex-wrap: nowrap; }
+  .quiz-nav-left, .quiz-nav-right { gap: 4px; }
+  .quiz-nav .btn { padding: 8px 10px; font-size: 0.8rem; }
   .navigator-grid { grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); }
   .nav-cell { width: 32px; height: 32px; font-size: 0.75rem; }
   .results-score { font-size: 2.5rem; }

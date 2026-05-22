@@ -46,8 +46,8 @@ const QUESTION_SETS = [
   {
     id: 'set7-practice-exam',
     file: 'data/set7-practice-exam.json',
-    name: '&#10052 SnowPro Core Practice Exam by Cristian Scutaru',
-    domain: '&#10052 SnowPro Core Certification Practice Questions by Cristian Scutaru',
+    name: '(bonus) SnowPro Core Practice Exam by Cristian Scutaru',
+    domain: '(bonus) SnowPro Core Certification Practice Questions by Cristian Scutaru',
     domainWeight: 0
   }
 ];

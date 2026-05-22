@@ -287,6 +287,14 @@ function renderCurrentQuestion() {
     nextBtn.classList.remove('hidden');
   }
 
+  // End Quiz button in nav (practice mode, last question submitted)
+  const endQuizNavBtn = document.getElementById('end-quiz-nav-btn');
+  if (isPractice && idx === total - 1 && isSubmitted) {
+    endQuizNavBtn.classList.remove('hidden');
+  } else {
+    endQuizNavBtn.classList.add('hidden');
+  }
+
   // Flag button state
   const flagBtn = document.getElementById('flag-btn');
   flagBtn.classList.toggle('flagged', quizState.flagged.has(q.id));

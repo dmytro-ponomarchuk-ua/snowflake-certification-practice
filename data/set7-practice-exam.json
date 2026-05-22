@@ -148,7 +148,7 @@
             "options": [
                 {
                     "key": "A",
-                    "text": "Transient Tables"
+                    "text": "File Formats"
                 },
                 {
                     "key": "B",
@@ -173,7 +173,7 @@
                 "D"
             ],
             "multiSelect": true,
-            "explanation": "B, C, and D are correct. You can share the following Snowflake objects: Databases, Tables, Dynamic tables, External tables, Iceberg tables, Secure views, Secure materialized views, and Secure user-defined functions (UDFs). Transient Tables and Resource Monitors cannot be shared.",
+            "explanation": "B, C, and D are correct. You can share the following Snowflake objects: Databases, Tables, Dynamic tables, External tables, Iceberg tables, Secure views, Secure materialized views, and Secure user-defined functions (UDFs). File Formats and Resource Monitors cannot be shared.",
             "difficulty": "medium"
         },
         {
@@ -501,7 +501,7 @@
                 "A"
             ],
             "multiSelect": false,
-            "explanation": "A is correct. The MAX_CONCURRENCY_LEVEL parameter, by default 10, sets only the maximum number of queries that are allowed to run in parallel. Otherwise, it all depends on the query complexity. You increase the warehouse size for more complex queries, and you use multi-cluster warehouses to improve concurrency (more users accessing the database). Increasing the warehouse size is called (manual) scale-up. Setting up more clusters is called (automatic) scale-out.",
+            "explanation": "A is correct. The MAX_CONCURRENCY_LEVEL parameter, by default 8, sets only the maximum number of queries that are allowed to run in parallel. Otherwise, it all depends on the query complexity. You increase the warehouse size for more complex queries, and you use multi-cluster warehouses to improve concurrency (more users accessing the database). Increasing the warehouse size is called (manual) scale-up. Setting up more clusters is called (automatic) scale-out.",
             "difficulty": "hard"
         },
         {
@@ -589,8 +589,7 @@
                 }
             ],
             "correctAnswers": [
-                "A",
-                "B"
+                "C"
             ],
             "multiSelect": true,
             "explanation": "A and B are correct. FLATTEN can be used for both semi-structured data (like JSON arrays and objects) and structured data. When data types like ARRAY or even OBJECT get specific and mandatory data types, their data becomes structured. Snowflake has structured ARRAY and OBJECT types, and MAPs, that can be used in a similar way with FLATTEN.",
