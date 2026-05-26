@@ -1,7 +1,10 @@
 # snowflake-certification-practice
 Snowflake SnowPro Certifications:  Practice Test Questions
 
-# EXAM DOMAIN BREAKDOWN
+## Public link to the app
+https://dmytro-ponomarchuk-ua.github.io/snowflake-certification-practice/
+
+# Exam Domain Breakdown
 
 The table below lists the main content domains and their weightings. 
 
