@@ -1,1164 +1,1357 @@
-{
-    "setId": "set5-data-collaboration",
-    "setName": "Data Collaboration",
-    "domain": "Data Collaboration",
-    "domainWeight": 10,
-    "questions": [
+﻿{
+  "setId": "set5-data-collaboration",
+  "setName": "Data Collaboration",
+  "domain": "Data Collaboration",
+  "domainWeight": 10,
+  "questions": [
+    {
+      "id": "s5q001",
+      "question": "Which Snowflake feature allows sharing compute costs with data consumers who don't have a Snowflake account?",
+      "options": [
         {
-            "id": "s5q001",
-            "question": "Which Snowflake feature allows sharing compute costs with data consumers who don't have a Snowflake account?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Direct Share"
-                },
-                {
-                    "key": "B",
-                    "text": "Reader Account"
-                },
-                {
-                    "key": "C",
-                    "text": "Data Marketplace"
-                },
-                {
-                    "key": "D",
-                    "text": "External Tables"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Reader Accounts (formerly Managed Accounts) allow data providers to create Snowflake accounts for consumers who don't have their own Snowflake account. The provider manages and pays for the reader account's compute costs. Direct Shares require consumers to have their own Snowflake account.",
-            "difficulty": "medium"
+          "key": "A",
+          "text": "Direct Share"
         },
         {
-            "id": "s5q002",
-            "question": "What is the Snowflake Data Marketplace?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "A platform for buying and selling Snowflake credits"
-                },
-                {
-                    "key": "B",
-                    "text": "A marketplace where data providers can publish datasets that consumers can access directly in their Snowflake accounts"
-                },
-                {
-                    "key": "C",
-                    "text": "An internal tool for managing database schemas"
-                },
-                {
-                    "key": "D",
-                    "text": "A tool for comparing pricing across cloud providers"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. The Snowflake Marketplace allows data providers to publish and monetize datasets. Data consumers can discover and access these datasets directly in their Snowflake accounts without any data copying or ETL required — data is accessed via Snowflake's secure data sharing.",
-            "difficulty": "easy"
+          "key": "B",
+          "text": "Reader Account"
         },
         {
-            "id": "s5q003",
-            "question": "What is Snowflake Secure Data Sharing?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "A feature that copies data from one account to another using ETL pipelines"
-                },
-                {
-                    "key": "B",
-                    "text": "A feature that allows sharing live, ready-to-query data between Snowflake accounts without copying or moving the data"
-                },
-                {
-                    "key": "C",
-                    "text": "A feature that exports data to external cloud storage for sharing"
-                },
-                {
-                    "key": "D",
-                    "text": "A feature that sends email notifications with data attachments to consumers"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Snowflake Secure Data Sharing enables sharing live data between accounts without any data copying, movement, or ETL. Consumers access the provider's data in place, ensuring they always see the most current version of the data.",
-            "difficulty": "easy"
+          "key": "C",
+          "text": "Data Marketplace"
         },
         {
-            "id": "s5q004",
-            "question": "In Snowflake's data sharing model, who pays for the compute costs when a consumer queries shared data?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "The data provider always pays"
-                },
-                {
-                    "key": "B",
-                    "text": "The data consumer pays using their own virtual warehouses"
-                },
-                {
-                    "key": "C",
-                    "text": "Costs are split equally between provider and consumer"
-                },
-                {
-                    "key": "D",
-                    "text": "Snowflake absorbs the compute costs"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. In Snowflake's data sharing model, the consumer pays for compute costs using their own virtual warehouses to query shared data. The provider owns and stores the data, but does not incur compute costs when consumers query it.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q005",
-            "question": "Which SQL command is used to view the list of shares available in a Snowflake account?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "LIST SHARES"
-                },
-                {
-                    "key": "B",
-                    "text": "DESCRIBE SHARES"
-                },
-                {
-                    "key": "C",
-                    "text": "SHOW SHARES"
-                },
-                {
-                    "key": "D",
-                    "text": "GET SHARES"
-                }
-            ],
-            "correctAnswers": [
-                "C"
-            ],
-            "multiSelect": false,
-            "explanation": "C is correct. The SHOW SHARES command lists all shares available in the account, including both outbound shares (created by the account) and inbound shares (shared to the account by other providers).",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q006",
-            "question": "What grant must be applied to a database created from a share so that users can access the shared objects?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "GRANT USAGE ON DATABASE"
-                },
-                {
-                    "key": "B",
-                    "text": "GRANT IMPORTED PRIVILEGES ON DATABASE"
-                },
-                {
-                    "key": "C",
-                    "text": "GRANT SELECT ON ALL TABLES"
-                },
-                {
-                    "key": "D",
-                    "text": "GRANT OWNERSHIP ON DATABASE"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. When a database is created from a share, the IMPORTED PRIVILEGES grant must be used to allow other roles in the consumer account to access the shared objects. This single grant propagates all privileges defined by the provider's share.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q007",
-            "question": "A share object in Snowflake can contain which of the following? (Select all that apply)",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Tables"
-                },
-                {
-                    "key": "B",
-                    "text": "Secure views"
-                },
-                {
-                    "key": "C",
-                    "text": "Secure UDFs"
-                },
-                {
-                    "key": "D",
-                    "text": "Virtual warehouses"
-                }
-            ],
-            "correctAnswers": [
-                "A",
-                "B",
-                "C"
-            ],
-            "multiSelect": true,
-            "explanation": "A, B, and C are correct. A share object can contain tables, secure views, and secure user-defined functions (UDFs). Virtual warehouses cannot be shared; each account manages its own compute resources independently.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q008",
-            "question": "Which SQL command is used to add a consumer account to an existing share?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "GRANT SHARE TO ACCOUNT"
-                },
-                {
-                    "key": "B",
-                    "text": "ADD ACCOUNT TO SHARE"
-                },
-                {
-                    "key": "C",
-                    "text": "ALTER SHARE SET ACCOUNTS ="
-                },
-                {
-                    "key": "D",
-                    "text": "UPDATE SHARE ADD ACCOUNT"
-                }
-            ],
-            "correctAnswers": [
-                "C"
-            ],
-            "multiSelect": false,
-            "explanation": "C is correct. The ALTER SHARE ... SET ACCOUNTS = command is used to add or update the list of consumer accounts that can access a share. You can also use ALTER SHARE ... ADD ACCOUNTS = to append accounts without replacing the existing list.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q009",
-            "question": "What is the default requirement for Secure Data Sharing between two Snowflake accounts?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Both accounts must be in the same cloud provider and region"
-                },
-                {
-                    "key": "B",
-                    "text": "Both accounts must be on the same Snowflake edition"
-                },
-                {
-                    "key": "C",
-                    "text": "Both accounts must be owned by the same organization"
-                },
-                {
-                    "key": "D",
-                    "text": "Both accounts must use the same virtual warehouse size"
-                }
-            ],
-            "correctAnswers": [
-                "A"
-            ],
-            "multiSelect": false,
-            "explanation": "A is correct. By default, Secure Data Sharing requires both the provider and consumer accounts to be in the same cloud provider and region. Cross-region and cross-cloud sharing requires additional mechanisms such as listings with auto-fulfillment or database replication.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q010",
-            "question": "What distinguishes a free listing from a paid listing on the Snowflake Marketplace?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Free listings are only available to Enterprise edition accounts"
-                },
-                {
-                    "key": "B",
-                    "text": "Free listings provide data at no charge, while paid listings require the consumer to pay the provider for data access"
-                },
-                {
-                    "key": "C",
-                    "text": "Paid listings allow data modification, while free listings are read-only"
-                },
-                {
-                    "key": "D",
-                    "text": "Free listings cannot contain secure views"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Free listings on the Snowflake Marketplace allow consumers to access data at no charge from the provider, while paid listings require the consumer to pay the provider a fee for data access. In both cases, the consumer pays their own compute costs.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q011",
-            "question": "What is the primary purpose of the Snowflake Marketplace?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "To sell Snowflake compute credits at discounted prices"
-                },
-                {
-                    "key": "B",
-                    "text": "To enable providers to publish and consumers to discover live, ready-to-query data products"
-                },
-                {
-                    "key": "C",
-                    "text": "To manage internal data governance policies"
-                },
-                {
-                    "key": "D",
-                    "text": "To replicate databases across cloud regions automatically"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. The Snowflake Marketplace is a platform where data providers can publish data products (datasets, ML models, applications) and consumers can discover, evaluate, and access them directly in their Snowflake accounts without data movement.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q012",
-            "question": "Which types of data products can be published on the Snowflake Marketplace? (Select all that apply)",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Standard datasets"
-                },
-                {
-                    "key": "B",
-                    "text": "Snowflake Native Apps"
-                },
-                {
-                    "key": "C",
-                    "text": "Virtual warehouse configurations"
-                },
-                {
-                    "key": "D",
-                    "text": "Data services backed by Snowpark functions"
-                }
-            ],
-            "correctAnswers": [
-                "A",
-                "B",
-                "D"
-            ],
-            "multiSelect": true,
-            "explanation": "A, B, and D are correct. The Snowflake Marketplace supports publishing standard datasets, Snowflake Native Apps, and data services. Virtual warehouse configurations are not a shareable data product type.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q013",
-            "question": "What must a provider do before a listing becomes publicly available on the Snowflake Marketplace?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Pay a one-time publishing fee to Snowflake"
-                },
-                {
-                    "key": "B",
-                    "text": "Submit the listing for review and approval by Snowflake"
-                },
-                {
-                    "key": "C",
-                    "text": "Create a reader account for every potential consumer"
-                },
-                {
-                    "key": "D",
-                    "text": "Replicate the data to all available regions first"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Before a listing becomes publicly visible on the Snowflake Marketplace, providers must submit it for review and approval by Snowflake. This ensures quality standards are met and the listing complies with Marketplace policies.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q014",
-            "question": "How does a consumer access a Marketplace listing in their Snowflake account?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "By downloading a data file and loading it into a table"
-                },
-                {
-                    "key": "B",
-                    "text": "By requesting access through the Marketplace and having a shared database created in their account"
-                },
-                {
-                    "key": "C",
-                    "text": "By cloning the provider's database using CREATE DATABASE ... CLONE"
-                },
-                {
-                    "key": "D",
-                    "text": "By connecting to the provider's account via an API endpoint"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. When a consumer gets a listing from the Marketplace, a shared database is created in their account, giving them direct access to the provider's data without any copying or ETL. The consumer can then query the data using their own compute resources.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q015",
-            "question": "How can consumers discover listings on the Snowflake Marketplace?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Only through direct links shared by the provider"
-                },
-                {
-                    "key": "B",
-                    "text": "By browsing categories, searching by keyword, or filtering by provider and data type within the Marketplace"
-                },
-                {
-                    "key": "C",
-                    "text": "Only through Snowflake support tickets"
-                },
-                {
-                    "key": "D",
-                    "text": "By running SHOW MARKETPLACE LISTINGS in SQL"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. The Snowflake Marketplace provides search and discovery features including category browsing, keyword search, and filtering by provider, data type, and other attributes to help consumers find relevant data products.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q016",
-            "question": "What is a public listing in the Snowflake Marketplace?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "A listing visible only to accounts in the same organization"
-                },
-                {
-                    "key": "B",
-                    "text": "A listing visible to all Snowflake accounts that can browse the Marketplace"
-                },
-                {
-                    "key": "C",
-                    "text": "A listing that requires manual approval for each consumer"
-                },
-                {
-                    "key": "D",
-                    "text": "A listing that is only accessible via direct SQL commands"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. A public listing is visible to all Snowflake accounts that can browse the Marketplace. Any eligible consumer can discover and request access to a public listing without needing a direct invitation from the provider.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q017",
-            "question": "What is a private listing in Snowflake?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "A listing that encrypts all shared data with a consumer-managed key"
-                },
-                {
-                    "key": "B",
-                    "text": "A listing that is visible only to specifically invited consumer accounts"
-                },
-                {
-                    "key": "C",
-                    "text": "A listing that hides the provider's identity from consumers"
-                },
-                {
-                    "key": "D",
-                    "text": "A listing that restricts data access to a single database"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. A private listing is shared only with specific consumer accounts that the provider explicitly invites. Unlike public listings, private listings are not discoverable by browsing the Marketplace — only invited accounts can see and access them.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q018",
-            "question": "What is a Snowflake Data Exchange?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "A public marketplace open to all Snowflake users"
-                },
-                {
-                    "key": "B",
-                    "text": "A private, managed hub where a group of accounts can publish and share data among invited members"
-                },
-                {
-                    "key": "C",
-                    "text": "A tool for converting data between file formats"
-                },
-                {
-                    "key": "D",
-                    "text": "An ETL pipeline service built into Snowflake"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. A Data Exchange is a private, managed hub where a curated group of Snowflake accounts can publish and share data among its members. Unlike the public Marketplace, membership is controlled by the exchange administrator.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q019",
-            "question": "A company wants to distribute shared datasets to multiple business partners across different organizations. Which Snowflake feature best supports this use case?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Database cloning"
-                },
-                {
-                    "key": "B",
-                    "text": "Listings (public or private) via the Snowflake Marketplace"
-                },
-                {
-                    "key": "C",
-                    "text": "External tables with shared storage"
-                },
-                {
-                    "key": "D",
-                    "text": "Snowpipe data loading"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Listings via the Snowflake Marketplace (either public or private) provide the best mechanism for distributing data to multiple organizations. Listings support cross-organization sharing and can leverage auto-fulfillment for cross-region/cross-cloud delivery.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q020",
-            "question": "What is the Snowflake Native App Framework?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "A mobile SDK for building Snowflake client applications"
-                },
-                {
-                    "key": "B",
-                    "text": "A framework that allows providers to package data, code, and logic into an application that consumers install and run in their own Snowflake account"
-                },
-                {
-                    "key": "C",
-                    "text": "A framework for building external API integrations with Snowflake"
-                },
-                {
-                    "key": "D",
-                    "text": "A set of pre-built analytics dashboards provided by Snowflake"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. The Snowflake Native App Framework enables providers to build applications that bundle data, business logic, and UI components. Consumers install these apps directly in their own Snowflake accounts, running them with their own compute and against their own data.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q021",
-            "question": "In the Snowflake Native App Framework, what is an application package?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "A compressed ZIP file uploaded to a Snowflake stage"
-                },
-                {
-                    "key": "B",
-                    "text": "A Snowflake object that bundles the app's data, code, configuration, and version history for distribution"
-                },
-                {
-                    "key": "C",
-                    "text": "A Python library installed via pip"
-                },
-                {
-                    "key": "D",
-                    "text": "A Docker container image stored in a Snowflake registry"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. An application package is a Snowflake first-class object that contains the application's data content, code, configuration, and version history. Providers use application packages to define, version, and distribute their Native Apps to consumers.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q022",
-            "question": "How does a consumer deploy a Snowflake Native App?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "The consumer downloads the app source code and runs it locally"
-                },
-                {
-                    "key": "B",
-                    "text": "The consumer installs the app in their own Snowflake account, where it runs using their compute resources"
-                },
-                {
-                    "key": "C",
-                    "text": "The provider runs the app in their account on behalf of the consumer"
-                },
-                {
-                    "key": "D",
-                    "text": "The app runs in a shared Snowflake-managed environment outside both accounts"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. A Snowflake Native App is installed directly in the consumer's own Snowflake account. The consumer's compute resources are used to run the app, and the app can access the consumer's data with appropriate permissions granted during installation.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q023",
-            "question": "What key advantage does the Native App Framework offer providers compared to traditional data sharing?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "It allows sharing data without using shares"
-                },
-                {
-                    "key": "B",
-                    "text": "It enables providers to distribute code, business logic, and data together as a single installable product"
-                },
-                {
-                    "key": "C",
-                    "text": "It eliminates the need for consumer accounts"
-                },
-                {
-                    "key": "D",
-                    "text": "It automatically converts data into Parquet format"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. The Native App Framework goes beyond traditional data sharing by allowing providers to package and distribute code, business logic, stored procedures, and data together as a complete application product. This enables richer data products beyond raw data access.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q024",
-            "question": "How can a provider monetize a Snowflake Native App?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "By collecting payments outside of Snowflake only"
-                },
-                {
-                    "key": "B",
-                    "text": "By publishing the app as a paid listing on the Snowflake Marketplace"
-                },
-                {
-                    "key": "C",
-                    "text": "By charging consumers per query executed"
-                },
-                {
-                    "key": "D",
-                    "text": "By selling Snowflake credits earned from the app"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Providers can monetize their Snowflake Native Apps by publishing them as paid listings on the Snowflake Marketplace. Snowflake handles billing and payment processing, allowing providers to set pricing for their applications.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q025",
-            "question": "What is auto-fulfillment in the context of Snowflake data sharing?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Automatic backup of shared data to a secondary region"
-                },
-                {
-                    "key": "B",
-                    "text": "Automatic replication and delivery of listing data to consumers in different regions or cloud providers"
-                },
-                {
-                    "key": "C",
-                    "text": "Automatic approval of all consumer access requests"
-                },
-                {
-                    "key": "D",
-                    "text": "Automatic scaling of virtual warehouses during shared data queries"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Auto-fulfillment automatically replicates and delivers listing data to consumers in different regions or cloud providers. This enables cross-region and cross-cloud sharing through listings without the provider manually setting up replication.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q026",
-            "question": "What underlying technology does Snowflake use to enable cross-region data sharing?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "External tables pointing to cross-region storage"
-                },
-                {
-                    "key": "B",
-                    "text": "Database replication to replicate data to the consumer's region"
-                },
-                {
-                    "key": "C",
-                    "text": "VPN tunneling between regions"
-                },
-                {
-                    "key": "D",
-                    "text": "Data export and import via cloud storage buckets"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Cross-region data sharing in Snowflake leverages database replication behind the scenes. The data is replicated from the provider's region to the consumer's region, enabling consumers to query the data locally with low latency.",
-            "difficulty": "hard"
-        },
-        {
-            "id": "s5q027",
-            "question": "How do listings enable cross-cloud sharing in Snowflake?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "By converting data to a universal format readable by all cloud providers"
-                },
-                {
-                    "key": "B",
-                    "text": "By using auto-fulfillment to replicate data across cloud platforms (e.g., AWS to Azure)"
-                },
-                {
-                    "key": "C",
-                    "text": "By requiring both accounts to use the same cloud provider"
-                },
-                {
-                    "key": "D",
-                    "text": "By routing all queries through a central Snowflake-managed cloud"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Listings with auto-fulfillment enable cross-cloud sharing by automatically replicating the provider's data to the consumer's cloud platform. This allows a provider on AWS to share data with a consumer on Azure or GCP seamlessly.",
-            "difficulty": "hard"
-        },
-        {
-            "id": "s5q028",
-            "question": "What are the cost considerations for cross-region data sharing in Snowflake?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Cross-region sharing is always free"
-                },
-                {
-                    "key": "B",
-                    "text": "There are additional costs for data replication and cross-region data transfer"
-                },
-                {
-                    "key": "C",
-                    "text": "Only the consumer incurs additional costs for cross-region queries"
-                },
-                {
-                    "key": "D",
-                    "text": "Cross-region sharing costs the same as same-region sharing"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Cross-region sharing incurs additional costs for data replication (compute and storage for maintaining a replica) and cross-region data transfer fees. These costs are above and beyond the standard compute costs for querying shared data.",
-            "difficulty": "hard"
-        },
-        {
-            "id": "s5q029",
-            "question": "Which of the following statements about cross-region and cross-cloud sharing is true?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Direct shares can be used across regions without any additional setup"
-                },
-                {
-                    "key": "B",
-                    "text": "Listings with auto-fulfillment are the recommended approach for cross-region and cross-cloud sharing"
-                },
-                {
-                    "key": "C",
-                    "text": "Cross-cloud sharing is not supported in Snowflake"
-                },
-                {
-                    "key": "D",
-                    "text": "Cross-region sharing requires both accounts to upgrade to Business Critical edition"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Listings with auto-fulfillment are the recommended approach for cross-region and cross-cloud sharing. Direct shares only work within the same region and cloud provider. Auto-fulfillment handles the data replication needed for cross-region/cross-cloud delivery.",
-            "difficulty": "hard"
-        },
-        {
-            "id": "s5q030",
-            "question": "What are Snowflake Data Clean Rooms?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Isolated environments for cleaning and transforming raw data"
-                },
-                {
-                    "key": "B",
-                    "text": "Secure environments where multiple parties can collaborate on data analysis without exposing their raw data to each other"
-                },
-                {
-                    "key": "C",
-                    "text": "Staging areas for data quality checks before loading into production"
-                },
-                {
-                    "key": "D",
-                    "text": "Temporary databases used during data migration"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Snowflake Data Clean Rooms are secure environments that enable multiple parties to collaborate on data analysis without exposing their raw underlying data to each other. Only agreed-upon aggregated or anonymized results are shared between the parties.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q031",
-            "question": "What is the key privacy-preserving principle of Snowflake Data Clean Rooms?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "All data is encrypted with a shared key between parties"
-                },
-                {
-                    "key": "B",
-                    "text": "No party can see or access the other party's raw data; only approved queries and aggregated results are allowed"
-                },
-                {
-                    "key": "C",
-                    "text": "All data is anonymized before being loaded into the clean room"
-                },
-                {
-                    "key": "D",
-                    "text": "Data is deleted after each analysis session"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. The core privacy-preserving principle of Data Clean Rooms is that no party can directly see or access the other party's raw data. Only pre-approved queries can be run, and only aggregated or anonymized results are returned, ensuring data privacy is maintained.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q032",
-            "question": "Which industries commonly use Snowflake Data Clean Rooms? (Select all that apply)",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Advertising and media for audience overlap analysis"
-                },
-                {
-                    "key": "B",
-                    "text": "Healthcare for collaborative research without sharing patient data"
-                },
-                {
-                    "key": "C",
-                    "text": "Financial services for fraud detection across institutions"
-                },
-                {
-                    "key": "D",
-                    "text": "Manufacturing for machine calibration"
-                }
-            ],
-            "correctAnswers": [
-                "A",
-                "B",
-                "C"
-            ],
-            "multiSelect": true,
-            "explanation": "A, B, and C are correct. Data Clean Rooms are widely used in advertising (audience overlap and campaign measurement), healthcare (collaborative research without exposing patient records), and financial services (cross-institution fraud analysis). These industries benefit most from privacy-preserving data collaboration.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q033",
-            "question": "In a Data Clean Room scenario, what type of results can typically be accessed by the participating parties?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Full row-level data from all parties"
-                },
-                {
-                    "key": "B",
-                    "text": "Only aggregated or anonymized results from pre-approved queries"
-                },
-                {
-                    "key": "C",
-                    "text": "Raw data from the party that initiated the analysis"
-                },
-                {
-                    "key": "D",
-                    "text": "Encrypted copies of all participant data"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. In a Data Clean Room, participating parties can only access aggregated or anonymized results generated by pre-approved queries. Raw row-level data from any party is never exposed to other participants, preserving data privacy.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q034",
-            "question": "What is the primary purpose of a Reader Account in Snowflake?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "To allow users to read data documentation"
-                },
-                {
-                    "key": "B",
-                    "text": "To share data with consumers who do not have their own Snowflake account"
-                },
-                {
-                    "key": "C",
-                    "text": "To provide read-only access to internal users within the same account"
-                },
-                {
-                    "key": "D",
-                    "text": "To create backup copies of databases"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Reader Accounts (formerly known as Managed Accounts) allow data providers to share data with external consumers who do not have their own Snowflake account. The provider creates and manages these accounts specifically for data sharing purposes.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q035",
-            "question": "Who creates and manages Reader Accounts in Snowflake?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Snowflake automatically creates them for all consumers"
-                },
-                {
-                    "key": "B",
-                    "text": "The data consumer requests one through the Marketplace"
-                },
-                {
-                    "key": "C",
-                    "text": "The data provider creates and manages Reader Accounts"
-                },
-                {
-                    "key": "D",
-                    "text": "A Snowflake support engineer creates them upon request"
-                }
-            ],
-            "correctAnswers": [
-                "C"
-            ],
-            "multiSelect": false,
-            "explanation": "C is correct. The data provider is responsible for creating and managing Reader Accounts. The provider controls the account setup, user access, and resource allocation for each Reader Account they create.",
-            "difficulty": "easy"
-        },
-        {
-            "id": "s5q036",
-            "question": "Who pays for the compute resources used in a Reader Account?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "The consumer who uses the Reader Account"
-                },
-                {
-                    "key": "B",
-                    "text": "The data provider who created the Reader Account"
-                },
-                {
-                    "key": "C",
-                    "text": "Snowflake covers the compute costs"
-                },
-                {
-                    "key": "D",
-                    "text": "Compute costs are shared between provider and consumer"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. The data provider pays for all compute resources used in Reader Accounts they create. This is a key difference from regular data sharing where the consumer uses their own warehouses. Providers should monitor Reader Account usage to manage costs.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q037",
-            "question": "Which of the following is a limitation of Reader Accounts compared to full Snowflake accounts?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Reader Accounts cannot run SQL queries"
-                },
-                {
-                    "key": "B",
-                    "text": "Reader Accounts cannot create their own databases or load data"
-                },
-                {
-                    "key": "C",
-                    "text": "Reader Accounts cannot use virtual warehouses"
-                },
-                {
-                    "key": "D",
-                    "text": "Reader Accounts cannot access shared data"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Reader Accounts have significant limitations compared to full Snowflake accounts. They cannot create their own databases, load their own data, or perform other data management operations. They are limited to querying data that has been shared with them by the provider.",
-            "difficulty": "medium"
-        },
-        {
-            "id": "s5q038",
-            "question": "A company wants to share data with a partner that uses a different cloud provider and does not have a Snowflake account. Which combination of features should they use?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Direct Share with database replication"
-                },
-                {
-                    "key": "B",
-                    "text": "Reader Account combined with a listing that uses auto-fulfillment"
-                },
-                {
-                    "key": "C",
-                    "text": "External tables with cross-cloud storage access"
-                },
-                {
-                    "key": "D",
-                    "text": "Snowpipe with a shared stage"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Since the partner has no Snowflake account, a Reader Account is needed. Since they are on a different cloud provider, a listing with auto-fulfillment handles the cross-cloud replication. Together, these features solve both challenges.",
-            "difficulty": "hard"
-        },
-        {
-            "id": "s5q039",
-            "question": "Which of the following are true about Reader Accounts? (Select all that apply)",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "They are created and managed by the data provider"
-                },
-                {
-                    "key": "B",
-                    "text": "The provider pays for the compute resources consumed"
-                },
-                {
-                    "key": "C",
-                    "text": "They can create their own databases and load external data"
-                },
-                {
-                    "key": "D",
-                    "text": "They allow non-Snowflake customers to query shared data"
-                }
-            ],
-            "correctAnswers": [
-                "A",
-                "B",
-                "D"
-            ],
-            "multiSelect": true,
-            "explanation": "A, B, and D are correct. Reader Accounts are created and managed by the data provider, who also pays for compute. They enable non-Snowflake customers to access shared data. Reader Accounts cannot create their own databases or load external data — they are limited to querying shared data only.",
-            "difficulty": "hard"
-        },
-        {
-            "id": "s5q040",
-            "question": "What happens to shared data in a consumer's account if the provider revokes the share?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "The consumer retains a cached copy of the data"
-                },
-                {
-                    "key": "B",
-                    "text": "The consumer immediately loses access to the shared data"
-                },
-                {
-                    "key": "C",
-                    "text": "The shared data is automatically cloned into the consumer's account"
-                },
-                {
-                    "key": "D",
-                    "text": "The consumer has a 30-day grace period before losing access"
-                }
-            ],
-            "correctAnswers": [
-                "B"
-            ],
-            "multiSelect": false,
-            "explanation": "B is correct. Since Secure Data Sharing does not copy data, the consumer accesses the provider's data in place. If the provider revokes the share (removes the consumer account from the share), the consumer immediately loses access. No data copy exists in the consumer's account.",
-            "difficulty": "hard"
-        },
-        {
-            "id": "s5q041",
-            "question": "Which Snowflake edition is required at minimum to use Secure Data Sharing as a provider?",
-            "options": [
-                {
-                    "key": "A",
-                    "text": "Standard"
-                },
-                {
-                    "key": "B",
-                    "text": "Enterprise"
-                },
-                {
-                    "key": "C",
-                    "text": "Business Critical"
-                },
-                {
-                    "key": "D",
-                    "text": "Virtual Private Snowflake (VPS)"
-                }
-            ],
-            "correctAnswers": [
-                "A"
-            ],
-            "multiSelect": false,
-            "explanation": "A is correct. Secure Data Sharing is available in all Snowflake editions, including Standard. Any Snowflake account can create shares and act as a data provider, regardless of the edition.",
-            "difficulty": "hard"
+          "key": "D",
+          "text": "External Tables"
         }
-    ]
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Reader Accounts (formerly Managed Accounts) allow data providers to create Snowflake accounts for consumers who don't have their own Snowflake account. The provider manages and pays for the reader account's compute costs. Direct Shares require consumers to have their own Snowflake account.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q002",
+      "question": "What is the Snowflake Data Marketplace?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A platform for buying and selling Snowflake credits"
+        },
+        {
+          "key": "B",
+          "text": "A marketplace where data providers can publish datasets that consumers can access directly in their Snowflake accounts"
+        },
+        {
+          "key": "C",
+          "text": "An internal tool for managing database schemas"
+        },
+        {
+          "key": "D",
+          "text": "A tool for comparing pricing across cloud providers"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. The Snowflake Marketplace allows data providers to publish and monetize datasets. Data consumers can discover and access these datasets directly in their Snowflake accounts without any data copying or ETL required â€” data is accessed via Snowflake's secure data sharing.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q003",
+      "question": "What is Snowflake Secure Data Sharing?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A feature that copies data from one account to another using ETL pipelines"
+        },
+        {
+          "key": "B",
+          "text": "A feature that allows sharing live, ready-to-query data between Snowflake accounts without copying or moving the data"
+        },
+        {
+          "key": "C",
+          "text": "A feature that exports data to external cloud storage for sharing"
+        },
+        {
+          "key": "D",
+          "text": "A feature that sends email notifications with data attachments to consumers"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Snowflake Secure Data Sharing enables sharing live data between accounts without any data copying, movement, or ETL. Consumers access the provider's data in place, ensuring they always see the most current version of the data.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q004",
+      "question": "In Snowflake's data sharing model, who pays for the compute costs when a consumer queries shared data?",
+      "options": [
+        {
+          "key": "A",
+          "text": "The data provider always pays"
+        },
+        {
+          "key": "B",
+          "text": "The data consumer pays using their own virtual warehouses"
+        },
+        {
+          "key": "C",
+          "text": "Costs are split equally between provider and consumer"
+        },
+        {
+          "key": "D",
+          "text": "Snowflake absorbs the compute costs"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. In Snowflake's data sharing model, the consumer pays for compute costs using their own virtual warehouses to query shared data. The provider owns and stores the data, but does not incur compute costs when consumers query it.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q005",
+      "question": "Which SQL command is used to view the list of shares available in a Snowflake account?",
+      "options": [
+        {
+          "key": "A",
+          "text": "LIST SHARES"
+        },
+        {
+          "key": "B",
+          "text": "DESCRIBE SHARES"
+        },
+        {
+          "key": "C",
+          "text": "SHOW SHARES"
+        },
+        {
+          "key": "D",
+          "text": "GET SHARES"
+        }
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "multiSelect": false,
+      "explanation": "C is correct. The SHOW SHARES command lists all shares available in the account, including both outbound shares (created by the account) and inbound shares (shared to the account by other providers).",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q006",
+      "question": "What grant must be applied to a database created from a share so that users can access the shared objects?",
+      "options": [
+        {
+          "key": "A",
+          "text": "GRANT USAGE ON DATABASE"
+        },
+        {
+          "key": "B",
+          "text": "GRANT IMPORTED PRIVILEGES ON DATABASE"
+        },
+        {
+          "key": "C",
+          "text": "GRANT SELECT ON ALL TABLES"
+        },
+        {
+          "key": "D",
+          "text": "GRANT OWNERSHIP ON DATABASE"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. When a database is created from a share, the IMPORTED PRIVILEGES grant must be used to allow other roles in the consumer account to access the shared objects. This single grant propagates all privileges defined by the provider's share.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q007",
+      "question": "A share object in Snowflake can contain which of the following? (Select all that apply)",
+      "options": [
+        {
+          "key": "A",
+          "text": "Tables"
+        },
+        {
+          "key": "B",
+          "text": "Secure views"
+        },
+        {
+          "key": "C",
+          "text": "Secure UDFs"
+        },
+        {
+          "key": "D",
+          "text": "Virtual warehouses"
+        }
+      ],
+      "correctAnswers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "multiSelect": true,
+      "explanation": "A, B, and C are correct. A share object can contain tables, secure views, and secure user-defined functions (UDFs). Virtual warehouses cannot be shared; each account manages its own compute resources independently.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q008",
+      "question": "Which SQL command is used to add a consumer account to an existing share?",
+      "options": [
+        {
+          "key": "A",
+          "text": "GRANT SHARE TO ACCOUNT"
+        },
+        {
+          "key": "B",
+          "text": "ADD ACCOUNT TO SHARE"
+        },
+        {
+          "key": "C",
+          "text": "ALTER SHARE SET ACCOUNTS ="
+        },
+        {
+          "key": "D",
+          "text": "UPDATE SHARE ADD ACCOUNT"
+        }
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "multiSelect": false,
+      "explanation": "C is correct. The ALTER SHARE ... SET ACCOUNTS = command is used to add or update the list of consumer accounts that can access a share. You can also use ALTER SHARE ... ADD ACCOUNTS = to append accounts without replacing the existing list.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q009",
+      "question": "What is the default requirement for Secure Data Sharing between two Snowflake accounts?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Both accounts must be in the same cloud provider and region"
+        },
+        {
+          "key": "B",
+          "text": "Both accounts must be on the same Snowflake edition"
+        },
+        {
+          "key": "C",
+          "text": "Both accounts must be owned by the same organization"
+        },
+        {
+          "key": "D",
+          "text": "Both accounts must use the same virtual warehouse size"
+        }
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "multiSelect": false,
+      "explanation": "A is correct. By default, Secure Data Sharing requires both the provider and consumer accounts to be in the same cloud provider and region. Cross-region and cross-cloud sharing requires additional mechanisms such as listings with auto-fulfillment or database replication.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q010",
+      "question": "What distinguishes a free listing from a paid listing on the Snowflake Marketplace?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Free listings are only available to Enterprise edition accounts"
+        },
+        {
+          "key": "B",
+          "text": "Free listings provide data at no charge, while paid listings require the consumer to pay the provider for data access"
+        },
+        {
+          "key": "C",
+          "text": "Paid listings allow data modification, while free listings are read-only"
+        },
+        {
+          "key": "D",
+          "text": "Free listings cannot contain secure views"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Free listings on the Snowflake Marketplace allow consumers to access data at no charge from the provider, while paid listings require the consumer to pay the provider a fee for data access. In both cases, the consumer pays their own compute costs.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q011",
+      "question": "What is the primary purpose of the Snowflake Marketplace?",
+      "options": [
+        {
+          "key": "A",
+          "text": "To sell Snowflake compute credits at discounted prices"
+        },
+        {
+          "key": "B",
+          "text": "To enable providers to publish and consumers to discover live, ready-to-query data products"
+        },
+        {
+          "key": "C",
+          "text": "To manage internal data governance policies"
+        },
+        {
+          "key": "D",
+          "text": "To replicate databases across cloud regions automatically"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. The Snowflake Marketplace is a platform where data providers can publish data products (datasets, ML models, applications) and consumers can discover, evaluate, and access them directly in their Snowflake accounts without data movement.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q012",
+      "question": "Which types of data products can be published on the Snowflake Marketplace? (Select all that apply)",
+      "options": [
+        {
+          "key": "A",
+          "text": "Standard datasets"
+        },
+        {
+          "key": "B",
+          "text": "Snowflake Native Apps"
+        },
+        {
+          "key": "C",
+          "text": "Virtual warehouse configurations"
+        },
+        {
+          "key": "D",
+          "text": "Data services backed by Snowpark functions"
+        }
+      ],
+      "correctAnswers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "multiSelect": true,
+      "explanation": "A, B, and D are correct. The Snowflake Marketplace supports publishing standard datasets, Snowflake Native Apps, and data services. Virtual warehouse configurations are not a shareable data product type.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q013",
+      "question": "What must a provider do before a listing becomes publicly available on the Snowflake Marketplace?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Pay a one-time publishing fee to Snowflake"
+        },
+        {
+          "key": "B",
+          "text": "Submit the listing for review and approval by Snowflake"
+        },
+        {
+          "key": "C",
+          "text": "Create a reader account for every potential consumer"
+        },
+        {
+          "key": "D",
+          "text": "Replicate the data to all available regions first"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Before a listing becomes publicly visible on the Snowflake Marketplace, providers must submit it for review and approval by Snowflake. This ensures quality standards are met and the listing complies with Marketplace policies.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q014",
+      "question": "How does a consumer access a Marketplace listing in their Snowflake account?",
+      "options": [
+        {
+          "key": "A",
+          "text": "By downloading a data file and loading it into a table"
+        },
+        {
+          "key": "B",
+          "text": "By requesting access through the Marketplace and having a shared database created in their account"
+        },
+        {
+          "key": "C",
+          "text": "By cloning the provider's database using CREATE DATABASE ... CLONE"
+        },
+        {
+          "key": "D",
+          "text": "By connecting to the provider's account via an API endpoint"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. When a consumer gets a listing from the Marketplace, a shared database is created in their account, giving them direct access to the provider's data without any copying or ETL. The consumer can then query the data using their own compute resources.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q015",
+      "question": "How can consumers discover listings on the Snowflake Marketplace?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Only through direct links shared by the provider"
+        },
+        {
+          "key": "B",
+          "text": "By browsing categories, searching by keyword, or filtering by provider and data type within the Marketplace"
+        },
+        {
+          "key": "C",
+          "text": "Only through Snowflake support tickets"
+        },
+        {
+          "key": "D",
+          "text": "By running SHOW MARKETPLACE LISTINGS in SQL"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. The Snowflake Marketplace provides search and discovery features including category browsing, keyword search, and filtering by provider, data type, and other attributes to help consumers find relevant data products.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q016",
+      "question": "What is a public listing in the Snowflake Marketplace?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A listing visible only to accounts in the same organization"
+        },
+        {
+          "key": "B",
+          "text": "A listing visible to all Snowflake accounts that can browse the Marketplace"
+        },
+        {
+          "key": "C",
+          "text": "A listing that requires manual approval for each consumer"
+        },
+        {
+          "key": "D",
+          "text": "A listing that is only accessible via direct SQL commands"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. A public listing is visible to all Snowflake accounts that can browse the Marketplace. Any eligible consumer can discover and request access to a public listing without needing a direct invitation from the provider.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q017",
+      "question": "What is a private listing in Snowflake?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A listing that encrypts all shared data with a consumer-managed key"
+        },
+        {
+          "key": "B",
+          "text": "A listing that is visible only to specifically invited consumer accounts"
+        },
+        {
+          "key": "C",
+          "text": "A listing that hides the provider's identity from consumers"
+        },
+        {
+          "key": "D",
+          "text": "A listing that restricts data access to a single database"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. A private listing is shared only with specific consumer accounts that the provider explicitly invites. Unlike public listings, private listings are not discoverable by browsing the Marketplace â€” only invited accounts can see and access them.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q018",
+      "question": "What is a Snowflake Data Exchange?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A public marketplace open to all Snowflake users"
+        },
+        {
+          "key": "B",
+          "text": "A private, managed hub where a group of accounts can publish and share data among invited members"
+        },
+        {
+          "key": "C",
+          "text": "A tool for converting data between file formats"
+        },
+        {
+          "key": "D",
+          "text": "An ETL pipeline service built into Snowflake"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. A Data Exchange is a private, managed hub where a curated group of Snowflake accounts can publish and share data among its members. Unlike the public Marketplace, membership is controlled by the exchange administrator.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q019",
+      "question": "A company wants to distribute shared datasets to multiple business partners across different organizations. Which Snowflake feature best supports this use case?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Database cloning"
+        },
+        {
+          "key": "B",
+          "text": "Listings (public or private) via the Snowflake Marketplace"
+        },
+        {
+          "key": "C",
+          "text": "External tables with shared storage"
+        },
+        {
+          "key": "D",
+          "text": "Snowpipe data loading"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Listings via the Snowflake Marketplace (either public or private) provide the best mechanism for distributing data to multiple organizations. Listings support cross-organization sharing and can leverage auto-fulfillment for cross-region/cross-cloud delivery.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q020",
+      "question": "What is the Snowflake Native App Framework?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A mobile SDK for building Snowflake client applications"
+        },
+        {
+          "key": "B",
+          "text": "A framework that allows providers to package data, code, and logic into an application that consumers install and run in their own Snowflake account"
+        },
+        {
+          "key": "C",
+          "text": "A framework for building external API integrations with Snowflake"
+        },
+        {
+          "key": "D",
+          "text": "A set of pre-built analytics dashboards provided by Snowflake"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. The Snowflake Native App Framework enables providers to build applications that bundle data, business logic, and UI components. Consumers install these apps directly in their own Snowflake accounts, running them with their own compute and against their own data.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q021",
+      "question": "In the Snowflake Native App Framework, what is an application package?",
+      "options": [
+        {
+          "key": "A",
+          "text": "A compressed ZIP file uploaded to a Snowflake stage"
+        },
+        {
+          "key": "B",
+          "text": "A Snowflake object that bundles the app's data, code, configuration, and version history for distribution"
+        },
+        {
+          "key": "C",
+          "text": "A Python library installed via pip"
+        },
+        {
+          "key": "D",
+          "text": "A Docker container image stored in a Snowflake registry"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. An application package is a Snowflake first-class object that contains the application's data content, code, configuration, and version history. Providers use application packages to define, version, and distribute their Native Apps to consumers.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q022",
+      "question": "How does a consumer deploy a Snowflake Native App?",
+      "options": [
+        {
+          "key": "A",
+          "text": "The consumer downloads the app source code and runs it locally"
+        },
+        {
+          "key": "B",
+          "text": "The consumer installs the app in their own Snowflake account, where it runs using their compute resources"
+        },
+        {
+          "key": "C",
+          "text": "The provider runs the app in their account on behalf of the consumer"
+        },
+        {
+          "key": "D",
+          "text": "The app runs in a shared Snowflake-managed environment outside both accounts"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. A Snowflake Native App is installed directly in the consumer's own Snowflake account. The consumer's compute resources are used to run the app, and the app can access the consumer's data with appropriate permissions granted during installation.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q023",
+      "question": "What key advantage does the Native App Framework offer providers compared to traditional data sharing?",
+      "options": [
+        {
+          "key": "A",
+          "text": "It allows sharing data without using shares"
+        },
+        {
+          "key": "B",
+          "text": "It enables providers to distribute code, business logic, and data together as a single installable product"
+        },
+        {
+          "key": "C",
+          "text": "It eliminates the need for consumer accounts"
+        },
+        {
+          "key": "D",
+          "text": "It automatically converts data into Parquet format"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. The Native App Framework goes beyond traditional data sharing by allowing providers to package and distribute code, business logic, stored procedures, and data together as a complete application product. This enables richer data products beyond raw data access.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q024",
+      "question": "How can a provider monetize a Snowflake Native App?",
+      "options": [
+        {
+          "key": "A",
+          "text": "By collecting payments outside of Snowflake only"
+        },
+        {
+          "key": "B",
+          "text": "By publishing the app as a paid listing on the Snowflake Marketplace"
+        },
+        {
+          "key": "C",
+          "text": "By charging consumers per query executed"
+        },
+        {
+          "key": "D",
+          "text": "By selling Snowflake credits earned from the app"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Providers can monetize their Snowflake Native Apps by publishing them as paid listings on the Snowflake Marketplace. Snowflake handles billing and payment processing, allowing providers to set pricing for their applications.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q025",
+      "question": "What is auto-fulfillment in the context of Snowflake data sharing?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Automatic backup of shared data to a secondary region"
+        },
+        {
+          "key": "B",
+          "text": "Automatic replication and delivery of listing data to consumers in different regions or cloud providers"
+        },
+        {
+          "key": "C",
+          "text": "Automatic approval of all consumer access requests"
+        },
+        {
+          "key": "D",
+          "text": "Automatic scaling of virtual warehouses during shared data queries"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Auto-fulfillment automatically replicates and delivers listing data to consumers in different regions or cloud providers. This enables cross-region and cross-cloud sharing through listings without the provider manually setting up replication.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q026",
+      "question": "What underlying technology does Snowflake use to enable cross-region data sharing?",
+      "options": [
+        {
+          "key": "A",
+          "text": "External tables pointing to cross-region storage"
+        },
+        {
+          "key": "B",
+          "text": "Database replication to replicate data to the consumer's region"
+        },
+        {
+          "key": "C",
+          "text": "VPN tunneling between regions"
+        },
+        {
+          "key": "D",
+          "text": "Data export and import via cloud storage buckets"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Cross-region data sharing in Snowflake leverages database replication behind the scenes. The data is replicated from the provider's region to the consumer's region, enabling consumers to query the data locally with low latency.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q027",
+      "question": "How do listings enable cross-cloud sharing in Snowflake?",
+      "options": [
+        {
+          "key": "A",
+          "text": "By converting data to a universal format readable by all cloud providers"
+        },
+        {
+          "key": "B",
+          "text": "By using auto-fulfillment to replicate data across cloud platforms (e.g., AWS to Azure)"
+        },
+        {
+          "key": "C",
+          "text": "By requiring both accounts to use the same cloud provider"
+        },
+        {
+          "key": "D",
+          "text": "By routing all queries through a central Snowflake-managed cloud"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Listings with auto-fulfillment enable cross-cloud sharing by automatically replicating the provider's data to the consumer's cloud platform. This allows a provider on AWS to share data with a consumer on Azure or GCP seamlessly.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q028",
+      "question": "What are the cost considerations for cross-region data sharing in Snowflake?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Cross-region sharing is always free"
+        },
+        {
+          "key": "B",
+          "text": "There are additional costs for data replication and cross-region data transfer"
+        },
+        {
+          "key": "C",
+          "text": "Only the consumer incurs additional costs for cross-region queries"
+        },
+        {
+          "key": "D",
+          "text": "Cross-region sharing costs the same as same-region sharing"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Cross-region sharing incurs additional costs for data replication (compute and storage for maintaining a replica) and cross-region data transfer fees. These costs are above and beyond the standard compute costs for querying shared data.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q029",
+      "question": "Which of the following statements about cross-region and cross-cloud sharing is true?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Direct shares can be used across regions without any additional setup"
+        },
+        {
+          "key": "B",
+          "text": "Listings with auto-fulfillment are the recommended approach for cross-region and cross-cloud sharing"
+        },
+        {
+          "key": "C",
+          "text": "Cross-cloud sharing is not supported in Snowflake"
+        },
+        {
+          "key": "D",
+          "text": "Cross-region sharing requires both accounts to upgrade to Business Critical edition"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Listings with auto-fulfillment are the recommended approach for cross-region and cross-cloud sharing. Direct shares only work within the same region and cloud provider. Auto-fulfillment handles the data replication needed for cross-region/cross-cloud delivery.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q030",
+      "question": "What are Snowflake Data Clean Rooms?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Isolated environments for cleaning and transforming raw data"
+        },
+        {
+          "key": "B",
+          "text": "Secure environments where multiple parties can collaborate on data analysis without exposing their raw data to each other"
+        },
+        {
+          "key": "C",
+          "text": "Staging areas for data quality checks before loading into production"
+        },
+        {
+          "key": "D",
+          "text": "Temporary databases used during data migration"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Snowflake Data Clean Rooms are secure environments that enable multiple parties to collaborate on data analysis without exposing their raw underlying data to each other. Only agreed-upon aggregated or anonymized results are shared between the parties.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q031",
+      "question": "What is the key privacy-preserving principle of Snowflake Data Clean Rooms?",
+      "options": [
+        {
+          "key": "A",
+          "text": "All data is encrypted with a shared key between parties"
+        },
+        {
+          "key": "B",
+          "text": "No party can see or access the other party's raw data; only approved queries and aggregated results are allowed"
+        },
+        {
+          "key": "C",
+          "text": "All data is anonymized before being loaded into the clean room"
+        },
+        {
+          "key": "D",
+          "text": "Data is deleted after each analysis session"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. The core privacy-preserving principle of Data Clean Rooms is that no party can directly see or access the other party's raw data. Only pre-approved queries can be run, and only aggregated or anonymized results are returned, ensuring data privacy is maintained.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q032",
+      "question": "Which industries commonly use Snowflake Data Clean Rooms? (Select all that apply)",
+      "options": [
+        {
+          "key": "A",
+          "text": "Advertising and media for audience overlap analysis"
+        },
+        {
+          "key": "B",
+          "text": "Healthcare for collaborative research without sharing patient data"
+        },
+        {
+          "key": "C",
+          "text": "Financial services for fraud detection across institutions"
+        },
+        {
+          "key": "D",
+          "text": "Manufacturing for machine calibration"
+        }
+      ],
+      "correctAnswers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "multiSelect": true,
+      "explanation": "A, B, and C are correct. Data Clean Rooms are widely used in advertising (audience overlap and campaign measurement), healthcare (collaborative research without exposing patient records), and financial services (cross-institution fraud analysis). These industries benefit most from privacy-preserving data collaboration.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q033",
+      "question": "In a Data Clean Room scenario, what type of results can typically be accessed by the participating parties?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Full row-level data from all parties"
+        },
+        {
+          "key": "B",
+          "text": "Only aggregated or anonymized results from pre-approved queries"
+        },
+        {
+          "key": "C",
+          "text": "Raw data from the party that initiated the analysis"
+        },
+        {
+          "key": "D",
+          "text": "Encrypted copies of all participant data"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. In a Data Clean Room, participating parties can only access aggregated or anonymized results generated by pre-approved queries. Raw row-level data from any party is never exposed to other participants, preserving data privacy.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q034",
+      "question": "What is the primary purpose of a Reader Account in Snowflake?",
+      "options": [
+        {
+          "key": "A",
+          "text": "To allow users to read data documentation"
+        },
+        {
+          "key": "B",
+          "text": "To share data with consumers who do not have their own Snowflake account"
+        },
+        {
+          "key": "C",
+          "text": "To provide read-only access to internal users within the same account"
+        },
+        {
+          "key": "D",
+          "text": "To create backup copies of databases"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Reader Accounts (formerly known as Managed Accounts) allow data providers to share data with external consumers who do not have their own Snowflake account. The provider creates and manages these accounts specifically for data sharing purposes.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q035",
+      "question": "Who creates and manages Reader Accounts in Snowflake?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Snowflake automatically creates them for all consumers"
+        },
+        {
+          "key": "B",
+          "text": "The data consumer requests one through the Marketplace"
+        },
+        {
+          "key": "C",
+          "text": "The data provider creates and manages Reader Accounts"
+        },
+        {
+          "key": "D",
+          "text": "A Snowflake support engineer creates them upon request"
+        }
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "multiSelect": false,
+      "explanation": "C is correct. The data provider is responsible for creating and managing Reader Accounts. The provider controls the account setup, user access, and resource allocation for each Reader Account they create.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q036",
+      "question": "Who pays for the compute resources used in a Reader Account?",
+      "options": [
+        {
+          "key": "A",
+          "text": "The consumer who uses the Reader Account"
+        },
+        {
+          "key": "B",
+          "text": "The data provider who created the Reader Account"
+        },
+        {
+          "key": "C",
+          "text": "Snowflake covers the compute costs"
+        },
+        {
+          "key": "D",
+          "text": "Compute costs are shared between provider and consumer"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. The data provider pays for all compute resources used in Reader Accounts they create. This is a key difference from regular data sharing where the consumer uses their own warehouses. Providers should monitor Reader Account usage to manage costs.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q037",
+      "question": "Which of the following is a limitation of Reader Accounts compared to full Snowflake accounts?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Reader Accounts cannot run SQL queries"
+        },
+        {
+          "key": "B",
+          "text": "Reader Accounts cannot create their own databases or load data"
+        },
+        {
+          "key": "C",
+          "text": "Reader Accounts cannot use virtual warehouses"
+        },
+        {
+          "key": "D",
+          "text": "Reader Accounts cannot access shared data"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Reader Accounts have significant limitations compared to full Snowflake accounts. They cannot create their own databases, load their own data, or perform other data management operations. They are limited to querying data that has been shared with them by the provider.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q038",
+      "question": "A company wants to share data with a partner that uses a different cloud provider and does not have a Snowflake account. Which combination of features should they use?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Direct Share with database replication"
+        },
+        {
+          "key": "B",
+          "text": "Reader Account combined with a listing that uses auto-fulfillment"
+        },
+        {
+          "key": "C",
+          "text": "External tables with cross-cloud storage access"
+        },
+        {
+          "key": "D",
+          "text": "Snowpipe with a shared stage"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Since the partner has no Snowflake account, a Reader Account is needed. Since they are on a different cloud provider, a listing with auto-fulfillment handles the cross-cloud replication. Together, these features solve both challenges.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q039",
+      "question": "Which of the following are true about Reader Accounts? (Select all that apply)",
+      "options": [
+        {
+          "key": "A",
+          "text": "They are created and managed by the data provider"
+        },
+        {
+          "key": "B",
+          "text": "The provider pays for the compute resources consumed"
+        },
+        {
+          "key": "C",
+          "text": "They can create their own databases and load external data"
+        },
+        {
+          "key": "D",
+          "text": "They allow non-Snowflake customers to query shared data"
+        }
+      ],
+      "correctAnswers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "multiSelect": true,
+      "explanation": "A, B, and D are correct. Reader Accounts are created and managed by the data provider, who also pays for compute. They enable non-Snowflake customers to access shared data. Reader Accounts cannot create their own databases or load external data â€” they are limited to querying shared data only.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q040",
+      "question": "What happens to shared data in a consumer's account if the provider revokes the share?",
+      "options": [
+        {
+          "key": "A",
+          "text": "The consumer retains a cached copy of the data"
+        },
+        {
+          "key": "B",
+          "text": "The consumer immediately loses access to the shared data"
+        },
+        {
+          "key": "C",
+          "text": "The shared data is automatically cloned into the consumer's account"
+        },
+        {
+          "key": "D",
+          "text": "The consumer has a 30-day grace period before losing access"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "B is correct. Since Secure Data Sharing does not copy data, the consumer accesses the provider's data in place. If the provider revokes the share (removes the consumer account from the share), the consumer immediately loses access. No data copy exists in the consumer's account.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q041",
+      "question": "Which Snowflake edition is required at minimum to use Secure Data Sharing as a provider?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Standard"
+        },
+        {
+          "key": "B",
+          "text": "Enterprise"
+        },
+        {
+          "key": "C",
+          "text": "Business Critical"
+        },
+        {
+          "key": "D",
+          "text": "Virtual Private Snowflake (VPS)"
+        }
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "multiSelect": false,
+      "explanation": "A is correct. Secure Data Sharing is available in all Snowflake editions, including Standard. Any Snowflake account can create shares and act as a data provider, regardless of the edition.",
+      "difficulty": "hard"
+    },
+    {
+      "id": "s5q042",
+      "question": "Which of the following Snowflake edition doesn't support Snowflake Marketplace?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Enterprise"
+        },
+        {
+          "key": "B",
+          "text": "VPS or Virtual Private Snowflake"
+        },
+        {
+          "key": "C",
+          "text": "Business Critical"
+        },
+        {
+          "key": "D",
+          "text": "Standard"
+        }
+      ],
+      "correctAnswers": [
+        "B"
+      ],
+      "multiSelect": false,
+      "explanation": "All Snowflake accounts, except VPS Snowflake accounts, can use the Snowflake Marketplace. VPS accounts have isolated metadata and compute and, therefore, can't use the Snowflake marketplace built on the common cloud services and metadata provided by Snowflake.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q043",
+      "question": "Which system function can be used to control access to data in a share and allow specific data only to paying customers?",
+      "options": [
+        {
+          "key": "A",
+          "text": "SYSTEM$IS_LISTING_PURCHASED"
+        },
+        {
+          "key": "B",
+          "text": "SYSTEM$ALLOWLIST"
+        },
+        {
+          "key": "C",
+          "text": "SYSTEM$BLOCK_INTERNAL_STAGES_PUBLIC_ACCESS"
+        },
+        {
+          "key": "D",
+          "text": "SYSTEM$DISABLE_BEHAVIOR_CHANGE_BUNDLE"
+        }
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "multiSelect": false,
+      "explanation": "SYSTEM$IS_LISTING_PURCHASED system function can be used to control which data is visible to a paid customer and which to a trial customer.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q044",
+      "question": "Which of the following privileges allows a user in a consumer account to create a database from a share? Select two.",
+      "options": [
+        {
+          "key": "A",
+          "text": "ACCOUNTADMIN role"
+        },
+        {
+          "key": "B",
+          "text": "IMPORT SHARE privileges"
+        },
+        {
+          "key": "C",
+          "text": "SYSADMIN role"
+        },
+        {
+          "key": "D",
+          "text": "SECURITY ADMIN role"
+        }
+      ],
+      "correctAnswers": [
+        "A",
+        "B"
+      ],
+      "multiSelect": true,
+      "explanation": "A user in a consumer account can create a database from the Share if they have the ACCOUNTADMIN role OR the IMPORT SHARE privileges.",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q045",
+      "question": "You are required to share data from various tables in separate databases. What is the recommended approach to simplify the sharing process?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Copy all data from the various tables into new tables in a new database. Share the new database."
+        },
+        {
+          "key": "B",
+          "text": "Clone tables from the separate databases into a new database. Share the new database."
+        },
+        {
+          "key": "C",
+          "text": "Create secure views in a single database to consolidate the data from various databases into a new database. Share the new database."
+        },
+        {
+          "key": "D",
+          "text": "Create one Share per database."
+        }
+      ],
+      "correctAnswers": [
+        "C"
+      ],
+      "multiSelect": false,
+      "explanation": "You may create a secure view if you need to share data from many tables in separate databases. Because several databases cannot be added to a single share, Snowflake suggests creating secure views within a single database and sharing that database.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q046",
+      "question": "Through which of the following can users search for and consume third-party datasets?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Snowflake Marketplace"
+        },
+        {
+          "key": "B",
+          "text": "Partner Hub"
+        },
+        {
+          "key": "C",
+          "text": "Sharing Centre"
+        },
+        {
+          "key": "D",
+          "text": "Secure Data Sharing"
+        }
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "multiSelect": false,
+      "explanation": "Snowflake Marketplace is the place to find and use third-party datasets that different organizations have made available. Users can search and consume third-party data sets using Snowflake Marketplace. https://other-docs.snowflake.com/en/collaboration/collaboration-marketplace-about.html",
+      "difficulty": "easy"
+    },
+    {
+      "id": "s5q047",
+      "question": "A data consumer has created a read-only database on a Share object shared by a data provider. The data provider adds an object to the Share. Which of the following statements correctly describes what happens?",
+      "options": [
+        {
+          "key": "A",
+          "text": "The data consumer can see and consume the new object immediately."
+        },
+        {
+          "key": "B",
+          "text": "Adding objects to a Share is impossible after a consumer creates a read-only database."
+        },
+        {
+          "key": "C",
+          "text": "The data consumer needs to run \"ALTER SHARE <share_name> REFRESH\" to ensure that the added object appears in the read-only database."
+        }
+      ],
+      "correctAnswers": [
+        "A"
+      ],
+      "multiSelect": false,
+      "explanation": "All new objects added to a share object by the data provider automatically become accessible to the consumer. https://docs.snowflake.com/en/user-guide/data-sharing-intro#what-is-a-share",
+      "difficulty": "medium"
+    },
+    {
+      "id": "s5q048",
+      "question": "Which of the following roles can manage a Data Exchange share by default?",
+      "options": [
+        {
+          "key": "A",
+          "text": "SYSADMIN"
+        },
+        {
+          "key": "B",
+          "text": "SECURITYADMIN"
+        },
+        {
+          "key": "C",
+          "text": "USERADMIN"
+        },
+        {
+          "key": "D",
+          "text": "ACCOUNTADMIN"
+        }
+      ],
+      "correctAnswers": [
+        "D"
+      ],
+      "multiSelect": false,
+      "explanation": "D is correct. As a default, only the ACCOUNTADMIN role has the privileges to create and manage shares. However, if required, the privileges can be granted to other roles. https://docs.snowflake.com/en/user-guide/security-access-privileges-shares",
+      "difficulty": "medium"
+    }
+  ]
 }
