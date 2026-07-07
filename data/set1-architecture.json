@@ -889,7 +889,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. The Cloud Services layer handles authentication, access control, infrastructure management, metadata management, query parsing, and optimization. A is wrong â€” query execution happens in the Query Processing layer. C is wrong â€” storage is the Database Storage layer.",
+      "explanation": "B is correct. The Cloud Services layer handles authentication, access control, infrastructure management, metadata management, query parsing, and optimization. A is wrong - query execution happens in the Query Processing layer. C is wrong - storage is the Database Storage layer.",
       "difficulty": "easy"
     },
     {
@@ -1057,7 +1057,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Snowsight is Snowflake's modern web-based user interface. It provides SQL editing, query results visualization with charts, dashboards, worksheet sharing, and administrative capabilities â€” all through a browser.",
+      "explanation": "B is correct. Snowsight is Snowflake's modern web-based user interface. It provides SQL editing, query results visualization with charts, dashboards, worksheet sharing, and administrative capabilities - all through a browser.",
       "difficulty": "easy"
     },
     {
@@ -1820,7 +1820,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A and C are correct. Snowflake supports cross-cloud database replication between accounts on different providers and allows data listings to be shared with consumers on different cloud platforms via auto-fulfillment. B is wrong â€” a single warehouse runs on one cloud provider. D is wrong â€” Snowflake does not auto-migrate data based on cost.",
+      "explanation": "A and C are correct. Snowflake supports cross-cloud database replication between accounts on different providers and allows data listings to be shared with consumers on different cloud platforms via auto-fulfillment. B is wrong - a single warehouse runs on one cloud provider. D is wrong - Snowflake does not auto-migrate data based on cost.",
       "difficulty": "medium"
     },
     {
@@ -1932,7 +1932,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Cross-cloud replication requires separate Snowflake accounts on each cloud provider. Using the Snowflake Organization feature, you link accounts and configure database replication between them. A is wrong â€” a single account cannot span multiple cloud providers. C is wrong â€” replication is available starting from Business Critical edition. D is wrong â€” replication is automatic once configured.",
+      "explanation": "B is correct. Cross-cloud replication requires separate Snowflake accounts on each cloud provider. Using the Snowflake Organization feature, you link accounts and configure database replication between them. A is wrong - a single account cannot span multiple cloud providers. C is wrong - replication is available starting from Business Critical edition. D is wrong - replication is automatic once configured.",
       "difficulty": "hard"
     },
     {
@@ -1960,7 +1960,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Database failover requires Business Critical edition or higher. Failover groups must be explicitly configured to specify which objects (databases, warehouses, etc.) should be replicated and which target account should serve as the failover. C is wrong â€” failover can work across cloud providers. D is wrong â€” Standard and Enterprise do not support failover.",
+      "explanation": "B is correct. Database failover requires Business Critical edition or higher. Failover groups must be explicitly configured to specify which objects (databases, warehouses, etc.) should be replicated and which target account should serve as the failover. C is wrong - failover can work across cloud providers. D is wrong - Standard and Enterprise do not support failover.",
       "difficulty": "hard"
     },
     {
@@ -2081,19 +2081,19 @@
       "options": [
         {
           "key": "A",
-          "text": "SNOWFLAKE.CORTEX.EXTRACT_ANSWER â€” extracts an answer from a document given a question"
+          "text": "SNOWFLAKE.CORTEX.EXTRACT_ANSWER - extracts an answer from a document given a question"
         },
         {
           "key": "B",
-          "text": "SNOWFLAKE.CORTEX.COMPLETE â€” generates text using a large language model"
+          "text": "SNOWFLAKE.CORTEX.COMPLETE - generates text using a large language model"
         },
         {
           "key": "C",
-          "text": "SNOWFLAKE.CORTEX.SENTIMENT â€” returns a sentiment score for input text"
+          "text": "SNOWFLAKE.CORTEX.SENTIMENT - returns a sentiment score for input text"
         },
         {
           "key": "D",
-          "text": "SNOWFLAKE.CORTEX.SUMMARIZE â€” generates a summary of input text"
+          "text": "SNOWFLAKE.CORTEX.SUMMARIZE - generates a summary of input text"
         }
       ],
       "correctAnswers": [
@@ -2551,7 +2551,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A and C are correct. Multi-cluster warehouses (auto-scaling clusters) and extended Time Travel (up to 90 days) are Enterprise edition features. B is wrong â€” Secure Data Sharing is available in all editions. D is wrong â€” AES-256 encryption is available in all editions.",
+      "explanation": "A and C are correct. Multi-cluster warehouses (auto-scaling clusters) and extended Time Travel (up to 90 days) are Enterprise edition features. B is wrong - Secure Data Sharing is available in all editions. D is wrong - AES-256 encryption is available in all editions.",
       "difficulty": "medium"
     },
     {
@@ -2635,7 +2635,7 @@
         "C"
       ],
       "multiSelect": false,
-      "explanation": "C is correct. Edition upgrades are handled by Snowflake. You contact Snowflake support or your account representative, and the upgrade is applied to the existing account. No data migration or new account creation is needed â€” all existing data and configurations are preserved.",
+      "explanation": "C is correct. Edition upgrades are handled by Snowflake. You contact Snowflake support or your account representative, and the upgrade is applied to the existing account. No data migration or new account creation is needed - all existing data and configurations are preserved.",
       "difficulty": "medium"
     },
     {
@@ -2663,7 +2663,7 @@
         "A"
       ],
       "multiSelect": false,
-      "explanation": "A is correct. Materialized Views require Enterprise edition. B is wrong â€” Multi-cluster Warehouses require Enterprise, not Standard. C is wrong â€” Tri-Secret Secure requires Business Critical, not Enterprise. D is wrong â€” Database Failover requires Business Critical, not Standard.",
+      "explanation": "A is correct. Materialized Views require Enterprise edition. B is wrong - Multi-cluster Warehouses require Enterprise, not Standard. C is wrong - Tri-Secret Secure requires Business Critical, not Enterprise. D is wrong - Database Failover requires Business Critical, not Standard.",
       "difficulty": "hard"
     },
     {
@@ -2692,7 +2692,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A and C are correct. Zero-copy cloning creates a metadata-only snapshot that references the same underlying micro-partitions, so no data is physically copied and no additional storage is used at clone time. B is wrong â€” no physical copy is made initially. D is wrong â€” clones are fully independent and can be modified without affecting the source.",
+      "explanation": "A and C are correct. Zero-copy cloning creates a metadata-only snapshot that references the same underlying micro-partitions, so no data is physically copied and no additional storage is used at clone time. B is wrong - no physical copy is made initially. D is wrong - clones are fully independent and can be modified without affecting the source.",
       "difficulty": "medium"
     },
     {
@@ -2776,7 +2776,7 @@
         "A"
       ],
       "multiSelect": false,
-      "explanation": "A is correct. Data gravity is the concept that large datasets tend to attract applications, services, and additional data to their location, making it hard to move workloads. Snowflake addresses this through Snowgrid capabilities â€” cross-region database replication and cross-cloud data sharing â€” so data can be brought closer to consumers.",
+      "explanation": "A is correct. Data gravity is the concept that large datasets tend to attract applications, services, and additional data to their location, making it hard to move workloads. Snowflake addresses this through Snowgrid capabilities - cross-region database replication and cross-cloud data sharing - so data can be brought closer to consumers.",
       "difficulty": "hard"
     },
     {
@@ -2804,7 +2804,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Snowflake's cloud-agnostic architecture means the platform provides an identical SQL interface, feature set, and user experience whether the account is deployed on AWS, Azure, or GCP. A is wrong â€” Snowflake runs on top of cloud providers. C is wrong â€” workloads are not auto-migrated between clouds. D is wrong â€” a warehouse runs on a single provider.",
+      "explanation": "B is correct. Snowflake's cloud-agnostic architecture means the platform provides an identical SQL interface, feature set, and user experience whether the account is deployed on AWS, Azure, or GCP. A is wrong - Snowflake runs on top of cloud providers. C is wrong - workloads are not auto-migrated between clouds. D is wrong - a warehouse runs on a single provider.",
       "difficulty": "hard"
     },
     {
