@@ -83,7 +83,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A, B, and C are correct. Snowflake has three types of internal stages: User Stage (@~) â€” allocated to each user. Table Stage (@%table_name) â€” allocated to each table. Named Stage â€” a named database object created with CREATE STAGE. Database Stage and Schema Stage do not exist.",
+      "explanation": "A, B, and C are correct. Snowflake has three types of internal stages: User Stage (@~) - allocated to each user. Table Stage (@%table_name) - allocated to each table. Named Stage - a named database object created with CREATE STAGE. Database Stage and Schema Stage do not exist.",
       "difficulty": "easy"
     },
     {
@@ -229,7 +229,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A, B, and C are correct. Snowflake supports loading from CSV, JSON, Avro, ORC, Parquet, and XML formats. Excel (XLSX) and PDF are not directly supported â€” data from these formats must first be converted to a supported format.",
+      "explanation": "A, B, and C are correct. Snowflake supports loading from CSV, JSON, Avro, ORC, Parquet, and XML formats. Excel (XLSX) and PDF are not directly supported - data from these formats must first be converted to a supported format.",
       "difficulty": "easy"
     },
     {
@@ -270,7 +270,7 @@
         },
         {
           "key": "B",
-          "text": "Returns validation errors without loading any data â€” a dry-run mode"
+          "text": "Returns validation errors without loading any data - a dry-run mode"
         },
         {
           "key": "C",
@@ -285,7 +285,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. VALIDATION_MODE performs a 'dry run' â€” it validates the data files and returns any errors without actually loading any data into the table. Options include RETURN_n_ROWS (validate n rows) and RETURN_ERRORS (return all errors). This is useful for testing before actual loads.",
+      "explanation": "B is correct. VALIDATION_MODE performs a 'dry run' - it validates the data files and returns any errors without actually loading any data into the table. Options include RETURN_n_ROWS (validate n rows) and RETURN_ERRORS (return all errors). This is useful for testing before actual loads.",
       "difficulty": "medium"
     },
     {
@@ -1875,7 +1875,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Snowsight dashboards are interactive â€” tiles can be rearranged and resized within the dashboard layout. Dashboard filters (such as date range filters) can be connected to multiple tiles, allowing users to filter data across the entire dashboard. Each tile runs its own query independently and can use different databases and schemas.",
+      "explanation": "B is correct. Snowsight dashboards are interactive - tiles can be rearranged and resized within the dashboard layout. Dashboard filters (such as date range filters) can be connected to multiple tiles, allowing users to filter data across the entire dashboard. Each tile runs its own query independently and can use different databases and schemas.",
       "difficulty": "hard"
     },
     {
