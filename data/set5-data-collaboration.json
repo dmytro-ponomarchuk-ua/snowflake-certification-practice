@@ -57,7 +57,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. The Snowflake Marketplace allows data providers to publish and monetize datasets. Data consumers can discover and access these datasets directly in their Snowflake accounts without any data copying or ETL required â€” data is accessed via Snowflake's secure data sharing.",
+      "explanation": "B is correct. The Snowflake Marketplace allows data providers to publish and monetize datasets. Data consumers can discover and access these datasets directly in their Snowflake accounts without any data copying or ETL required - data is accessed via Snowflake's secure data sharing.",
       "difficulty": "easy"
     },
     {
@@ -481,7 +481,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. A private listing is shared only with specific consumer accounts that the provider explicitly invites. Unlike public listings, private listings are not discoverable by browsing the Marketplace â€” only invited accounts can see and access them.",
+      "explanation": "B is correct. A private listing is shared only with specific consumer accounts that the provider explicitly invites. Unlike public listings, private listings are not discoverable by browsing the Marketplace - only invited accounts can see and access them.",
       "difficulty": "easy"
     },
     {
@@ -1101,7 +1101,7 @@
         "D"
       ],
       "multiSelect": true,
-      "explanation": "A, B, and D are correct. Reader Accounts are created and managed by the data provider, who also pays for compute. They enable non-Snowflake customers to access shared data. Reader Accounts cannot create their own databases or load external data â€” they are limited to querying shared data only.",
+      "explanation": "A, B, and D are correct. Reader Accounts are created and managed by the data provider, who also pays for compute. They enable non-Snowflake customers to access shared data. Reader Accounts cannot create their own databases or load external data - they are limited to querying shared data only.",
       "difficulty": "hard"
     },
     {
