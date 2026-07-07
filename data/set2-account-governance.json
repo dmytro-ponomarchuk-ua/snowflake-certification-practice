@@ -141,7 +141,7 @@
         "A"
       ],
       "multiSelect": false,
-      "explanation": "A is correct. In Snowflake's role hierarchy, privileges flow upward â€” parent roles inherit all privileges from their child roles. For example, SYSADMIN inherits all privileges from custom roles that are granted to it. This is why best practice recommends granting custom roles to SYSADMIN.",
+      "explanation": "A is correct. In Snowflake's role hierarchy, privileges flow upward -” parent roles inherit all privileges from their child roles. For example, SYSADMIN inherits all privileges from custom roles that are granted to it. This is why best practice recommends granting custom roles to SYSADMIN.",
       "difficulty": "medium"
     },
     {
@@ -759,7 +759,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. When a privilege is revoked from a role, all users who have that role immediately lose that privilege. Privilege changes are effective immediately for all current and future sessions â€” no re-login is required.",
+      "explanation": "B is correct. When a privilege is revoked from a role, all users who have that role immediately lose that privilege. Privilege changes are effective immediately for all current and future sessions -” no re-login is required.",
       "difficulty": "medium"
     },
     {
@@ -2328,7 +2328,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Fail-safe provides an additional 7-day window of data protection after Time Travel expires. It is NOT user-accessible â€” only Snowflake Support can recover data from Fail-safe, and only in the event of a system failure or disaster. Fail-safe data contributes to storage costs.",
+      "explanation": "B is correct. Fail-safe provides an additional 7-day window of data protection after Time Travel expires. It is NOT user-accessible -” only Snowflake Support can recover data from Fail-safe, and only in the event of a system failure or disaster. Fail-safe data contributes to storage costs.",
       "difficulty": "medium"
     },
     {
@@ -2547,7 +2547,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. The Snowflake Marketplace is a platform where data providers (companies and organizations) can list and monetize datasets. Consumers can discover, evaluate, and access these datasets directly within their Snowflake accounts â€” no ETL or data copying needed.",
+      "explanation": "B is correct. The Snowflake Marketplace is a platform where data providers (companies and organizations) can list and monetize datasets. Consumers can discover, evaluate, and access these datasets directly within their Snowflake accounts -” no ETL or data copying needed.",
       "difficulty": "easy"
     },
     {
@@ -2688,7 +2688,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Time Travel retains historical versions of changed micro-partitions. Storage costs are based on the amount of data that has changed during the retention period â€” not the full table size. If data changes frequently, Time Travel storage costs will be higher.",
+      "explanation": "B is correct. Time Travel retains historical versions of changed micro-partitions. Storage costs are based on the amount of data that has changed during the retention period -” not the full table size. If data changes frequently, Time Travel storage costs will be higher.",
       "difficulty": "medium"
     },
     {
@@ -2841,7 +2841,7 @@
         },
         {
           "key": "B",
-          "text": "A Replication Group that additionally supports failover â€” promoting a secondary account to serve as the primary"
+          "text": "A Replication Group that additionally supports failover -” promoting a secondary account to serve as the primary"
         },
         {
           "key": "C",
@@ -2901,7 +2901,7 @@
         },
         {
           "key": "C",
-          "text": "There is no difference â€” all listings are free"
+          "text": "There is no difference -” all listings are free"
         },
         {
           "key": "D",
@@ -3082,7 +3082,7 @@
         "B"
       ],
       "multiSelect": true,
-      "explanation": "A and B are correct. Shares can include tables, external tables, secure views, secure materialized views, and secure UDFs. Warehouses, users, and roles cannot be shared â€” consumers use their own warehouses to query shared data.",
+      "explanation": "A and B are correct. Shares can include tables, external tables, secure views, secure materialized views, and secure UDFs. Warehouses, users, and roles cannot be shared -” consumers use their own warehouses to query shared data.",
       "difficulty": "medium"
     },
     {
@@ -3179,7 +3179,7 @@
         },
         {
           "key": "B",
-          "text": "The consumer immediately loses access to the shared data â€” no data was ever copied"
+          "text": "The consumer immediately loses access to the shared data -” no data was ever copied"
         },
         {
           "key": "C",
@@ -3222,7 +3222,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Consumers use their own virtual warehouses to query shared data, so they pay for their own compute costs. The provider pays only for data storage. Exception: Reader Accounts â€” the provider pays for the Reader Account's compute.",
+      "explanation": "B is correct. Consumers use their own virtual warehouses to query shared data, so they pay for their own compute costs. The provider pays only for data storage. Exception: Reader Accounts -” the provider pays for the Reader Account's compute.",
       "difficulty": "easy"
     },
     {
@@ -3452,7 +3452,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Cloning is an account-level operation only â€” you cannot clone objects across account boundaries. To copy data between accounts, use Data Sharing, Data Replication, or COPY INTO/COPY OUT through a shared cloud storage location.",
+      "explanation": "B is correct. Cloning is an account-level operation only -” you cannot clone objects across account boundaries. To copy data between accounts, use Data Sharing, Data Replication, or COPY INTO/COPY OUT through a shared cloud storage location.",
       "difficulty": "easy"
     },
     {
