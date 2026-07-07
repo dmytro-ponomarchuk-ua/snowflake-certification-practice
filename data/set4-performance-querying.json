@@ -58,7 +58,7 @@
         "D"
       ],
       "multiSelect": true,
-      "explanation": "C and D are correct. The Result Cache serves results when the query text matches (whitespace differences are ignored) and the query is run within 24 hours of the cached result. The warehouse used and user name are irrelevant â€” the result cache is shared at the Cloud Services layer.",
+      "explanation": "C and D are correct. The Result Cache serves results when the query text matches (whitespace differences are ignored) and the query is run within 24 hours of the cached result. The warehouse used and user name are irrelevant - the result cache is shared at the Cloud Services layer.",
       "difficulty": "medium"
     },
     {
@@ -92,7 +92,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A, B, and C are correct. Snowflake has three cache layers: 1) Result Cache â€” stores complete query results for 24 hours in Cloud Services. 2) Local Disk Cache â€” stores micro-partition data on warehouse SSD for re-use. 3) Metadata Cache â€” stores micro-partition statistics for query optimization and pruning.",
+      "explanation": "A, B, and C are correct. Snowflake has three cache layers: 1) Result Cache - stores complete query results for 24 hours in Cloud Services. 2) Local Disk Cache - stores micro-partition data on warehouse SSD for re-use. 3) Metadata Cache - stores micro-partition statistics for query optimization and pruning.",
       "difficulty": "medium"
     },
     {
@@ -1036,7 +1036,7 @@
         },
         {
           "key": "B",
-          "text": "Review join conditions â€” an exploding join produces many more rows than input tables, usually due to missing or incorrect join predicates"
+          "text": "Review join conditions - an exploding join produces many more rows than input tables, usually due to missing or incorrect join predicates"
         },
         {
           "key": "C",
@@ -1237,7 +1237,7 @@
         },
         {
           "key": "B",
-          "text": "An object that records DML changes (inserts, updates, deletes) made to a table â€” change data capture (CDC)"
+          "text": "An object that records DML changes (inserts, updates, deletes) made to a table - change data capture (CDC)"
         },
         {
           "key": "C",
@@ -1286,7 +1286,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A, B, and C are correct. Streams add three metadata columns: METADATA$ACTION (INSERT or DELETE â€” updates produce a DELETE+INSERT pair), METADATA$ISUPDATE (TRUE for update-related rows), and METADATA$ROW_ID (unique identifier for each row). TIMESTAMP and CHANGED_COLUMNS are not stream metadata columns.",
+      "explanation": "A, B, and C are correct. Streams add three metadata columns: METADATA$ACTION (INSERT or DELETE - updates produce a DELETE+INSERT pair), METADATA$ISUPDATE (TRUE for update-related rows), and METADATA$ROW_ID (unique identifier for each row). TIMESTAMP and CHANGED_COLUMNS are not stream metadata columns.",
       "difficulty": "hard"
     },
     {
@@ -1531,7 +1531,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. PARSE_JSON takes a string containing valid JSON and converts it into a VARIANT value that can be queried using Snowflake's semi-structured data functions. TO_JSON does the reverse â€” converts VARIANT to a JSON string.",
+      "explanation": "B is correct. PARSE_JSON takes a string containing valid JSON and converts it into a VARIANT value that can be queried using Snowflake's semi-structured data functions. TO_JSON does the reverse - converts VARIANT to a JSON string.",
       "difficulty": "easy"
     },
     {
@@ -1803,7 +1803,7 @@
         },
         {
           "key": "B",
-          "text": "Performing upsert operations â€” inserting new rows and updating existing rows based on a match condition"
+          "text": "Performing upsert operations - inserting new rows and updating existing rows based on a match condition"
         },
         {
           "key": "C",
@@ -1902,7 +1902,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Stored Procedures are invoked using CALL procedure_name(args). They cannot be used directly in SELECT statements â€” that's what UDFs are for. Procedures can contain transaction control (BEGIN/COMMIT/ROLLBACK) and can be written in SQL, JavaScript, Python, Java, or Scala.",
+      "explanation": "B is correct. Stored Procedures are invoked using CALL procedure_name(args). They cannot be used directly in SELECT statements - that's what UDFs are for. Procedures can contain transaction control (BEGIN/COMMIT/ROLLBACK) and can be written in SQL, JavaScript, Python, Java, or Scala.",
       "difficulty": "easy"
     },
     {
@@ -1930,7 +1930,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. A standard view is a stored query definition â€” it runs the query each time it's accessed. A materialized view stores the precomputed query results and Snowflake automatically refreshes them when the base table data changes. Materialized views trade storage cost for query performance.",
+      "explanation": "B is correct. A standard view is a stored query definition - it runs the query each time it's accessed. A materialized view stores the precomputed query results and Snowflake automatically refreshes them when the base table data changes. Materialized views trade storage cost for query performance.",
       "difficulty": "easy"
     },
     {
@@ -2272,7 +2272,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. TYPEOF returns the data type of a value stored within a VARIANT column â€” such as VARCHAR, INTEGER, DOUBLE, BOOLEAN, ARRAY, OBJECT, or NULL_VALUE. This is useful for inspecting semi-structured data where types can vary.",
+      "explanation": "B is correct. TYPEOF returns the data type of a value stored within a VARIANT column - such as VARCHAR, INTEGER, DOUBLE, BOOLEAN, ARRAY, OBJECT, or NULL_VALUE. This is useful for inspecting semi-structured data where types can vary.",
       "difficulty": "medium"
     },
     {
@@ -3433,7 +3433,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. Setting MIN_CLUSTER_COUNT and MAX_CLUSTER_COUNT configures multi-cluster warehouses to handle increased concurrency (more simultaneous users/queries). It does NOT improve performance for large individual queries â€” for that, you would resize the warehouse (increase its size).",
+      "explanation": "B is correct. Setting MIN_CLUSTER_COUNT and MAX_CLUSTER_COUNT configures multi-cluster warehouses to handle increased concurrency (more simultaneous users/queries). It does NOT improve performance for large individual queries - for that, you would resize the warehouse (increase its size).",
       "difficulty": "medium"
     },
     {
@@ -3639,11 +3639,11 @@
       "options": [
         {
           "key": "A",
-          "text": "Economy â€” keeps clusters running longer to avoid startup costs"
+          "text": "Economy - keeps clusters running longer to avoid startup costs"
         },
         {
           "key": "B",
-          "text": "Standard â€” shuts down clusters quickly when no longer needed"
+          "text": "Standard - shuts down clusters quickly when no longer needed"
         },
         {
           "key": "C",
@@ -3799,7 +3799,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "A and C are correct. INSERT FIRST evaluates WHEN conditions in order and inserts each source row only into the first matching target, then moves to the next row. INSERT ALL WHEN evaluates all conditions for each row and inserts into every target whose condition is satisfied, so a single row can land in multiple tables. B is not guaranteed (performance depends on data). D is incorrect â€” both INSERT FIRST and INSERT ALL WHEN support an ELSE clause.",
+      "explanation": "A and C are correct. INSERT FIRST evaluates WHEN conditions in order and inserts each source row only into the first matching target, then moves to the next row. INSERT ALL WHEN evaluates all conditions for each row and inserts into every target whose condition is satisfied, so a single row can land in multiple tables. B is not guaranteed (performance depends on data). D is incorrect - both INSERT FIRST and INSERT ALL WHEN support an ELSE clause.",
       "difficulty": "hard"
     },
     {
@@ -3827,7 +3827,7 @@
         "B"
       ],
       "multiSelect": false,
-      "explanation": "B is correct. The key advantage of multi-table INSERT is that the source query is executed once and the results are routed to multiple target tables, avoiding repeated scans of the same source data. Separate INSERT statements would each independently scan the source. A is misleading â€” credit consumption depends on total compute, not per-row pricing. C is incorrect â€” all DML is logged. D is incorrect â€” clustering keys are not created automatically.",
+      "explanation": "B is correct. The key advantage of multi-table INSERT is that the source query is executed once and the results are routed to multiple target tables, avoiding repeated scans of the same source data. Separate INSERT statements would each independently scan the source. A is misleading - credit consumption depends on total compute, not per-row pricing. C is incorrect - all DML is logged. D is incorrect - clustering keys are not created automatically.",
       "difficulty": "hard"
     },
     {
@@ -3912,7 +3912,7 @@
         "C"
       ],
       "multiSelect": true,
-      "explanation": "B and C are correct. Dynamic Tables are a declarative approach â€” you define the query and Snowflake handles refresh scheduling and incremental processing. Streams and Tasks are an imperative approach that gives you fine-grained control over how changes are captured (streams) and when/how they are processed (tasks). A is incorrect because Dynamic Tables eliminate the need for separate streams and tasks. D is incorrect â€” Dynamic Tables can reference other Dynamic Tables, forming DAG-based pipelines.",
+      "explanation": "B and C are correct. Dynamic Tables are a declarative approach - you define the query and Snowflake handles refresh scheduling and incremental processing. Streams and Tasks are an imperative approach that gives you fine-grained control over how changes are captured (streams) and when/how they are processed (tasks). A is incorrect because Dynamic Tables eliminate the need for separate streams and tasks. D is incorrect - Dynamic Tables can reference other Dynamic Tables, forming DAG-based pipelines.",
       "difficulty": "hard"
     },
     {
@@ -3949,19 +3949,19 @@
       "options": [
         {
           "key": "A",
-          "text": "Set QUERY_TAG â€” its value is recorded in QUERY_HISTORY and can be used to filter and identify queries from the ETL application"
+          "text": "Set QUERY_TAG - its value is recorded in QUERY_HISTORY and can be used to filter and identify queries from the ETL application"
         },
         {
           "key": "B",
-          "text": "Set STATEMENT_TIMEOUT_IN_SECONDS â€” it tags queries that exceed the time limit for later review"
+          "text": "Set STATEMENT_TIMEOUT_IN_SECONDS - it tags queries that exceed the time limit for later review"
         },
         {
           "key": "C",
-          "text": "Set TIMEZONE â€” it records the application timezone as metadata on each query"
+          "text": "Set TIMEZONE - it records the application timezone as metadata on each query"
         },
         {
           "key": "D",
-          "text": "Set LOG_LEVEL â€” it labels all queries with the application name in the query log"
+          "text": "Set LOG_LEVEL - it labels all queries with the application name in the query log"
         }
       ],
       "correctAnswers": [
